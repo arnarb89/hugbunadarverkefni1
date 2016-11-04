@@ -22,8 +22,33 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+// Configuring Passport
+var passport = require('passport');
+var expressSession = require('express-session');
+// TODO - Why Do we need this key ?
+app.use(expressSession({secret: 'Long and hard. Very long and very hard.'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Initialize Passport
+var initPassport = require('./passport/init');
+initPassport(passport);
+
+/*var routes = require('./routes/index')(passport);
+app.use('/', routes);*/
+
+
+
 app.use('/', routes);
 app.use('/users', users);
+
+/* Handle Logout */
+  router.get('/signout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
