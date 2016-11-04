@@ -4,7 +4,7 @@ var gulp = require('gulp');
 //var sass = require('gulp-sass');
 var nodemon = require('gulp-nodemon');
 var browserSync = require('browser-sync').create();
-//var jshint = require('gulp-jshint');
+var jshint = require('gulp-jshint');
 
 var isProd = false;
 
@@ -62,11 +62,11 @@ gulp.task('browser-sync', function() {
     //gulp.watch('./public/stylesheets/**/*.scss', ['styles']);
 });
 
-/*gulp.task('jshint', function() {
+gulp.task('jshint', function() {
   return gulp.src(['./public/javascripts/*.js','./routes/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
-});*/
+});
 
 
 gulp.task('setProdEnv', function() { isProd = true; });
