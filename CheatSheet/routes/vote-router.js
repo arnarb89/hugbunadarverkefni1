@@ -13,3 +13,5 @@ router.get('/', function asyncVote(body) {
 		// error handling
 	};
 })
+
+module.exports = router;
