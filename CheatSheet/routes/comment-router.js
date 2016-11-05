@@ -1,8 +1,7 @@
 'use strict';
 
-var express = require('express');
 var commentManager = require('../lib/managers/comment-manager.js');
-var router = express.Router();
+var router = require('express').Router();
 
 router.get('/async', function (req, res) {
 	var parentId = req.body.parentId;

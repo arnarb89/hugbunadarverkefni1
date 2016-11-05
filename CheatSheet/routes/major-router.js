@@ -6,7 +6,7 @@ var router = require('express').Router();
 
 router.get('/', function (req, res) {
 	// async request
-	courseManager.getCourseByMajor(req.body.majorId, function(err, result) {
+	courseManager.getCourseByMajor(req.body.majorId, function (err, result) {
 		// return courses asyncly
 		// handle error
 	});
@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
 	var majorName = req.body.name;
 	var dptmtId = req.body.departmentId;
-	majorManager.createMajor(majorName, dptmtId, function () {
+	majorManager.createMajor(majorName, dptmtId, function (err, result) {
 			// send success and 
 			// error handling
 	});

@@ -4,11 +4,11 @@ var express = require('express');
 var router = express.Router();
 var voteManager = require('../lib/managers/vote-manager.js');
 
-router.get('/', function asyncVote(body) {
+router.post('/', function asyncVote(req, res) {
 	var value = req.body.value;
 	var parentId = req.body.parenId;
 	var type = req.body.String;
-	voteManager.vote(value, parentId, type, function callback(err, results) {
+	voteManager.vote(value, parentId, type, function callback(err, result) {
 		// send success and 
 		// error handling
 	};

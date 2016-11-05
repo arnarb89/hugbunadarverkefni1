@@ -6,7 +6,7 @@ var router = require('express').Router();
 router.post('/', function (req, res) {
 	var dptmtName = req.body.name;
 	var schoolId = req.body.schoolId;
-	dptmtManager.createDepartment(dptmtName, schoolId, function () {
+	dptmtManager.createDepartment(dptmtName, schoolId, function (err, result) {
 			// send success and 
 			// error handling
 	});
