@@ -7,6 +7,7 @@ router.get('/', function (req, res) {
 	summaryManager.getSummaryById(req.body.summaryId, function(err, result) {
 		// render summary in results
 		// handle error
+		res.render('index', { title: '/course/get', summary:result});
 	});
 });
 
@@ -24,7 +25,7 @@ router.post('/create', function (req, res) {
 	summaryManager.createSummary(req.body.user, content, teacherName, attendance, function (err, result) {
 		// render success/fail page OR
 		// redirect user to /summary with the right id?
-		res.render('index', { title: '/summary/get', summaries:result});
+		res.render('index', { title: '/summary/get', success:result});
 	});
 });
 
