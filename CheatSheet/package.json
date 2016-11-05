@@ -9,6 +9,7 @@
     "async": "^2.1.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.15.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "dotenv": "^2.0.0",
