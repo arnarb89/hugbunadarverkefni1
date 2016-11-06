@@ -20,13 +20,13 @@ module.exports = function(passport){
 	});
 
 	/* GET Registration Page */
-	router.get('/signup', function(req, res){
+	/*router.get('/signup', function(req, res){
 		res.render('signup',{message: req.flash('message')});
-	});
+	});*/
 
 	/* Handle Registration POST */
-	router.post('/signup', passport.authenticate('signup', {
-		successRedirect: '/home', //***************//
+	router.post('/', passport.authenticate('signup', {
+		successRedirect: '/', //***************//
 		failureRedirect: '/signup', //***************//
 		failureFlash : true  
 	}));

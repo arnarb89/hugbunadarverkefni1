@@ -5,7 +5,8 @@ var userManager = require('../cs-managers/userManager.js');
 
 module.exports = function(passport){
 
-	passport.use('signup', new LocalStrategy({
+	passport.use('signup', new LocalStrategy(
+        {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) {
@@ -13,20 +14,26 @@ module.exports = function(passport){
             findOrCreateUser = function(){
                 // find a user in Mongo with provided username
                 //User.findOne({ 'username' :  username }, function(err, user) {
-                userManager.getUserByUsername({ 'username' :  username }, function(err, result) {
+                userManager.getUserByUsername(username, function(err, result) {
                     // In case of any error, return using the done method
                     if (err){
                         console.log('Error in SignUp: '+err);
                         return done(err);
                     }
                     // already exists
-                    if (result.username) {
+                    if (result) {
                         console.log('User already exists with username: '+username);
                         return done(null, false, req.flash('message','User Already Exists'));
                     } else {
                         // if there is no user with that email
                         // create the user
                         var newUser = {};
+                        /*[
+                            username, 
+                            createHash(password),
+                            req.param('email'),
+                            req.param('fullname')
+                        ];*/
 
                         // set the user's local credentials
                         newUser.username = username;
@@ -35,14 +42,16 @@ module.exports = function(passport){
                         newUser.fullname = req.param('fullname');
 
                         // save the user
-                        userManager.createUser(username,createHash(password),req.param('email'),req.param('fullname'),function(err) {
-                            if (err){
-                                console.log('Error in Saving user: '+err);  
-                                throw err;  
+                        userManager.createUser(username,createHash(password),req.param('email'),req.param('fullname'),
+                            function(err) {
+                                if (err){
+                                    console.log('Error in Saving user: '+err);  
+                                    throw err;  
+                                }
+                                console.log('User Registration succesful');    
+                                return done(null, newUser);
                             }
-                            console.log('User Registration succesful');    
-                            return done(null, newUser);
-                        });
+                        );
                     }
                 });
             };
