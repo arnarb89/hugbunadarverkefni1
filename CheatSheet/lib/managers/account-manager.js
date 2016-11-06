@@ -18,7 +18,7 @@ accountManager.getAccountInfoByUser = function (user, callback) {
 			return callback(null, result);
 		}
 	});
-}
+};
 
 
 // NO idea how this actually works. Needs to be changed to implement actual functionality.
@@ -33,7 +33,7 @@ accountManager.connectWithThirdPartyService = function (thirdPartyIdentifier, se
 			return callback(null, result);
 		}
 	});
-}
+};
 
 
 module.exports = accountManager;

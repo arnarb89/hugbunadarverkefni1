@@ -14,7 +14,7 @@ summaryManager.getSummaryById = function (summaryId, callback) {
 	"majors.id AS majorId, majors.name AS majorName, " + // from major table
 	"departments.id AS departmentId, departments.name AS departmentName, " + // from department table
 	"schools.id AS schoolId, schools.name AS schoolName, " + // from school table
-	"users.id AS authorId, users.fullname AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
+	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
 	"FROM summaries, courses, majors, departments, schools, users " +
 	"WHERE summaries.courseid =  summaries.id = $1 AND courses.id AND courses.majorid = majors.id AND majors.departmentid = departments.id AND departments.schoolid = schools.id AND summaries.authorid = users.id";
 	var inputVariables = [summaryId];
@@ -34,7 +34,7 @@ summaryManager.getSummaryById = function (summaryId, callback) {
 				dateModified : new Date(row.datemodified),
 				author : {
 					id : parseInt(resultArray[i].authorid),
-					fullname : resultArray[i].authorname,
+					fullName : resultArray[i].authorname,
 					email : resultArray[i].authoremail,
 					username : resultArray[i].authorusername
 				}
@@ -71,7 +71,7 @@ summaryManager.getSummaryByCourse = function (courseId, callback) {
 	"majors.id AS majorId, majors.name AS majorName, " + // from major table
 	"departments.id AS departmentId, departments.name AS departmentName, " + // from department table
 	"schools.id AS schoolId, schools.name AS schoolName, " + // from school table
-	"users.id AS authorId, users.fullname AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
+	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
 	"FROM summaries, courses, majors, departments, schools, users " +
 	"WHERE summaries.courseid =  summaries.courseId = $1 AND courses.id AND courses.majorid = majors.id AND majors.departmentid = departments.id AND departments.schoolid = schools.id AND summaries.authorid = users.id";
 	var inputVariables = [courseId];
@@ -93,7 +93,7 @@ summaryManager.getSummaryByCourse = function (courseId, callback) {
 				summaryArray[i].dateModified = new Date(resultArray[i].datemodified);
 				summaryArray[i].author = {
 					id : parseInt(resultArray[i].authorid),
-					fullname : resultArray[i].authorname,
+					fullName : resultArray[i].authorname,
 					email : resultArray[i].authoremail,
 					username : resultArray[i].authorusername
 				};
@@ -124,7 +124,7 @@ summaryManager.getSummaryByCourse = function (courseId, callback) {
 summaryManager.getSummaryMetaData = function (courseId, callback) {
 	var sqlString = "SELECT " +
 	"summaries.id AS summaryId, summaries.teacherName, summaries.attendanceDate, summaries.voteCount, summaries.dateCreated. summaries.dateModified, " + // from summary table
-	"users.id AS authorId, users.fullname AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
+	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
 	"FROM summaries, courses, users WHERE summaries.authorid = users.id AND summaries.courseId = $1";
 	var inputVariables = [courseId];
 
@@ -146,7 +146,7 @@ summaryManager.getSummaryMetaData = function (courseId, callback) {
 				summaryMetaDataArray[i].courseId = coursId;
 				summaryMetaDataArray[i].author = {
 					id : parseInt(resultArray[i].authorid),
-					fullname : resultArray[i].authorname,
+					fullName : resultArray[i].authorname,
 					email : resultArray[i].authoremail,
 					username : resultArray[i].authorusername
 				};

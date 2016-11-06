@@ -32,7 +32,7 @@ gulp.task('nodemon', function (cb) {
     // watch core server file(s) that require server restart on change
     watch: ['bin/www', 'app.js','routes/**/*', 'views/**/*']
   }).on('start', function () {
-    // to avoid nodemon being started multiple times
+    // to avoid nodemon being started multiple times°l
     if (!started) {
       cb();
       started = true;
@@ -63,7 +63,7 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('jshint', function() {
-  return gulp.src(['./public/javascripts/*.js','./routes/*.js'])
+  return gulp.src(['./public/javascripts/*.js','./routes/*.js', './lib/managers/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
@@ -75,4 +75,4 @@ gulp.task('setProdEnv', function() { isProd = true; });
 gulp.task('serve', ['nodemon', 'browser-sync'/*, 'styles'*/]);
 // set production enviroment, then serve.
 gulp.task('serve-prod', ['setProdEnv','serve']);
-gulp.task('default', ['serve']);
+gulp.task('default', ['jshint', 'serve']);

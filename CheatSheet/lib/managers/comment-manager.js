@@ -7,10 +7,12 @@ var query = require('../DBController.js');
 var commentManager = {};
 
 
+ // id, author, content, type, parentId, dateCreated, voteCount, dateModified
+
 commentManager.getCommentsByTypeAndParentId = function (type, parentId, callback) {
 	var sqlString = "SELECT " +
 	"comments.id as commentId, content, type, parentId, dateCreated, voteCount, dateModified, " + // from comments table
-	"users.id as authordId, users.name as authorName, users.email as authorEmail " + // from users table
+	"users.id as authordId, users.name as authorName, users.email as authorEmail, users.username AS authorUsername " + // from users table
 	"FROM comments, users WHERE comments.authorId = users.id AND type = $1 AND parentId = $2";
 	var inputVariables = [type, parentId];
 
@@ -18,22 +20,23 @@ commentManager.getCommentsByTypeAndParentId = function (type, parentId, callback
 		if(err) {
 			return callback(err);
 		} else {
-			var commentArray = result.row;
-			for(var i in commentArray) {
-				commentArray[i].commentid = parseInt(commentArray[i].commentid);
-				commentArray[i].parentid = parseInt(commentArray[i].parentid);
-				commentArray[i].datecreated = new Date(commentArray[i].datecreated);
-				commentArray[i].votecount = parseInt(commentArray[i].voteCount);
-				commentArray[i].datemodified = new Date(commentArray[i].datemodified);
+			var resultArray = result.row;
+			var commentArray = [];
+
+			for(var i in resultArray) {
+				commentArray[i].commentId = parseInt(resultArray[i].commentid);
+				commentArray[i].content = resultArray[i].content;
+				commentArray[i].type = resultArray[i].type;
+				commentArray[i].parentId = parseInt(resultArray[i].parentid);
+				commentArray[i].dateCreated = new Date(resultArray[i].datecreated);
+				commentArray[i].voteCount = parseInt(resultArray[i].voteCount);
+				commentArray[i].dateModified = new Date(resultArray[i].datemodified);
 				commentArray[i].author = {
-					id : commentArray[i].authorid,
-					name : commentArray[i].authorname,
-					email : commentArray[i].authoremail
+					id : parseInt(resultArray[i].authorid),
+					fullName : resultArray[i].authorfullNamename,
+					email : resultArray[i].authoremail,
+					username : resultArray[i].authorusername
 				};
-				
-				commentArray[i].authorid = undefined;
-				commentArray[i].authorname = undefined;
-				commentArray[i].authoremail = undefined;
 			}
 			return callback(null, commentArray);
 		}

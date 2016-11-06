@@ -7,7 +7,7 @@ var query = require('../DBController.js');
 var courseManager = {};
 
 
-courseManager.getCourseByMajor = function (majorId, callback) {
+courseManager.getCourseByMajorId = function (majorId, callback) {
 	var sqlString = "SELECT " +
 	"courses.id AS courseId, courses.name AS courseName, courses.identificationCode, " + // from courses table
 	"majors.name AS majorName, " + // from majors table
@@ -24,7 +24,7 @@ courseManager.getCourseByMajor = function (majorId, callback) {
 			var courseArray = [];
 
 			// converting the result to hierarchy of objects, converting to correct types and leaving behind unnecessary variables
-			for(i in resultArray) {
+			for(var i in resultArray) {
 				courseArray[i].id = parseInt(resultArray[i].courseid);
 				courseArray[i].name = resultArray[i].coursename;
 				courseArray[i].idetificationCode = resultArray[i].identificationcode;
@@ -53,7 +53,7 @@ courseManager.getCourseById = function (courseId, callback) {
 	"majors.id AS majorId, majors.name AS majorName, " + // from majors table
 	"departments.id AS departmentId, departments.name AS departmentName " + // from departments table
 	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
-	"FROM courses, majors, departments, schools WHERE courses.majorId = majors.id AND majors.departmentId = departments.id AND department.schoolId = schools.id AND courses.id = $1";
+	"FROM courses, majors, departments, schools WHERE courses.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND department.schoolId = schools.id";
 	var inputVariables = [courseId];
 
 	query(sqlString, inputVariables, function(err, result) {
