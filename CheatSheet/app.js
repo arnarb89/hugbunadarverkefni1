@@ -9,6 +9,8 @@ var dotenv = require('dotenv').config();
 
 
 var app = express();
+var flash = require('connect-flash');
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +36,7 @@ app.use(passport.session());
 
  // Using the flash middleware provided by connect-flash to store messages in session
  // and displaying in templates
-var flash = require('connect-flash');
+
 app.use(flash());
 
 // Initialize Passport
@@ -49,30 +51,21 @@ app.use('/', routes);*/
 var routes = require('./routes/index')(passport);
 app.use('/', routes);
 
-
-
 var login = require('./routes/login')(passport);
 app.use('/login', login);
 
 var signup = require('./routes/signup')(passport);
 app.use('/signup', signup);
 
+var logout = require('./routes/logout')(passport);
+app.use('/logout', logout);
 
-
-var users = require('./routes/users');
-app.use('/users', users);
-
-/* Handle Logout */
-  router.get('/signout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handlers

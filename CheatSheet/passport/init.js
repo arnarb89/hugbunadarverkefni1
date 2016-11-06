@@ -9,7 +9,7 @@ module.exports = function(passport){
     passport.serializeUser(function(user, done) {
         console.log('serializing user: ');
         console.log(user);
-        done(null, user._id);
+        done(null, user.id);
     });
 
     /*passport.deserializeUser(function(id, done) {
@@ -21,13 +21,13 @@ module.exports = function(passport){
 
     passport.deserializeUser(function(id, done) {
         userManager.getUserById(id, function(err, result) {
-            console.log('deserializing user:',user);
-            var theUser = {
+            console.log('deserializing user:',result);
+            /*var theUser = {
                 username : result.username,
                 fullname: result.fullname,
                 email: result.email
-            };
-            done(err, theUser);
+            };*/
+            done(err, result);
         });
     });
 
