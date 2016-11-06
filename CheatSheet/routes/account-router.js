@@ -1,9 +1,10 @@
 'use strict';
 
-var accountManager = require('../lib/managers/comment-manager.js');
+var accountManager = require('../lib/managers/comment-manager');
 var router = require('express').Router();
+var isAuthenticated = require('../lib/isAuthenticated');
 
-router.get('/', function (req, res) {
+router.get('/', isAuthenticated, function (req, res) {
 	// Render account settings page
-	res.render('index', {title:'account'});
+	// accountManager
 });

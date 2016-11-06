@@ -1,7 +1,7 @@
 'use strict';
 
-var courseManager = require('../lib/managers/course-manager.js');
-var majorManager = require('../lib/managers/major-manager.js');
+var courseManager = require('../lib/managers/course-manager');
+var majorManager = require('../lib/managers/major-manager');
 var router = require('express').Router();
 
 router.get('/', function (req, res) {
@@ -12,12 +12,15 @@ router.get('/', function (req, res) {
 	});
 });
 
-router.post('/', function (req, res) {
+router.post('/', isAuthenticated, function (req, res) {
 	var majorName = req.body.name;
 	var dptmtId = req.body.departmentId;
 	majorManager.createMajor(majorName, dptmtId, function (err, result) {
-			// send success and 
-			// error handling
+		if(!err) {
+			res.send(result)
+		} else {
+			res.send(err)
+		}
 	});
 });
 
