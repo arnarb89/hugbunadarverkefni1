@@ -2,7 +2,7 @@
 var pg = require('pg');
 var conString = process.env.DB_HOST;
 
-exports.queryDb = function(queryStr, parameters, then) {
+exports.query = function(queryStr, parameters, then) {
   pg.connect(conString, function(err, client, done) {
     if(err) {
       return console.error('error fetching client from pool', err);

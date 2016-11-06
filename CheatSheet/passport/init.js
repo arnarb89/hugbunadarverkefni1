@@ -1,6 +1,7 @@
 var login = require('./login');
 var signup = require('./signup');
-/* check */ var User = require('../models/user');
+//var User = require('../models/user');
+var userManager = require('../cs-managers/userManager.js');
 
 module.exports = function(passport){
 
@@ -11,10 +12,22 @@ module.exports = function(passport){
         done(null, user._id);
     });
 
-    passport.deserializeUser(function(id, done) {
-/* check */ User.findById(id, function(err, user) {
-                console.log('deserializing user:',user);
+    /*passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
+            console.log('deserializing user:',user);
             done(err, user);
+        });
+    });*/
+
+    passport.deserializeUser(function(id, done) {
+        userManager.getUserById(id, function(err, result) {
+            console.log('deserializing user:',user);
+            var theUser = {
+                username : result.username,
+                fullname: result.fullname,
+                email: result.email
+            };
+            done(err, theUser);
         });
     });
 
