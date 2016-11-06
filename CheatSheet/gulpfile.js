@@ -75,4 +75,4 @@ gulp.task('setProdEnv', function() { isProd = true; });
 gulp.task('serve', ['nodemon', 'browser-sync'/*, 'styles'*/]);
 // set production enviroment, then serve.
 gulp.task('serve-prod', ['setProdEnv','serve']);
-gulp.task('default', ['serve']);
+gulp.task('default', ['jshint','serve']);
