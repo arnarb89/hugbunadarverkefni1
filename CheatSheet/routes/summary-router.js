@@ -9,15 +9,13 @@ router.get('/', function (req, res) {
 		if(!err) {
 			res.render('index', { title: 'Summary', summary:result});
 		} else {
-			res.render('index', { title: 'Summary', summary:result});
+			res.render('index', { title: 'Summary', error:err});
 		}
 	});
 });
 
 router.get('/create', isAuthenticated, function (req, res) {
-	// expects req.body.courseId
-	// render summary form, tagged with courseId
-	res.render('index', { title: '/summary/get'});
+	res.render('createsummary', { title: 'Create Summary'});
 });
 
 router.post('/create', isAuthenticated, function (req, res) {
@@ -27,9 +25,9 @@ router.post('/create', isAuthenticated, function (req, res) {
 	var attendance = req.body.attendanceDate;
 	summaryManager.createSummary(req.body.user, content, teacherName, attendance, function (err, result) {
 		if(!err) {
-			res.send(result)
+			res.send(JSON.stringify(result));
 		} else {
-			res.send(err)
+			res.send(err):
 		}
 	});
 });

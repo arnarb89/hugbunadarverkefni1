@@ -5,14 +5,14 @@ var router = require('express').Router();
 var isAuthenticated = require('../lib/isAuthenticated');
 
 router.get('/async', function (req, res) {
+	// async
 	var parentId = req.body.parentId;
 	var type = req.body.type;
 	commentManager.getCommentsByTypeAndParentId(type, parentId, function callback(err, result) {
 		if(!err) {
-			res.send(result)
+			res.send(JSON.stringify(result));
 		} else {
-			res.send(err)
-		}
+			res.send(err):
 	});
 });
 
@@ -29,14 +29,15 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', isAuthenticated, function (req, res) {
+	// async
 	var content = req.body.content;
 	var parentId = req.body.parentId;
 	var type = req.body.type;
 	commentManager.createComment(req.user, content, type, parentId, function callback(err, results) {
 		if(!err) {
-			res.send(result)
+			res.send(JSON.stringify(result));
 		} else {
-			res.send(err)
+			res.send(err):
 		}
 	});
 });
