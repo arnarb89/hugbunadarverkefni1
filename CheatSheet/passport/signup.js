@@ -30,25 +30,12 @@ module.exports = function(passport){
                     }
                     // already exists
                     if (result.rows.length!==0) {
-                        //console.log('The result is: '+JSON.stringify(result.rows));
                         console.log('User already exists with username: '+req.body.username);
                         return done(null, false, req.flash('message','User Already Exists'));
                     } else {
                         // if there is no user with that email
                         // create the user
                         var newUser = {};
-                        /*[
-                            username, 
-                            createHash(password),
-                            req.param('email'),
-                            req.param('fullname')
-                        ];*/
-
-                        // set the user's local credentials
-                        /*newUser.username = username;
-                        newUser.password = createHash(password);
-                        newUser.email = req.param('email');
-                        newUser.fullname = req.param('fullname');*/
 
                         newUser.username = req.body.username;
                         newUser.password = createHash(req.body.password);
@@ -56,7 +43,6 @@ module.exports = function(passport){
                         newUser.fullname = req.body.fullname;
 
                         // save the user
-                        //userManager.createUser(username,createHash(password),req.param('email'),req.param('fullname'),
                         userManager.createUser(req.body.username,createHash(req.body.password),req.body.email,req.body.fullname,
                             function(err) {
                                 if (err){

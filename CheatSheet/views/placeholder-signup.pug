@@ -15,9 +15,11 @@ block content
 			div
 				input(type="submit").form-control
 			br
-		if theError
+		if message
 			div
-				span= theError
+				span= message
+				br
+				span
 					a(href='/signup') Try again.
 	else
 		div

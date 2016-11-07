@@ -11,6 +11,13 @@ html(lang="is")
 	body
 		div
 			p this is the header
+			if	session.passport
+				if session.passport.user
+					p
+						span Welcome, 
+						span=session.passport.user.username
+						span !
+			//a.passport.user.username
 			a(href='/login') login
 			br
 			a(href='/signup') signup

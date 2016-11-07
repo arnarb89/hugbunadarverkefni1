@@ -51,6 +51,10 @@ app.use(flash());
 var initPassport = require('./passport/init');
 initPassport(passport);
 
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next();
+});
 /*var routes = require('./routes/index')(passport);
 app.use('/', routes);*/
 
