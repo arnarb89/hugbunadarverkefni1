@@ -23,7 +23,7 @@ majorManager.getMajorByDepartmentId = function (departmentId, callback) {
 			var majorArray = [];
 
 			// converting the result to hierarchy of objects, converting to correct types and leaving behind unnecessary variables
-			for(i in resultArray) {
+			for(var i in resultArray) {
 				majorArray[i].id = parseInt(resultArray[i].majorid);
 				majorArray[i].name = resultArray[i].majorname;
 				majorArray[i].idetificationCode = resultArray[i].identificationcode;
