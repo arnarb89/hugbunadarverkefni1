@@ -1,6 +1,6 @@
 'use strict';
 var pg = require('pg');
-var conString = process.env.DB_HOST;
+var conString = process.env.DATABASE_URL;
 
 exports.query = function(queryStr, parameters, then) {
   pg.connect(conString, function(err, client, done) {

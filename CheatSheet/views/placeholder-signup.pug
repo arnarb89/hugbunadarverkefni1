@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	p this is the signup page
+	if !msg
+		form(method="post" action='/signup')
+			fieldset.form-group  
+				input(id="username" type="text" placeholder="Username" name="username" autofocus required).form-control
+			fieldset.form-group
+				input(id="password" type="password" name="password" placeholder="Password" required).form-control
+			fieldset.form-group  
+				input(id="email" type="text" name="email" placeholder="Email" required).form-control
+			fieldset.form-group
+				input(id="fullname" type="text" name="fullname" placeholder="Full name" required).form-control
+			div
+				input(type="submit").form-control
+			br
+		if theError
+			div
+				span= theError
+					a(href='/signup') Try again.
+	else
+		div
+			span= msg
+				b= user
+				span .

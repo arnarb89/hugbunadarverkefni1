@@ -31,7 +31,7 @@ userManager.getUserByUsername = function (username, callback) {
 };
 
 userManager.getUserById = function (userId, callback) {
-	var sqlString = 'SELECT * FROM "CheatSheet"."user" WHERE id=$1';
+	var sqlString = 'SELECT id,username,password,email,fullname FROM "CheatSheet"."user" WHERE id=$1';
 	var inputVariables = [userId];
 
 	DBC.query(sqlString, inputVariables, function(err, result) {
