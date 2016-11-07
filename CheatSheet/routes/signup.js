@@ -15,8 +15,11 @@ module.exports = function(passport){
 
 	/* GET login page. */
 	router.get('/', function(req, res) {
-    	// Display the Login page with any flash message, if any
-		res.render('placeholder-signup', { message: req.flash('message') });
+		if(req.isAuthenticated())res.redirect('/');
+		else{
+			// Display the Signup page with any flash message, if any
+			res.render('placeholder-signup', { message: req.flash('message') });
+		};
 	});
 
 	/* GET Registration Page */
