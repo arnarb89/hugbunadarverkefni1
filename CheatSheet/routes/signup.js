@@ -16,7 +16,7 @@ module.exports = function(passport){
 	/* GET login page. */
 	router.get('/', function(req, res) {
     	// Display the Login page with any flash message, if any
-		res.render('signup', { message: req.flash('message') });
+		res.render('placeholder-signup', { message: req.flash('message') });
 	});
 
 	/* GET Registration Page */
@@ -27,7 +27,7 @@ module.exports = function(passport){
 	/* Handle Registration POST */
 	router.post('/', passport.authenticate('signup', {
 		successRedirect: '/', //***************//
-		failureRedirect: '/signup', //***************//
+		failureRedirect: '/placeholder-signup', //***************//
 		failureFlash : true  
 	}));
 
