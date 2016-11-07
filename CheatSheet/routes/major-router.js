@@ -7,8 +7,13 @@ var router = require('express').Router();
 router.get('/', function (req, res) {
 	// async request
 	courseManager.getCourseByMajor(req.body.majorId, function (err, result) {
-		// return courses asyncly
-		// handle error
+	majorManager.createMajor(majorName, dptmtId, function (err, result) {
+		if(!err) {
+			res.render('major', { title: 'Major', courses:result});
+		} else {
+			res.render('major', { title: 'Major', error:err});
+		}
+	});
 	});
 });
 
