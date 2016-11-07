@@ -1,6 +1,65 @@
 body {
-  padding: 50px;
+  /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.log {
+display: inline-block;
+vertical-align:top;
+float: right;
+}
+.lcontainer1{
+	box-sizing: border-box;
+}
+
+.lib {
+    list-style-type: none;
+}
+.vote1 {
+	border:1px solid black;
+	width: auto;
+	z-index: 3;
+    position: absolute; 
+	float: left;
+}
+.image1{
+	float: left;
+	padding: 10px;
+}
+.cont1 {
+	border:1px solid black;
+	width: 90%; 
+	margin: 0 auto;
+	margin-bottom: 15px;
+	
+}
+
+.header1 {
+	text-align: middle;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.course {
+	
+	text-align: center;
+	width: 100%;
+	display: inline-block;
+}
+
+.list1{
+	width: 40%;
+	display: inline-block;
+	list-style-type: none;
+	
+}
+.pmidja{
+	width: 100%;
+	text-align: center;
+}
+
+.pmidja2{
+	width: 250px;
+	display: inline-block;
 }
 
 a {

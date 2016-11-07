@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	div.pmidja
+		div.pmidja2
+			form(method="post")
+				fieldset.form-group
+					if msgusername
+						p.red= msgusername
+					label(for="username") Username
+					input(id="username" type="text" placeholder="Santa" username="name").form-control
+				fieldset.form-group
+					if msgpassword
+						p.red= msgpassword
+					label(for="password") Password
+					input(id="password" type="text" placeholder="xxxx" name="password").form-control
+				input(class='btn btn-success' type="submit" value="Sign in" method="post").form-control

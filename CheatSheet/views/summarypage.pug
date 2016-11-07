@@ -1,0 +1,27 @@
+extends layout
+
+block content
+	div.cont1
+		div.course
+			div.vote1
+				img(src='/images/uparrow.png')
+				img(src='/images/downarrow.png')
+				a= 3
+					// state of vote fylki.results.rows[0].id. BTW þá er hægt að setja if setningu á a og hafa rautt og grænt eftir því hvort fleiri up eða down votes.
+			h2 Línuleg algebra
+			div.list1
+				ul.lib
+					li "Nemandi: " +
+					li "Kennari: " +
+			div.list1
+				ul.lib
+					li "Síðast breytt: " +
+					li setið
+			hr
+			p Content...
+			div
+				img.image1(src='/images/share.png')
+				img.image1(src='/images/vsource.png')
+				img.image1(src='/images/report.png')
+	div.cont1
+		h2 comment module 
