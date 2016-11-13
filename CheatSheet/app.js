@@ -63,6 +63,9 @@ app.use('/', routes);*/
 var routes = require('./routes/index')(passport);
 app.use('/', routes);
 
+var facebookLogin = require('./routes/facebook-login')(passport);
+app.use('/facebook-login', facebookLogin);
+
 var login = require('./routes/login')(passport);
 app.use('/login', login);
 

@@ -2,7 +2,11 @@
 var pg = require('pg');
 var conString = process.env.DATABASE_URL;
 
-exports.query = function(queryStr, parameters, then) {
+
+var dbc = {};
+
+
+dbc.query = function(queryStr, parameters, then) {
   pg.connect(conString, function(err, client, done) {
     if(err) {
       return console.error('error fetching client from pool', err);
@@ -17,3 +21,8 @@ exports.query = function(queryStr, parameters, then) {
     });
   });
 };
+
+
+
+
+module.exports = dbc;

@@ -22,7 +22,7 @@ module.exports = function(passport){
                 //userManager.getUserByUsername(username, function(err, result) {
                 //console.log('!!!!!! req.body: '+req);
                 //console.log('!!!!!! req.header: '+req.headers);
-                userManager.getUserByUsername(req.body.username, function(err, result) {
+                userManager.getLocalUserByUsername(req.body.username, function(err, result) {
                     // In case of any error, return using the done method
                     if (err){
                         console.log('Error in SignUp: '+err);
@@ -35,15 +35,26 @@ module.exports = function(passport){
                     } else {
                         // if there is no user with that email
                         // create the user
-                        var newUser = {};
+                        //var newUser = {};
 
-                        newUser.username = req.body.username;
-                        newUser.password = createHash(req.body.password);
-                        newUser.email = req.body.email;
-                        newUser.fullname = req.body.fullname;
+                        //newUser.username = req.body.username;
+                        //newUser.password = createHash(req.body.password);
+                        //newUser.email = req.body.email;
+                        //newUser.fullname = req.body.fullname;
 
                         // save the user
-                        userManager.createUser(req.body.username,createHash(req.body.password),req.body.email,req.body.fullname,
+                        userManager.createLocalUser(req.body.username,createHash(req.body.password),req.body.email,req.body.fullname,
+                            function(err,result) {
+                                if (err){
+                                    console.log('Error in Saving user: '+err);  
+                                    throw err;  
+                                }
+                                var theresults = result.rows[0];
+                                if(theresults.passwordhash) delete theresults.passwordhash;
+                                return done(null, theresults);
+                            }
+                        );
+                        /*userManager.createLocalUser(req.body.username,createHash(req.body.password),req.body.email,req.body.fullname,
                             function(err) {
                                 if (err){
                                     console.log('Error in Saving user: '+err);  
@@ -54,11 +65,11 @@ module.exports = function(passport){
                                         console.log('Error in getting user by username: '+err);  
                                         throw err;  
                                     }
-                                    newUser.id = result.rows[0].id;
-                                     return done(null, newUser);
+                                    //newUser.id = result.rows[0].id;
+                                    return done(null, newUser);
                                 });
                             }
-                        );
+                        )*/
                     }
                 });
             };
