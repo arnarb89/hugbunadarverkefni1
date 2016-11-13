@@ -23,7 +23,6 @@
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pg": "^6.1.0",
-    "pg-transaction": "^1.0.4",
     "pug": "^2.0.0-beta6",
     "serve-favicon": "~2.3.0",
     "xss": "^0.2.16"
