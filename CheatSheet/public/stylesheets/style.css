@@ -112,12 +112,13 @@ a {
 	line-height: 30px;
 }
 .loginLinks{
-	color: #110069;
+	color: #321CA3;
 	text-decoration: none;
 }
 
 .loginLinks:hover{
 	text-decoration: none;
+	color: #5D49C4;
 }
 
 .leftContent{
@@ -138,7 +139,7 @@ a {
 
 	border-style: solid;
 	border-width: 1px 0px 0px 0px;
-	border-color: DarkGray;
+	border-color: rgba(140,140,140,1);
 }
 
 .loginContainer{
@@ -155,22 +156,39 @@ a {
 	width: 100%;
 	margin: 0 auto;
 	border-width: 0px 0px 1px 0px;
-	border-color: DarkGray;
+	border-color: rgba(100,100,100,1);
 }
 .logoText{
 	margin-left: 10px;
-	margin-right: 20px;
+	margin-right: 120px;
 	font-family: 'Bowlby One', cursive;
 	font-size: 3em;
 	font-stretch: ultra-condensed;
-	color: black;
+	color: rgba(10,10,10,1);
 	text-decoration: none;
+
+	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
+}
+
+.logoText:hover{
+	color: rgba(10,10,10,0.5);
+	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
 }
 
 .logoAnchor:hover{
 	text-decoration: none;
+	
 }
 
 .horizontalAlignment{
 	display:flex;
 }
+
+.flavorTextItself{
+	transform:rotate(0.2deg);
+    -ms-transform:rotate(0.2deg); /* IE 9 */
+    -moz-transform:rotate(0.2deg); /* Firefox */
+    -webkit-transform:rotate(0.2deg); /* Safari and Chrome */
+    -o-transform:rotate(0.2deg); /* Opera */
+	
+}	
