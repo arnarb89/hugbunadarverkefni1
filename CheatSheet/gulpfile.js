@@ -27,10 +27,10 @@ gulp.task('nodemon', function (cb) {
 
   return nodemon({
     script: 'bin/www',
-    ext: 'js pug json',
+    ext: 'js pug json css',
     env: { 'NODE_ENV': enviroment },
     // watch core server file(s) that require server restart on change
-    watch: ['bin/www', 'app.js','routes/**/*','passport/**/*','cs-managers/**/*','cs-DBcontroller/**/*','social/**/*', 'views/**/*']
+    watch: ['bin/www', 'app.js','routes/**/*','public/**/*','passport/**/*','cs-managers/**/*','cs-DBcontroller/**/*','social/**/*', 'views/**/*']
   }).on('start', function () {
     // to avoid nodemon being started multiple times°l
     if (!started) {

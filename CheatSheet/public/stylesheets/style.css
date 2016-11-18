@@ -65,3 +65,77 @@ float: right;
 a {
   color: #00B7FF;
 }
+
+.fullWidth{
+  width:100%;
+}
+.logoFlavorContainer{
+	display: flex;
+}
+.mainHeader{
+	display: flex;
+	justify-content: space-between;
+}
+
+.logo{
+	margin:10px;
+}
+
+.middleContent{
+	text-align: center;
+}
+
+.flavorText{
+	margin: 0 auto;
+	font-size: 1.5em;
+
+}
+
+.verticalMiddleContent{
+	display:flex;
+	align-items: center;
+}
+
+.wholeHeader{
+	background-color: LightGray;
+}
+
+.accountDiv{
+	width: 300px;
+	margin: 10px;
+	margin-right:20px;
+}
+
+.loginButtons{
+	line-height: 30px;
+}
+
+.leftContent{
+	text-align: left;
+}
+.rightContent{
+	text-align: right;
+}
+
+.hotBarDiv{
+	background-color: gray;
+	display: flex;
+	padding-left: 5px;
+}
+
+.loginContainer{
+	margin: 0 auto;
+	margin-top: 15px;
+	width:450px;
+}
+.colorRed{
+	color: red;
+}
+
+.headerBorder{
+	border-style: solid;
+	width: 100%;
+	margin: 0 auto;
+	border-width: 0px 0px 1px 0px;
+	border-color: DarkGray;
+}

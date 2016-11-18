@@ -3,28 +3,64 @@ html(lang="is")
 	head
 		title= title
 		link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet")
-		link(rel='stylesheet' href='/dist/stylesheets/styles.css')
-		link(rel="stylesheet" type='text/css' href='https://fonts.googleapis.com/css?family=Shadows+Into+Light')
+		link(rel='stylesheet' type='text/css' href='/stylesheets/style.css')
+		link(rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Shadows+Into+Light')
 		//<link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+		script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
 		meta(charset="utf-8")
 		meta(name="viewport" content="width=device-width" initial-scale="1")
 	body
-		div
-			p this is the header
-			if	session.passport
+		// The whole header
+		div.fullWidth.wholeHeader
+			// Upper header
+			div.fullWidth.mainHeader
+				// The logo
+				div
+					a(href='/')
+						img(src='/images/logo.png' style='width:80px;height:80px;').logo
+				// The flavor text
+				div.verticalMiddleContent
+					div.leftContent.flavorText
+						span Welcome to CheatSheet! 
+						br
+						span Read or create summaries about the best way to tackle each class in school.
+				// Account management
+				div.accountDiv.loginButtons.rightContent
+					if	session.passport
+						if session.passport.user
+							a(href='/account')=session.passport.user.fullname
+							b  | 
+							a(href='/logout') Logout
+						else 
+							a(href='/login') Login
+							b  | 
+							a(href='/signup') Signup
+							b  | 
+							a(href='/facebook-login')
+								img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
+					else 
+						a(href='/login') Login
+						b  | 
+						a(href='/signup') Signup
+						b  | 
+						a(href='/facebook-login')
+							img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
+			// Hotbar
+			if session.passport
 				if session.passport.user
-					p
-						span Welcome, 
-						span=session.passport.user.username
-						span !
-			//a.passport.user.username
-			a(href='/login') login
-			br
-			a(href='/signup') signup
-			br
-			a(href='/logout') logout
-			br
-			a(href='/facebook-login', class='btn btn-block btn-social btn-facebook') Login with Facebook
-					i(class='fa fa-facebook')
+					div.fullWidth.hotBarDiv
+						div My Courses: 
+						//
+							div My majors: 
+							each major in results.majors
+								div= major.id
+							div My courses:
+							each course in results.courses
+								div= course.id
+							div My summaries:
+							each summary in results.summaries
+								div= summary.id
+			// lower border for header
+			div.headerBorder
 		main
 			block content

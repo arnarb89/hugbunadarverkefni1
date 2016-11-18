@@ -17,12 +17,12 @@ module.exports = function(passport){
                 // Username does not exist, log the error and redirect back
                 if (result.rows.length===0){
                     console.log('User Not Found with username '+username);
-                    return done(null, false, req.flash('message', 'User Not found.'));                 
+                    return done(null, false, req.flash('message', 'There is no user with the username "'+username+'". Please try again.'));                 
                 }
                 // User exists but wrong password, log the error 
                 if (!isValidPassword(result.rows[0], password)){
                     console.log('Invalid Password');
-                    return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
+                    return done(null, false, req.flash('message', 'Invalid password. Please try again.')); // redirect back to login page
                 }
                 // User and password both match, return user from done method
                 // which will be treated like success

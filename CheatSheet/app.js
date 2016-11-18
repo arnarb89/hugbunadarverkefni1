@@ -75,6 +75,10 @@ app.use('/signup', signup);
 var logout = require('./routes/logout')(passport);
 app.use('/logout', logout);
 
+//var account = require('./routes/account-router')(passport);
+//app.use('/account', account);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
