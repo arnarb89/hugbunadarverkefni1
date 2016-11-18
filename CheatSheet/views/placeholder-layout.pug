@@ -9,42 +9,47 @@ html(lang="is")
 		script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
 		meta(charset="utf-8")
 		meta(name="viewport" content="width=device-width" initial-scale="1")
+		link(href="https://fonts.googleapis.com/css?family=Bowlby+One" rel="stylesheet")
+		link(href="https://fonts.googleapis.com/css?family=Bilbo" rel="stylesheet")
 	body
 		// The whole header
 		div.fullWidth.wholeHeader
 			// Upper header
 			div.fullWidth.mainHeader
 				// The logo
-				div
-					a(href='/')
-						img(src='/images/logo.png' style='width:80px;height:80px;').logo
-				// The flavor text
-				div.verticalMiddleContent
-					div.leftContent.flavorText
-						span Welcome to CheatSheet! 
-						br
-						span Read or create summaries about the best way to tackle each class in school.
+				div.horizontalAlignment
+					a(href='/').logoAnchor
+						//img(src='/images/logo.png' style='width:80px;height:80px;').logo
+						div
+							span.logoText CheatSheet
+					// The flavor text
+					div.verticalMiddleContent
+						div.leftContent.flavorText
+							//span Welcome to CheatSheet! 
+							//br
+							span Read or create summaries about the best way to tackle each class in school.
 				// Account management
-				div.accountDiv.loginButtons.rightContent
-					if	session.passport
-						if session.passport.user
-							a(href='/account')=session.passport.user.fullname
-							b  | 
-							a(href='/logout') Logout
+				div.verticalMiddleContent
+					div.accountDiv.loginButtons.rightContent
+						if	session.passport
+							if session.passport.user
+								a(href='/account').loginLinks=session.passport.user.fullname
+								b  | 
+								a(href='/logout').loginLinks Logout
+							else 
+								a(href='/login').loginLinks Login
+								b  | 
+								a(href='/signup').loginLinks Signup
+								b  | 
+								a(href='/facebook-login')
+									img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
 						else 
-							a(href='/login') Login
+							a(href='/login').loginLinks Login
 							b  | 
-							a(href='/signup') Signup
+							a(href='/signup').loginLinks Signup
 							b  | 
 							a(href='/facebook-login')
 								img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
-					else 
-						a(href='/login') Login
-						b  | 
-						a(href='/signup') Signup
-						b  | 
-						a(href='/facebook-login')
-							img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
 			// Hotbar
 			if session.passport
 				if session.passport.user
