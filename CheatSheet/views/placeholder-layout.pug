@@ -55,15 +55,13 @@ html(lang="is")
 				if session.passport.user
 					div.fullWidth.hotBarDiv
 						div My Courses: 
-						//
-							div My majors: 
-							each major in results.majors
-								div= major.id
-							div My courses:
-							each course in results.courses
+							//each course in results.courses
 								div= course.id
-							div My summaries:
-							each summary in results.summaries
+						div My majors: 
+							//each major in results.majors
+								div= major.id
+						div My summaries:
+							//each summary in results.summaries
 								div= summary.id
 			// lower border for header
 			div.headerBorder
