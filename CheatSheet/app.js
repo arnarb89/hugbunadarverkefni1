@@ -55,8 +55,17 @@ app.use(function(req,res,next){
     res.locals.session = req.session;
     next();
 });
-/*var routes = require('./routes/index')(passport);
-app.use('/', routes);*/
+
+app.use(function(req,res,next){
+    if(req.user){
+      res.locals.user = req.user;
+      next();
+    }
+    else{
+      next();
+    }
+});
+
 
 
 
@@ -75,8 +84,8 @@ app.use('/signup', signup);
 var logout = require('./routes/logout')(passport);
 app.use('/logout', logout);
 
-//var account = require('./routes/account-router')(passport);
-//app.use('/account', account);
+var account = require('./routes/account-router')(passport);
+app.use('/account', account);
 
 
 

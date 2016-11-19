@@ -8,6 +8,7 @@ module.exports = function(passport){
 
 	// Serialization determines what should be stored in the cookie, gets "user" from done() of i.e. passport/login.js and passport/signup.js
     passport.serializeUser(function(user, done) {
+        
         if(user.passwordhash) {
             delete user.passwordhash;
         }

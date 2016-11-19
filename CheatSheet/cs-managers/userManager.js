@@ -51,6 +51,45 @@ userManager.createLocalUser = function (username, password, email, fullname , ca
 	});
 };
 
+userManager.updateProfileInformation = function (fullname, email, id, callback) {
+	var inputVariables1 = [fullname,email, id];
+	var sqlString1 = 'UPDATE "CheatSheet"."users" SET fullname=$1, email=$2 WHERE id=$3;';
+
+	DBC.query(sqlString1, inputVariables1, function(err, result) {
+		if(err) {
+			return callback(err);
+		} else {
+			return callback(null, result);
+		}
+	});
+};
+
+userManager.updatePasswordInformation = function (password, id, callback) {
+	var inputVariables1 = [password, id];
+	var sqlString1 = 'UPDATE "CheatSheet"."userlocal" SET passwordhash=$1 WHERE userid=$2;';
+
+	DBC.query(sqlString1, inputVariables1, function(err, result) {
+		if(err) {
+			return callback(err);
+		} else {
+			return callback(null, result);
+		}
+	});
+};
+
+userManager.updateUsernameInformation = function (username, id, callback) {
+	var inputVariables1 = [username, id];
+	var sqlString1 = 'UPDATE "CheatSheet"."userlocal" SET username=$1 WHERE userid=$2;';
+
+	DBC.query(sqlString1, inputVariables1, function(err, result) {
+		if(err) {
+			return callback(err);
+		} else {
+			return callback(null, result);
+		}
+	});
+};
+
 
 
 userManager.getUserByFbId = function (fbId, callback) {
