@@ -1,6 +1,7 @@
 'use strict';
 
 var query = require('../DBController.js');
+var moment = require('moment');
 
 
 
@@ -14,24 +15,25 @@ summaryManager.getSummaryById = function (summaryId, callback) {
 	"majors.id AS majorId, majors.name AS majorName, " + // from major table
 	"departments.id AS departmentId, departments.name AS departmentName, " + // from department table
 	"schools.id AS schoolId, schools.name AS schoolName, " + // from school table
-	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
+	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, " + // from user table
+	"userLocal.username AS authorUsername " + // from userLocal table
 	"FROM summaries, courses, majors, departments, schools, users " +
-	"WHERE summaries.courseid =  summaries.id = $1 AND courses.id AND courses.majorid = majors.id AND majors.departmentid = departments.id AND departments.schoolid = schools.id AND summaries.authorid = users.id";
+	"WHERE summaries.courseid =  summaries.id = $1 AND courses.id AND courses.majorid = majors.id AND majors.departmentid = departments.id AND departments.schoolid = schools.id AND summaries.authorid = users.id AND users.id=userLocal.userId";
 	var inputVariables = [summaryId];
 
 	query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			var row = result.row;
+			var row = result.rows;
 			if(!row) return callback(null, result);
 			return callback(null, {
 				id : summaryId,
 				teacherName : row.teachername,
-				attendanceDate : new Date(row.attendancedate),
+				attendanceDate : moment(row.attendancedate),
 				voteCount : parseInt(row.votecount),
-				dateCreated : new Date(row.datecreated),
-				dateModified : new Date(row.datemodified),
+				dateCreated : moment(row.datecreated),
+				dateModified : moment(row.datemodified),
 				author : {
 					id : parseInt(resultArray[i].authorid),
 					fullName : resultArray[i].authorname,
@@ -71,26 +73,27 @@ summaryManager.getSummaryByCourse = function (courseId, callback) {
 	"majors.id AS majorId, majors.name AS majorName, " + // from major table
 	"departments.id AS departmentId, departments.name AS departmentName, " + // from department table
 	"schools.id AS schoolId, schools.name AS schoolName, " + // from school table
-	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
+	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, " + // from user table
+	"usersLocal.username AS authorUsername " + // from userLocal table
 	"FROM summaries, courses, majors, departments, schools, users " +
-	"WHERE summaries.courseid =  summaries.courseId = $1 AND courses.id AND courses.majorid = majors.id AND majors.departmentid = departments.id AND departments.schoolid = schools.id AND summaries.authorid = users.id";
+	"WHERE summaries.courseid =  summaries.courseId = $1 AND courses.id AND courses.majorid = majors.id AND majors.departmentid = departments.id AND departments.schoolid = schools.id AND summaries.authorid = users.id AND users.id=userLocal.userId";
 	var inputVariables = [courseId];
 
 	query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			var resultArray = result.row;
+			var resultArray = result.rows;
 			var summaryArray = [];
 
 			// converting the result to hierarchy of objects, converting to correct types and leaving behind unnecessary variables
 			for(var i in resultArray) {
 				summaryArray[i].id = parseInt(resultArray[i].summaryid);
 				summaryArray[i].teacherName = resultArray[i].teachername;
-				summaryArray[i].attendanceDate = new Date(resultArray[i].attendancedate);
+				summaryArray[i].attendanceDate = moment(resultArray[i].attendancedate);
 				summaryArray[i].voteCount = parseInt(resultArray[i].votecount);
-				summaryArray[i].dateCreated = new Date(resultArray[i].datecreated);
-				summaryArray[i].dateModified = new Date(resultArray[i].datemodified);
+				summaryArray[i].dateCreated = moment(resultArray[i].datecreated);
+				summaryArray[i].dateModified = moment(resultArray[i].datemodified);
 				summaryArray[i].author = {
 					id : parseInt(resultArray[i].authorid),
 					fullName : resultArray[i].authorname,
@@ -124,25 +127,26 @@ summaryManager.getSummaryByCourse = function (courseId, callback) {
 summaryManager.getSummaryMetaData = function (courseId, callback) {
 	var sqlString = "SELECT " +
 	"summaries.id AS summaryId, summaries.teacherName, summaries.attendanceDate, summaries.voteCount, summaries.dateCreated. summaries.dateModified, " + // from summary table
-	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, users.username AS authorUsername " + // from user table
-	"FROM summaries, courses, users WHERE summaries.authorid = users.id AND summaries.courseId = $1";
+	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, " + // from user table
+	"usersLocal.username AS authorUsername " + // from userLocal table
+	"FROM summaries, courses, users WHERE summaries.authorid = users.id AND summaries.courseId = $1 AND users.id=userLocal.userId";
 	var inputVariables = [courseId];
 
 	query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			var resultArray = result.row;
+			var resultArray = result.rows;
 			var summaryMetaDataArray = [];
 
 			// converting the result to hierarchy of objects, converting to correct types and leaving behind unnecessary variables
 			for(var i in resultArray) {
 				summaryMetaDataArray[i].id = parseInt(resultArray[i].summaryid);
 				summaryMetaDataArray[i].teacherName = resultArray[i].teachername;
-				summaryMetaDataArray[i].attendanceDate = new Date(resultArray[i].attendancedate);
+				summaryMetaDataArray[i].attendanceDate = moment(resultArray[i].attendancedate);
 				summaryMetaDataArray[i].voteCount = parseInt(resultArray[i].votecount);
-				summaryMetaDataArray[i].dateCreated = new Date(resultArray[i].datecreated);
-				summaryMetaDataArray[i].dateModified = new Date(resultArray[i].datemodified);
+				summaryMetaDataArray[i].dateCreated = moment(resultArray[i].datecreated);
+				summaryMetaDataArray[i].dateModified = moment(resultArray[i].datemodified);
 				summaryMetaDataArray[i].courseId = coursId;
 				summaryMetaDataArray[i].author = {
 					id : parseInt(resultArray[i].authorid),
@@ -158,8 +162,8 @@ summaryManager.getSummaryMetaData = function (courseId, callback) {
 }
 
 summaryManager.createSummary = function (user, content, teacherName, attendanceDate, courseId, callback) {
-	var sqlString = "INSERT INTO summaries (author, content, teacherName, attendanceDate, courseId, voteCount, dateCreated, dateModified) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-	var inputVariables = [user.id, content, teacherName, attendanceDate, courseId, 0, new Date(), new Date()];
+	var sqlString = "INSERT INTO summaries (authorId, content, teacherName, attendanceDate, courseId, voteCount, dateCreated, dateModified) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+	var inputVariables = [user.id, content, teacherName, attendanceDate, courseId, 0, moment(), moment()];
 
 	query(sqlString, inputVariables, function(err, result) {
 		if(err) {

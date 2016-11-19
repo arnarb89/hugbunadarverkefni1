@@ -19,7 +19,7 @@ majorManager.getMajorByDepartmentId = function (departmentId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			var resultArray = result.row;
+			var resultArray = result.rows;
 			var majorArray = [];
 
 			// converting the result to hierarchy of objects, converting to correct types and leaving behind unnecessary variables
@@ -55,7 +55,7 @@ majorManager.getMajorById = function (majorId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			var row = result.row[0];
+			var row = result.rows[0];
 			if(!row) return callback(null, result);
 			return callback(null, {
 				id : majorId,

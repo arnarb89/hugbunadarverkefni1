@@ -15,9 +15,9 @@ schoolManager.getSchoolById = function (schoolId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			var row = result.row[0];
+			var row = result.rows[0];
 			if(!row) return callback(null, result);
-			return callback(null, {id : schoolId, name : result.row[0].name});
+			return callback(null, {id : schoolId, name : row.name});
 		}
 	});
 }
@@ -43,7 +43,7 @@ schoolManager.getSchools = function (callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			var schoolArray = result.row;
+			var schoolArray = result.rows;
 
 			for(var i in schoolArray) {
 				schoolArray[i].id = parseInt(schoolArray[i].id);

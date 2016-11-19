@@ -17,7 +17,7 @@ departmentManager.getDepartmentBySchoolId = function (schoolId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			var resultArray = result.row;
+			var resultArray = result.rows;
 			var departmentArray = [];
 
 			// converting the result to hierarchy of objects, converting to correct types and leaving behind unnecessary variables
@@ -46,7 +46,7 @@ departmentManager.getDepartmentById = function (departmentId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			var row = result.row[0];
+			var row = result.rows[0];
 			if(!row) return callback(null, result);
 			return callback(null, {
 				id : departmentId,

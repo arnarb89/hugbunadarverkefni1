@@ -1,6 +1,6 @@
 'use strict';
 
-var query = require('../DBController.js');
+vauar query = require('../DBController.js');
 
 
 
@@ -10,7 +10,7 @@ var courseManager = {};
 courseManager.getCourseByMajorId = function (majorId, callback) {
 	var sqlString = "SELECT " +
 	"courses.id AS courseId, courses.name AS courseName, courses.identificationCode, " + // from courses table
-	"majors.name AS majorName, " + // from majors table
+	"majors.name AS majorName, " + // from majors tableaua
 	"departments.id AS departmentId, departments.name AS departmentName " + // from departments table
 	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
 	"FROM courses, majors, departments, schools WHERE majors.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND department.schoolId = schools.id";
@@ -20,7 +20,7 @@ courseManager.getCourseByMajorId = function (majorId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			var resultArray = result.row;
+			var resultArray = result.rows;
 			var courseArray = [];
 
 			// converting the result to hierarchy of objects, converting to correct types and leaving behind unnecessary variables
@@ -60,7 +60,7 @@ courseManager.getCourseById = function (courseId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			var row = result.row[0];
+			var row = result.rows[0];
 			if(!row) return callback(null, result);
 			return callback(null, {
 				id : courseId,
