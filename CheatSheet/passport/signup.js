@@ -43,6 +43,7 @@ module.exports = function(passport){
                                 if(theresults.passwordhash) {
                                     delete theresults.passwordhash;
                                 }
+                                console.log('Signed up, returning theresults: '+JSON.stringify(theresults));
                                 return done(null, theresults);
                             }
                         );

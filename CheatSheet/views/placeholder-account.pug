@@ -1,5 +1,60 @@
-extends layout
+extends placeholder-layout
 
 block content
-
-	p This is account.pug
+	div.fullWidth
+		div.accountContainer.loginContainer
+			// user info
+			div 
+				span Here you can update your account information.
+				br
+				div
+					if passwordMessage
+						span(id="passwordMessage").colorRed=passwordMessage
+					else if profileMessage
+						span(id="profileMessage").colorRed=profileMessage
+					else if usernameMessage
+						span(id="usernameMessage").colorRed=usernameMessage
+					else
+						br
+				form(id="updateProfileForm" method="post" action='/account/updateprofile')
+					fieldset.form-group
+						label(for="fullname") Full name:
+						input(id="fullname" type="text" name="fullname" placeholder="Full name" required value=user.fullname).form-control
+					fieldset.form-group  
+						label(for="email") Email:
+						input(id="email" type="text" name="email" placeholder="Email" required value=user.email).form-control
+					input(type="submit" value="Update" id="profilesubmitbutton").form-control.btn-success.active
+				br
+				if user.facebookid===null
+					form(id="updateUsernameForm" method="post" action='/account/updateusername')
+						fieldset.form-group  
+							label(for="username") Username:
+							input(id="username" type="text" placeholder="Username" name="username" required value=user.username).form-control
+						input(type="submit" value="Update" id="usernamesubmitbutton").form-control.btn-success.active
+					br
+					form(id="updatePasswordForm" method="post" action='/account/updatepassword')
+						fieldset.form-group
+							label(for="oldpassword") Old password:
+							input(id="oldpassword" type="password" name="oldpassword" placeholder="Password" required).form-control
+						fieldset.form-group
+							label(for="newpassword1") New password:
+							input(id="newpassword1" type="password" name="newpassword1" placeholder="The new password" required).form-control
+						fieldset.form-group
+							div.mainHeader
+								label(for="newpassword2") Retype the new password:
+								div
+									span(id="password-message").colorRed
+							input(id="newpassword2" type="password" name="newpassword2" placeholder="Retype your new password" required).form-control
+						input(type="submit" value="Update" id="passwordsubmitbutton").form-control.btn-success.active
+			br
+			div
+				if (message != "")
+					span(id="message")= message
+				else
+					span(id="message")
+			//hotbar elements
+			div Hotbar elements
+				div My courses:
+				div My submissions:
+				div My majors:
+	script(src="/javascripts/frontend-account.js")

@@ -32,7 +32,7 @@ html(lang="is")
 							a(href='/facebook-login')
 								img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
 						else
-							a(href='/account').loginLinks=session.passport.user.fullname
+							a(href='/account').loginLinks=user.fullname
 							b  | 
 							a(href='/logout').loginLinks Logout
 			// Hotbar
