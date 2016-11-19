@@ -1,0 +1,27 @@
+extends layout
+
+block content
+	div.pmidja
+		div.pmidja2
+			form(method="post")
+				fieldset.form-group
+					if msgname
+						p.red= msgname
+					label(for="name") Name
+					input(id="name" type="text" placeholder="John Wayne" name="name").form-control
+				fieldset.form-group
+					if msgusername
+						p.red= msgusername
+					label(for="username") Username
+					input(id="username" type="text" placeholder="Santa" username="name").form-control
+				fieldset.form-group
+					if msgmail
+						p.red= msgmail
+					label(for="mail") Email
+					input(id="mail" type="text" placeholder="johnwayne@gmail.is" name="mail").form-control
+				fieldset.form-group
+					if msgpassword
+						p.red= msgpassword
+					label(for="password") Password(Length at least 6)
+					input(id="password" type="text" placeholder="xxxx" name="password").form-control
+				input(class='btn btn-success' type="submit" value="Sign up" method="post").form-control

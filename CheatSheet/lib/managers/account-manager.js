@@ -1,6 +1,6 @@
 'use strict';
 
-var query = require('../DBController.js');
+var dbc = require('../cs-DBcontroller/cs-DBController.js');
 
 
 
@@ -11,7 +11,7 @@ accountManager.getAccountInfoByUser = function (user, callback) {
 	var sqlString = "";
 	var inputVariables = [];
 
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
@@ -26,7 +26,7 @@ accountManager.connectWithThirdPartyService = function (thirdPartyIdentifier, se
 	var sqlString = "";
 	var inputVariables = [];
 
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {

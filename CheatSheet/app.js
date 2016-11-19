@@ -16,13 +16,21 @@ var flash = require('connect-flash');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(require('connect').bodyParser);
+//app.use(require('connect').bodyParser.urlencoded({ extended: false }));
+
+
+
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 
 
@@ -43,6 +51,10 @@ app.use(flash());
 var initPassport = require('./passport/init');
 initPassport(passport);
 
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next();
+});
 /*var routes = require('./routes/index')(passport);
 app.use('/', routes);*/
 
@@ -50,6 +62,9 @@ app.use('/', routes);*/
 
 var routes = require('./routes/index')(passport);
 app.use('/', routes);
+
+var facebookLogin = require('./routes/facebook-login')(passport);
+app.use('/facebook-login', facebookLogin);
 
 var login = require('./routes/login')(passport);
 app.use('/login', login);
@@ -59,6 +74,10 @@ app.use('/signup', signup);
 
 var logout = require('./routes/logout')(passport);
 app.use('/logout', logout);
+
+//var account = require('./routes/account-router')(passport);
+//app.use('/account', account);
+
 
 
 // catch 404 and forward to error handler

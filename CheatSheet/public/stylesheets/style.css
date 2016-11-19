@@ -1,8 +1,218 @@
 body {
-  padding: 50px;
+  /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.log {
+display: inline-block;
+vertical-align:top;
+float: right;
+}
+.lcontainer1{
+	box-sizing: border-box;
+}
+
+.lib {
+    list-style-type: none;
+}
+.vote1 {
+	border:1px solid black;
+	width: auto;
+	z-index: 3;
+    position: absolute; 
+	float: left;
+}
+.image1{
+	float: left;
+	padding: 10px;
+}
+.cont1 {
+	border:1px solid black;
+	width: 90%; 
+	margin: 0 auto;
+	margin-bottom: 15px;
+	
+}
+
+.header1 {
+	text-align: middle;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.course {
+	
+	text-align: center;
+	width: 100%;
+	display: inline-block;
+}
+
+.list1{
+	width: 40%;
+	display: inline-block;
+	list-style-type: none;
+	
+}
+.pmidja{
+	width: 100%;
+	text-align: center;
+}
+
+.pmidja2{
+	width: 250px;
+	display: inline-block;
 }
 
 a {
   color: #00B7FF;
+}
+
+.fullWidth{
+  width:100%;
+}
+.logoFlavorContainer{
+	display: flex;
+}
+.mainHeader{
+	display: flex;
+	justify-content: space-between;
+}
+
+
+.middleContent{
+	text-align: center;
+}
+
+.flavorText{
+	padding-right:10px;
+	font-size: 2.5em;
+	font-family: 'Bilbo', cursive;
+
+	transform:rotate(0.2deg);
+    -ms-transform:rotate(0.2deg); /* IE 9 */
+    -moz-transform:rotate(0.2deg); /* Firefox */
+    -webkit-transform:rotate(0.2deg); /* Safari and Chrome */
+    -o-transform:rotate(0.2deg); /* Opera */
+
+}
+
+.verticalMiddleContent{
+	display:flex;
+	align-items: center;
+}
+
+.wholeHeader{
+	background-color: LightGray;
+	background: linear-gradient(0deg,#A6A6A6, #EBEBEB);
+}
+
+.accountDiv{
+	width: 300px;
+	margin-right:20px;
+}
+
+
+.loginLinks:link{
+	line-height: 30px;
+	color: #321CA3;
+	text-decoration: none;
+}
+.loginLinks:visited{
+	line-height: 30px;
+	text-decoration: none;
+	color: #321CA3;
+}
+
+.loginLinks:hover{
+	line-height: 30px;
+	text-decoration: none;
+	color: #5D49C4;
+}
+.loginLinks:active{
+	line-height: 30px;
+	text-decoration: none;
+	color: #321CA3;
+}
+
+.leftContent{
+	text-align: left;
+}
+.rightContent{
+	text-align: right;
+}
+.rightContent2{
+	justify-content: flex-end;
+}
+
+.hotBarDiv{
+	background-color: Gray;
+	background: linear-gradient(#E0E0E0,#B8B6B6);
+
+	display: flex;
+	padding: 2px;
+	padding-left:5px;
+
+
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
+	border-color: rgba(100,100,100,1);
+}
+
+.loginContainer{
+	margin: 0 auto;
+	margin-top: 15px;
+	width:450px;
+}
+.colorRed{
+	color: red;
+}
+
+.headerBorder{
+	border-style: solid;
+	width: 100%;
+	margin: 0 auto;
+	border-width: 0px 0px 1px 0px;
+	border-color: rgba(100,100,100,1);
+}
+.logoText{
+	font-family: 'Bowlby One', cursive;
+	font-size: 3em;
+	font-stretch: ultra-condensed;
+	color: rgba(10,10,10,1);
+	text-decoration: none;
+	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
+}
+
+.logoText:hover{
+	color: rgba(10,10,10,0.5);
+	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
+}
+.logoAnchor:link{
+	text-decoration: none;
+	
+}
+.logoAnchor:visited{
+	text-decoration: none;
+	
+}
+.logoAnchor:hover{
+	text-decoration: none;
+	
+}
+.logoAnchor:active{
+	text-decoration: none;
+	
+}
+
+.horizontalAlignment{
+	display:flex;
+}
+
+
+.centeredContent{
+	text-align:center;
+}
+
+.logoDiv{
+	width:300px;
+	margin-left:20px;
 }

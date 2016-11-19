@@ -1,14 +1,18 @@
 'use strict';
 
-var dptmtManager = require('../lib/managers/department-manager.js');
+var dptmtManager = require('../lib/managers/department-manager');
 var router = require('express').Router();
+var isAuthenticated = require('../lib/isAuthenticated');
 
-router.post('/', function (req, res) {
+router.post('/', isAuthenticated, function (req, res) {
 	var dptmtName = req.body.name;
 	var schoolId = req.body.schoolId;
 	dptmtManager.createDepartment(dptmtName, schoolId, function (err, result) {
-			// send success and 
-			// error handling
+		if(!err) {
+			res.send(result)
+		} else {
+			res.send(err)
+		}
 	});
 });
 
