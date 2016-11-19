@@ -7,8 +7,6 @@ var dbc = {};
 
 
 dbc.query = function(queryStr, parameters, then) {
-	queryStr = addSearchPath(queryStr);
-
 	pg.connect(conString, function(err, client, done) {
 		if(err) {
 		  	return console.error('error fetching client from pool', err);
@@ -25,8 +23,6 @@ dbc.query = function(queryStr, parameters, then) {
 };
 
 dbc.waterfallWithThreeStatements = function(statementArray,inputVariablesArray,then){
-	statementArray = statementArray.map(addSearchPath);
-
 	var Client = require('pg').Client;
 	var client = new Client(conString);
 	client.connect();
@@ -55,10 +51,5 @@ dbc.waterfallWithThreeStatements = function(statementArray,inputVariablesArray,t
 	});
 };
 
-
-function addSearchPath(queryStr) {
-	var search_path = 'SET search_path TO "CheatSheet";'
-	return search_path+queryStr;
-};
 
 module.exports = dbc;
