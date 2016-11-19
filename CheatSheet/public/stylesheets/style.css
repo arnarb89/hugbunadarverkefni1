@@ -77,18 +77,21 @@ a {
 	justify-content: space-between;
 }
 
-.logo{
-	margin:10px;
-}
 
 .middleContent{
 	text-align: center;
 }
 
 .flavorText{
-	margin: 0 auto;
+	padding-right:10px;
 	font-size: 2.5em;
 	font-family: 'Bilbo', cursive;
+
+	transform:rotate(0.2deg);
+    -ms-transform:rotate(0.2deg); /* IE 9 */
+    -moz-transform:rotate(0.2deg); /* Firefox */
+    -webkit-transform:rotate(0.2deg); /* Safari and Chrome */
+    -o-transform:rotate(0.2deg); /* Opera */
 
 }
 
@@ -104,27 +107,28 @@ a {
 
 .accountDiv{
 	width: 300px;
-	margin: 10px;
 	margin-right:20px;
 }
 
-.loginButtons{
-	line-height: 30px;
-}
+
 .loginLinks:link{
+	line-height: 30px;
 	color: #321CA3;
 	text-decoration: none;
 }
 .loginLinks:visited{
+	line-height: 30px;
 	text-decoration: none;
 	color: #321CA3;
 }
 
 .loginLinks:hover{
+	line-height: 30px;
 	text-decoration: none;
 	color: #5D49C4;
 }
 .loginLinks:active{
+	line-height: 30px;
 	text-decoration: none;
 	color: #321CA3;
 }
@@ -134,6 +138,9 @@ a {
 }
 .rightContent{
 	text-align: right;
+}
+.rightContent2{
+	justify-content: flex-end;
 }
 
 .hotBarDiv{
@@ -167,14 +174,11 @@ a {
 	border-color: rgba(100,100,100,1);
 }
 .logoText{
-	margin-left: 10px;
-	margin-right: 120px;
 	font-family: 'Bowlby One', cursive;
 	font-size: 3em;
 	font-stretch: ultra-condensed;
 	color: rgba(10,10,10,1);
 	text-decoration: none;
-
 	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
 }
 
@@ -203,11 +207,12 @@ a {
 	display:flex;
 }
 
-.flavorTextItself{
-	transform:rotate(0.2deg);
-    -ms-transform:rotate(0.2deg); /* IE 9 */
-    -moz-transform:rotate(0.2deg); /* Firefox */
-    -webkit-transform:rotate(0.2deg); /* Safari and Chrome */
-    -o-transform:rotate(0.2deg); /* Opera */
-	
-}	
+
+.centeredContent{
+	text-align:center;
+}
+
+.logoDiv{
+	width:300px;
+	margin-left:20px;
+}

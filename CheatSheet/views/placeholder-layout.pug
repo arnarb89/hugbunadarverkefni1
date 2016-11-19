@@ -17,39 +17,24 @@ html(lang="is")
 			// Upper header
 			div.fullWidth.mainHeader
 				// The logo
-				div.horizontalAlignment
-					a(href='/').logoAnchor
-						//img(src='/images/logo.png' style='width:80px;height:80px;').logo
-						div
-							span.logoText CheatSheet
-					// The flavor text
-					div.verticalMiddleContent
-						div.leftContent.flavorText
-							//span Welcome to CheatSheet! 
-							//br
-							div.flavorTextItself Find or create the best way to tackle each class in school
+				div.logoDiv.leftContent
+					a(href='/').logoAnchor.logoText CheatSheet
+				// The flavor text
+				div.verticalMiddleContent.centeredContent.flavorText Find or create the best way to tackle each class in school
 				// Account management
-				div.verticalMiddleContent
-					div.accountDiv.loginButtons.rightContent
-						if	session.passport
-							if session.passport.user
-								a(href='/account').loginLinks=session.passport.user.fullname
-								b  | 
-								a(href='/logout').loginLinks Logout
-							else 
-								a(href='/login').loginLinks Login
-								b  | 
-								a(href='/signup').loginLinks Signup
-								b  | 
-								a(href='/facebook-login')
-									img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
-						else 
+				div.verticalMiddleContent.accountDiv.rightContent2
+					div
+						if	!session.passport||!session.passport.user
 							a(href='/login').loginLinks Login
 							b  | 
 							a(href='/signup').loginLinks Signup
 							b  | 
 							a(href='/facebook-login')
 								img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
+						else
+							a(href='/account').loginLinks=session.passport.user.fullname
+							b  | 
+							a(href='/logout').loginLinks Logout
 			// Hotbar
 			if session.passport
 				if session.passport.user
