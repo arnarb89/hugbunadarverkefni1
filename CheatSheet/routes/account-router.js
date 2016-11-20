@@ -48,17 +48,18 @@ module.exports = function(passport){
 
 		//accountManager.removeHotbarElement = function (userid,type,elementid, callback) {
 		//return res.redirect('/account');
-		accountManager.removeHotbarElement(req.user.id,req.params.id, req.params.type, function(err,result){
-			console.log("/updateprofile... before if else");
+		accountManager.removeHotbarElement(req.user.id,req.params.type, req.params.id, function(err,result){
+			console.log("/removehotbarelement... before if else");
 			if(err){
 				req.session.changesuccessmessage = "There was an error. Try again.";
+				console.log("/removehotbarelement, err: "+err);
 				return res.redirect('/account');
 			}
 			else{
 				req.session.changesuccessmessage = "The hotbar element was successfully removed.";
 				return res.redirect('/account');
 			}
-			console.log("/updateprofile... after if else");
+			console.log("/removehotbarelement... after if else");
 		});
 	});
 
