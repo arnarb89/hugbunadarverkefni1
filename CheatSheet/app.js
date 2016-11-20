@@ -66,6 +66,10 @@ app.use(function(req,res,next){
     }
 });
 
+// Load hotbar elements
+var loadhotbarelements = require('./lib/hotbarloader');
+app.use(loadhotbarelements);
+
 
 
 

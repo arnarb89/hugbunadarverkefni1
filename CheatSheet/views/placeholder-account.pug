@@ -5,15 +5,10 @@ block content
 		div.accountContainer.loginContainer
 			// user info
 			div 
-				span Here you can update your account information.
 				br
 				div
-					if passwordMessage
-						span(id="passwordMessage").colorRed=passwordMessage
-					else if profileMessage
-						span(id="profileMessage").colorRed=profileMessage
-					else if usernameMessage
-						span(id="usernameMessage").colorRed=usernameMessage
+					if changesuccessmessage
+						span(id="changesuccessmessage").colorRed=changesuccessmessage
 					else
 						br
 				form(id="updateProfileForm" method="post" action='/account/updateprofile')
@@ -24,8 +19,8 @@ block content
 						label(for="email") Email:
 						input(id="email" type="text" name="email" placeholder="Email" required value=user.email).form-control
 					input(type="submit" value="Update" id="profilesubmitbutton").form-control.btn-success.active
-				br
 				if user.facebookid===null
+					br
 					form(id="updateUsernameForm" method="post" action='/account/updateusername')
 						fieldset.form-group  
 							label(for="username") Username:
@@ -53,8 +48,44 @@ block content
 				else
 					span(id="message")
 			//hotbar elements
-			div Hotbar elements
-				div My courses:
-				div My submissions:
-				div My majors:
+			div.verticalAlignment.fullWidth
+				label My courses:
+				div.verticalAlignment.fullWidth
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					each element in hotbarelements.courses
+						div.fullWidth
+							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
+							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
+				br
+				label My majors:
+				//div.fullWidth My majors:
+				div.verticalAlignment.fullWidth
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					each element in hotbarelements.majors
+						div.fullWidth
+							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
+							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
+				br
+				label My summaries:
+				div.verticalAlignment.fullWidth
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					each element in hotbarelements.summaries
+						div.fullWidth
+							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
+							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
 	script(src="/javascripts/frontend-account.js")
