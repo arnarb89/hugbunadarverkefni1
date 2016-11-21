@@ -1,128 +1,171 @@
 'use strict';
 
-var query = require('../DBController.js');
+var dbc = require('../../cs-DBcontroller/cs-DBcontroller.js');
 var moment = require('moment');
 
 
 
 var commentManager = {};
 
-
- // id, author, content, type, parentId, dateCreated, voteCount, dateModified
-
-commentManager.getCommentsWithVoteByTypeAndParentId = function (user, type, parentId, parentContentId, callback) {
-	var commentTable, parentContentTable;
-	if(type.toLowerCase() === "course") { commentTable = "courseComments"; parentContentTable = "courses"; };
-	else if (type.toLowerCase === "summary") { commentTable = "summaryComments"; parentContentTable = "summaries"; };
-
+commentManager.getLatestComments = function (amount, callback) {
 	var sqlString = "SELECT " +
-	"$1.id as commentId, content, $1.parentId, dateCreated, voteCount, dateModified, " + // from comments table
-	"users.id as authordId, users.fullname as authorName, users.email as authorEmail, " + // from users table
-	"userLocal.username AS authorUsername, " + // from userLocal table
-	"CASE WHEN commentVotes.userId=$3 THEN commentVotes.value ELSE 0 END AS voteValue " + // from commentVotes table
-	"FROM $1, users, userLocal, commentVotes, $4"
-	"WHERE $1.authorId = users.id AND $1.parentId = $2 AND users.id = userLocal.userId AND commentvotes.parentid = $1.id AND $4.id = $1.parentContentId;";
-	var inputVariables = [commentTable, parentId, user.id, parentContentTable];
+	"comments.id, content, parentId, dateCreated, voteCount, dateModified, " + // from comments (summaryComments UNION courseComments)
+	"fullName as authorName, email as authorEmail, " + // from users
+	"users.id as authorId, username as authorUsername " + // from userLocal
+	"FROM (SELECT * FROM courseComments UNION SELECT * FROM summaryComments LIMIT $1) AS comments, users, userLocal " +
+	"WHERE comments.authorid = users.id " +
+	"AND users.id = userLocal.userId; " 
+	"ORDER BY dateModified DESC;"
+	;
+	var inputVariables = [amount];
 
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			var resultArray = result.rows;
-			var commentArray = [];
+			return callback(null, result.rows.map(formatComment));
+		}
+	});
+}
 
-			for(var i in resultArray) {
-				commentArray[i].id = parseInt(resultArray[i].commentid);
-				commentArray[i].content = resultArray[i].content;
-				commentArray[i].parentId = parseInt(resultArray[i].parentid);
-				commentArray[i].dateCreated = moment(resultArray[i].datecreated);
-				commentArray[i].voteCount = parseInt(resultArray[i].voteCount);
-				commentArray[i].dateModified = moment(resultArray[i].datemodified);
-				commentArray[i].voteValue = resultArray[i].votevalue;
-				commentArray[i].author = {
-					id : parseInt(resultArray[i].authorid),
-					fullName : resultArray[i].authorname,
-					email : resultArray[i].authoremail,
-					username : resultArray[i].authorusername
-				};
-			}
-			return callback(null, commentArray);
+commentManager.getCommentsWithVoteByTypeAndParentId = function (user, type, parentId, parentContentId, callback) {
+	var sqlString;
+	var inputVariables = [user.id, parentId, parentContentId, type];
+
+	if(type.toLowerCase() === "course") {
+		sqlString = "SELECT " +
+			"courseComments.id as commentId, courseComments.content, courseComments.parentId, courseComments.dateCreated, courseComments.voteCount, courseComments.dateModified, parentContentId, " + // from comments table
+			"users.id as authorId, users.fullname as authorName, users.email as authorEmail, " + // from users table
+			"userLocal.username AS authorUsername, " + // from userLocal table
+			"(SELECT coalesce(max(value), 0) FROM commentvotes WHERE userId=$1 AND parentId=courseComments.id AND type=$4) AS voteValue, " + // checking if the current user has voted on the comment
+			"CASE WHEN courseComments.id IN (SELECT courseComments.parentId FROM courseComments) THEN 1 ELSE 0 END AS hasChild " + // checking if the comment has subComments
+			"FROM courseComments, courses, users, userLocal " +
+			"WHERE courseComments.authorId = users.id " + // comment.authorId = users.id
+			"AND courseComments.parentId = $2 " + // comment.parentId = parentId (given parameter)
+			"AND courseComments.parentContentId = $3 " + // comment.parentContentId = parentContentId (given parameter)
+			"AND courseComments.parentContentId = courses.id " + // comment.parentContentId = parentContentTable.id
+			"AND users.id = userLocal.userId;";
+	} else if (type.toLowerCase() === "summary") {
+		sqlString = "SELECT " +
+			"summaryComments.id as commentId, summaryComments.content, summaryComments.parentId, summaryComments.dateCreated, summaryComments.voteCount, summaryComments.dateModified, parentContentId, " + // from comments table
+			"users.id as authorId, users.fullname as authorName, users.email as authorEmail, " + // from users table
+			"userLocal.username AS authorUsername, " + // from userLocal table
+			"(SELECT coalesce(max(value), 0) FROM commentvotes WHERE userId=$1 AND parentId=summaryComments.id AND type=$4) AS voteValue, " + // checking if the current user has voted on the comment
+			"CASE WHEN summaryComments.id IN (SELECT summaryComments.parentId FROM summaryComments) THEN 1 ELSE 0 END AS hasChild " + // checking if the comment has subComments
+			"FROM summaryComments, summaries, users, userLocal " +
+			"WHERE summaryComments.authorId = users.id " + // comment.authorId = users.id
+			"AND summaryComments.parentId = $2 " + // comment.parentId = parentId (given parameter)
+			"AND summaryComments.parentContentId = $3 " + // comment.parentContentId = parentContentId (given parameter)
+			"AND summaryComments.parentContentId = summaries.id " + // comment.parentContentId = parentContentTable.id
+			"AND users.id = userLocal.userId;";
+	}
+
+	dbc.query(sqlString, inputVariables, function(err, result) {
+		if(err) {
+			return callback(err);
+		} else {
+			return callback(null, result.rows.map(formatComment));
 		}
 	});
 };
 
-commentManager.getCommentsByTypeAndParentId = function (type, parentId, callback) {
-	var commentTable;
-	if(type.toLowerCase() === "course") commentTable = "courseComments";
-	else if (type.toLowerCase === "summary") commentTable = "summaryComments";
+commentManager.getCommentsByTypeAndParentId = function (type, parentId, parentContentId, callback) {
+	var sqlString;
+	var inputVariables = [parentId, parentContentId];
 
-	var sqlString = "SELECT " +
-	"$1.id as commentId, content, parentId, dateCreated, voteCount, dateModified, " + // from comments table
-	"users.id as authordId, users.fullname as authorName, users.email as authorEmail, " + // from users table
-	"usersLocal.username AS authorUsername " + // from userLocal table
-	"FROM $1, users, userLocal, $3 "
-	"WHERE $1.authorId = users.id AND parentId = $2 AND users.id = userLocal.userId AND $3.id = $1.parentContentId;";
-	var inputVariables = [commentTable, parentId, parentContentId];
+	if(type.toLowerCase() === "course") {
+		sqlString = "SELECT " +
+			"courseComments.id as commentId, courseComments.content, courseComments.parentId, courseComments.dateCreated, courseComments.voteCount, courseComments.dateModified, parentContentId, " + // from comments table
+			"users.id as authorId, users.fullname as authorName, users.email as authorEmail, " + // from users table
+			"userLocal.username AS authorUsername, " + // from userLocal table
+			"CASE WHEN courseComments.id IN (SELECT courseComments.parentId FROM courseComments) THEN 1 ELSE 0 END AS hasChild " + // checking if the comment has subComments
+			"FROM courseComments, courses, users, userLocal " +
+			"WHERE courseComments.authorId = users.id " + // comment.authorId = users.id
+			"AND courseComments.parentId = $1 " + // comment.parentId = parentId (given parameter)
+			"AND courseComments.parentContentId = $2 " + // comment.parentContentId = parentContentId (given parameter)
+			"AND courseComments.parentContentId = courses.id " + // comment.parentContentId = parentContentTable.id
+			"AND users.id = userLocal.userId;";
+	} else if (type.toLowerCase() === "summary") {
+		sqlString = "SELECT " +
+			"summaryComments.id as commentId, summaryComments.content, summaryComments.parentId, summaryComments.dateCreated, summaryComments.voteCount, summaryComments.dateModified, parentContentId, " + // from comments table
+			"users.id as authorId, users.fullname as authorName, users.email as authorEmail, " + // from users table
+			"userLocal.username AS authorUsername, " + // from userLocal table
+			"CASE WHEN summaryComments.id IN (SELECT summaryComments.parentId FROM summaryComments) THEN 1 ELSE 0 END AS hasChild " + // checking if the comment has subComments
+			"FROM summaryComments, summaries, users, userLocal " +
+			"WHERE summaryComments.authorId = users.id " + // comment.authorId = users.id
+			"AND summaryComments.parentId = $1 " + // comment.parentId = parentId (given parameter)
+			"AND summaryComments.parentContentId = $2 " + // comment.parentContentId = parentContentId (given parameter)
+			"AND summaryComments.parentContentId = summaries.id " + // comment.parentContentId = parentContentTable.id
+			"AND users.id = userLocal.userId;";
+	}
 
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			var resultArray = result.rows;
-			var commentArray = [];
-
-			for(var i in resultArray) {
-				commentArray[i].id = parseInt(resultArray[i].commentid);
-				commentArray[i].content = resultArray[i].content;
-				commentArray[i].parentId = parseInt(resultArray[i].parentid);
-				commentArray[i].dateCreated = moment(resultArray[i].datecreated);
-				commentArray[i].voteCount = parseInt(resultArray[i].voteCount);
-				commentArray[i].dateModified = moment(resultArray[i].datemodified);
-				commentArray[i].author = {
-					id : parseInt(resultArray[i].authorid),
-					fullName : resultArray[i].authorname,
-					email : resultArray[i].authoremail,
-					username : resultArray[i].authorusername
-				};
-			}
-			return callback(null, commentArray);
+			return callback(null, result.rows.map(formatComment));			
 		}
 	});
 };
 
 commentManager.createComment = function (user, content, type, parentId, parentContentId, callback) {
-	var commentTable, parentContentTable;
-	if(type.toLowerCase() === "course") { commentTable = "courseComments"; parentContentTable = "courses"; };
-	else if (type.toLowerCase === "summary") { commentTable = "summaryComments"; parentContentTable = "summaries"; };
+	var sqlString;
+	var inputVariables = [user.id, content, parentId, moment().format(), 0, moment().format(), parentContentId];
 
-	var sqlString = "INSERT INTO $1 (authorId, content, parentId, dateCreated, voteCount, dateModified, parentContentId) VALUES ($2, $3, $4, $5 $6, $7, $8);";
-	var inputVariables = [commentTable, user.id, content, parentId, moment(), 0, moment(), parentContentId];
+	if(type.toLowerCase() === "course") {
+		sqlString = "INSERT INTO courseComments (authorId, content, parentId, dateCreated, voteCount, dateModified, parentContentId) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;";
+	} else if (type.toLowerCase() === "summary") {
+		sqlString = "INSERT INTO summaryComments (authorId, content, parentId, dateCreated, voteCount, dateModified, parentContentId) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;";
+	}
 
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result);
+
+			return callback(null, result.rows.map(formatComment).map(comment => { comment.author=user; return comment } ));
 		}
 	});
 };
 
+commentManager.editCommentByIdAndType = function (user, content, type, commentId, callback) {
+	var sqlString = "UPDATE $1 SET content = $3, datemModified = $4 WHERE id = $2 AND authorId = $5;";
+	var inputVariables = [user.id, content, commentId, moment().format()];
 
-commentManager.editCommentByIdAndType = function (commentId, type, content, callback) {
-	var commentTable;
-	if(type.toLowerCase() === "course") commentTable = "courseComments";
-	else if (type.toLowerCase === "summary") commentTable = "summaryComments";
+	if(type.toLowerCase() === "course") {
+		sqlString = "UPDATE courseComments SET content = $2, dateModified = $4 WHERE authorId = $1 AND id = $3 RETURNING *;";
+	} else if (type.toLowerCase() === "summary") {
+		sqlString = "UPDATE summaryComments SET content = $2, dateModified = $4 WHERE authorId = $1 AND id = $3 RETURNING *;";
+	}
 
-	var sqlString = "UPDTATE $1 SET content = $3 WHERE id = $2;";
-	var inputVariables = [commentTable, commentId, content];
-
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result);
+			return callback(null, result.rows.map(formatComment).map(comment => { comment.author=user; return comment } ));
 		}
 	});
+};
+
+function formatComment(unformattedComment) {
+	var comment = {
+		id : unformattedComment.id !== undefined ? unformattedComment.id : unformattedComment.commentid,
+		content : unformattedComment.content,
+		parentId : unformattedComment.parentid,
+		parentContentId : unformattedComment.parentcontentid,
+		voteCount : unformattedComment.votecount,
+		dateCreated : moment(unformattedComment.datecreated).format('hh:mm DD/MM/YY'),
+		dateModified : moment(unformattedComment.datemodified).format('hh:mm DD/MM/YY'),
+		hasChild : Boolean(unformattedComment.haschild),
+		author : {
+			id : unformattedComment.authorid,
+			fullName : unformattedComment.authorname,
+			email : unformattedComment.authoremail,
+			username : unformattedComment.authorusername
+		}
+	};
+	if(unformattedComment.votevalue !== undefined) comment.voteValue = unformattedComment.votevalue; // only some comments should have the voteValue attribute
+	return comment;
 };
 
 module.exports = commentManager;
