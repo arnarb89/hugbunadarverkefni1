@@ -1,5 +1,91 @@
-extends layout
+extends placeholder-layout
 
 block content
-
-	p This is account.pug
+	div.fullWidth
+		div.accountContainer.loginContainer
+			// user info
+			div 
+				br
+				div
+					if changesuccessmessage
+						span(id="changesuccessmessage").colorRed=changesuccessmessage
+					else
+						br
+				form(id="updateProfileForm" method="post" action='/account/updateprofile')
+					fieldset.form-group
+						label(for="fullname") Full name:
+						input(id="fullname" type="text" name="fullname" placeholder="Full name" required value=user.fullname).form-control
+					fieldset.form-group  
+						label(for="email") Email:
+						input(id="email" type="text" name="email" placeholder="Email" required value=user.email).form-control
+					input(type="submit" value="Update" id="profilesubmitbutton").form-control.btn-success.active
+				if user.facebookid===null
+					br
+					form(id="updateUsernameForm" method="post" action='/account/updateusername')
+						fieldset.form-group  
+							label(for="username") Username:
+							input(id="username" type="text" placeholder="Username" name="username" required value=user.username).form-control
+						input(type="submit" value="Update" id="usernamesubmitbutton").form-control.btn-success.active
+					br
+					form(id="updatePasswordForm" method="post" action='/account/updatepassword')
+						fieldset.form-group
+							label(for="oldpassword") Old password:
+							input(id="oldpassword" type="password" name="oldpassword" placeholder="Password" required).form-control
+						fieldset.form-group
+							label(for="newpassword1") New password:
+							input(id="newpassword1" type="password" name="newpassword1" placeholder="The new password" required).form-control
+						fieldset.form-group
+							div.mainHeader
+								label(for="newpassword2") Retype the new password:
+								div
+									span(id="password-message").colorRed
+							input(id="newpassword2" type="password" name="newpassword2" placeholder="Retype your new password" required).form-control
+						input(type="submit" value="Update" id="passwordsubmitbutton").form-control.btn-success.active
+			br
+			div
+				if (message != "")
+					span(id="message")= message
+				else
+					span(id="message")
+			//hotbar elements
+			div.verticalAlignment.fullWidth
+				label My courses:
+				div.verticalAlignment.fullWidth
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					each element in hotbarelements.courses
+						div.fullWidth
+							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
+							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
+				br
+				label My majors:
+				//div.fullWidth My majors:
+				div.verticalAlignment.fullWidth
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					each element in hotbarelements.majors
+						div.fullWidth
+							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
+							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
+				br
+				label My summaries:
+				div.verticalAlignment.fullWidth
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					div.fullWidth
+						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
+						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
+					each element in hotbarelements.summaries
+						div.fullWidth
+							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
+							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
+	script(src="/javascripts/frontend-account.js")

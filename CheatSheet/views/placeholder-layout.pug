@@ -32,22 +32,27 @@ html(lang="is")
 							a(href='/facebook-login')
 								img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
 						else
-							a(href='/account').loginLinks=session.passport.user.fullname
+							a(href='/account').loginLinks=user.fullname
 							b  | 
 							a(href='/logout').loginLinks Logout
 			// Hotbar
 			if session.passport
 				if session.passport.user
 					div.fullWidth.hotBarDiv
-						div My Courses: 
-							//each course in results.courses
-								div= course.id
-						div My majors: 
-							//each major in results.majors
-								div= major.id
-						div My summaries:
-							//each summary in results.summaries
-								div= summary.id
+						div.hotbarLabels My Courses: 
+						button(onClick="location.href='/course?id=23';").hotbarButtons .Línuleg Algebra
+						button(onClick="location.href='/course?id=24';").hotbarButtons .Tölvunarfræði 1
+						each course in hotbarelements.courses
+							button(onClick="location.href='/course?id="+course.elementid+"';").hotbarButtons=course.contentname
+						div.hotbarLabels My majors: 
+						button(onClick="location.href='/major?id=4';").hotbarButtons .Tölvunarfræði
+						each major in hotbarelements.majors
+							button(onClick="location.href='/major?id="+major.elementid+"';").hotbarButtons=major.contentname
+						div.hotbarLabels My summaries:
+						button(onClick="location.href='/summary?id=4';").hotbarButtons .Línuleg Algebra
+						button(onClick="location.href='/summary?id=5';").hotbarButtons .Tölvunarfræði 1
+						each summary in hotbarelements.summaries
+							button(onClick="location.href='/summary?id="+summary.elementid+"';").hotbarButtons=summary.contentname
 			// lower border for header
 			div.headerBorder
 		main

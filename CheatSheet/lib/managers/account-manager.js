@@ -1,30 +1,16 @@
 'use strict';
 
-var dbc = require('../cs-DBcontroller/cs-DBController.js');
+var dbc = require('../../cs-DBcontroller/cs-DBcontroller.js');
 
 
 
 var accountManager = {};
 
 
-accountManager.getAccountInfoByUser = function (user, callback) {
-	var sqlString = "";
-	var inputVariables = [];
+accountManager.removeHotbarElement = function (userid,type,elementid, callback) {
 
-	dbc.query(sqlString, inputVariables, function(err, result) {
-		if(err) {
-			return callback(err);
-		} else {
-			return callback(null, result);
-		}
-	});
-};
-
-
-// NO idea how this actually works. Needs to be changed to implement actual functionality.
-accountManager.connectWithThirdPartyService = function (thirdPartyIdentifier, serviceName, callback) {
-	var sqlString = "";
-	var inputVariables = [];
+	var sqlString = 'DELETE FROM "CheatSheet"."hotbarelements" WHERE userid=$1 and type=$2 and elementid=$3;';
+	var inputVariables = [userid,type,elementid];
 
 	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
