@@ -1,6 +1,6 @@
 'use strict';
 
-vauar query = require('../DBController.js');
+var dbc = require('../../cs-DBcontroller/cs-DBcontroller.js');
 
 
 
@@ -11,38 +11,16 @@ courseManager.getCourseByMajorId = function (majorId, callback) {
 	var sqlString = "SELECT " +
 	"courses.id AS courseId, courses.name AS courseName, courses.identificationCode, " + // from courses table
 	"majors.name AS majorName, " + // from majors tableaua
-	"departments.id AS departmentId, departments.name AS departmentName " + // from departments table
+	"departments.id AS departmentId, departments.name AS departmentName, " + // from departments table
 	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
-	"FROM courses, majors, departments, schools WHERE majors.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND department.schoolId = schools.id";
+	"FROM courses, majors, departments, schools WHERE majors.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id";
 	var inputVariables = [majorId];
 
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			var resultArray = result.rows;
-			var courseArray = [];
-
-			// converting the result to hierarchy of objects, converting to correct types and leaving behind unnecessary variables
-			for(var i in resultArray) {
-				courseArray[i].id = parseInt(resultArray[i].courseid);
-				courseArray[i].name = resultArray[i].coursename;
-				courseArray[i].idetificationCode = resultArray[i].identificationcode;
-				courseArray[i].major = {
-					id : majorId,
-					name : resultArray[i].majorname,
-					department : {
-						id : parseInt(resultArray[i].departmentid),
-						name : resultArray[i].departmentname,
-						school : {
-							id : parseInt(resultArray[i].schoolid),
-							name : resultArray[i].schoolname
-						}
-					}
-				}
-			}
-
-			return callback(null, courseArray);
+			return callback(null, result.rows.map(formatCourse).map(course => { course.major.id = majorId; return course; }));
 		}
 	});
 }
@@ -51,49 +29,52 @@ courseManager.getCourseById = function (courseId, callback) {
 	var sqlString = "SELECT " +
 	"courses.name AS courseName, courses.identificationCode, " + // from courses table
 	"majors.id AS majorId, majors.name AS majorName, " + // from majors table
-	"departments.id AS departmentId, departments.name AS departmentName " + // from departments table
+	"departments.id AS departmentId, departments.name AS departmentName, " + // from departments table
 	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
-	"FROM courses, majors, departments, schools WHERE courses.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND department.schoolId = schools.id";
+	"FROM courses, majors, departments, schools WHERE courses.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id";
 	var inputVariables = [courseId];
 
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			var row = result.rows[0];
-			if(!row) return callback(null, result);
-			return callback(null, {
-				id : courseId,
-				name : row.coursename,
-				identificationCode : row.identificationcode,
-				major : {
-					id : parseInt(row.majorid),
-					name : row.majorname,
-					department : {
-						id : parseInt(row.departmentid),
-						name : row.departmentname,
-						school : {
-							id : parseInt(row.schoolid),
-							name : row.schoolname
-						}
-					}
-				}
-			});
+			return callback(null, result.rows.map(formatCourse).map(course => { course.id = courseId; return course; }));
 		}
 	});
 }
 
 courseManager.createCourse = function (name, identificationCode, majorId, callback) {
-	var sqlString = "INSERT INTO courses (name, identificationCode, majorId) VALUES ($1, $2, $3)";
+	var sqlString = "INSERT INTO courses (name, identificationCode, majorId) VALUES ($1, $2, $3) RETURNING *";
 	var inputVariables = [name, identificationCode, majorId];
 
-	query(sqlString, inputVariables, function(err, result) {
+	dbc.query(sqlString, inputVariables, function(err, result) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result);
+			return callback(null, result.rows.map(formatCourse));
 		}
 	});
 }
+
+
+function formatCourse(unformattedCourse) {
+	return {
+		id : unformattedCourse.id ? unformattedCourse.id : unformattedCourse.courseid,
+		name : unformattedCourse.name ? unformattedCourse.name : unformattedCourse.coursename,
+		identificationCode : unformattedCourse.identificationcode ? unformattedCourse.identificationcode : unformattedCourse.courseidentificationcode,
+		major : {
+			id : unformattedCourse.majorid,
+			name : unformattedCourse.majorname,
+			department : {
+				id : unformattedCourse.departmentid,
+				name : unformattedCourse.departmentname,
+				school : {
+					id : unformattedCourse.schoolid,
+					name : unformattedCourse.schoolname
+				}
+			}
+		}
+	};
+};
 
 module.exports = courseManager;
