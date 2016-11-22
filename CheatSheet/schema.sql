@@ -2,7 +2,8 @@
 -- SCHEMA
 
 CREATE SCHEMA IF NOT EXISTS "CheatSheet";
-SET search_path TO "CheatSheet";
+ALTER USER ocmgxpde SET search_path="CheatSheet";
+SET search_path TO "CheatSheet"; -- probably not necessary cause the search_path has been altered for this specific user
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -187,9 +188,9 @@ FOR EACH ROW EXECUTE PROCEDURE update_summaryVotes();
 /*
 SET search_path TO "CheatSheet";
 
-DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS userFb CASCADE;
-DROP TABLE IF EXISTS userLocal CASCADE;
+--DROP TABLE IF EXISTS users CASCADE;
+--DROP TABLE IF EXISTS userFb CASCADE;
+--DROP TABLE IF EXISTS userLocal CASCADE;
 DROP TABLE IF EXISTS schools CASCADE;
 DROP TABLE IF EXISTS departments CASCADE;
 DROP TABLE IF EXISTS majors CASCADE;
