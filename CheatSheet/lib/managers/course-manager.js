@@ -25,6 +25,24 @@ courseManager.getCourseByMajorId = function (majorId, callback) {
 	});
 }
 
+courseManager.getCoursesByMajorIdArnar = function (majorId, callback) {
+	var sqlString = "SELECT " +
+	"courses.id AS courseId, courses.name AS courseName, courses.identificationCode, " + // from courses table
+	"majors.name AS majorName, majors.id AS majorId," + // from majors tableaua
+	"departments.id AS departmentId, departments.name AS departmentName, " + // from departments table
+	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
+	"FROM courses, majors, departments, schools WHERE majors.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id;	";
+	var inputVariables = [majorId];
+
+	dbc.query(sqlString, inputVariables, function(err, result) {
+		if(err) {
+			return callback(err,null);
+		} else {
+			return callback(null,result);
+		}
+	});
+}
+
 courseManager.getCourseById = function (courseId, callback) {
 	var sqlString = "SELECT " +
 	"courses.name AS courseName, courses.identificationCode, " + // from courses table
