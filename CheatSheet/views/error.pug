@@ -1,6 +1,8 @@
-extends layout
+extends placeholder-layout
 
 block content
-  h1= message
-  h2= error.status
+  p= message
+  br
+  p= error.status
+  br
   pre #{error.stack}

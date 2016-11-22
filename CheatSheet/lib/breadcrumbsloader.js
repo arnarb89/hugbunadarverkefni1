@@ -3,6 +3,34 @@
 var dbc = require('../cs-DBcontroller/cs-DBcontroller.js');
 
 
+module.exports = function breadcrumbsloader(type,id) {
+  	return function(req, res, next) {
+  		var breadcrumbs = {};
+
+    	if(type=="login"){
+
+    	}else if(type=="signup"){
+
+    	}else if(type=="account"){
+
+    	}else if(type=="major"){
+
+    	}else if(type=="course"){
+
+    	}else if(type=="summary"){
+
+    	}else if(type=="summarycreation"){
+
+    	}
+
+    	res.locals.breadcrumbs = breadcrumbs;
+
+
+
+    	next();
+  	}
+}
+
 
 module.exports = function (req,res, next) {
 	if(!req.user){
@@ -10,6 +38,8 @@ module.exports = function (req,res, next) {
 	}
 	var sqlString = 'SELECT DISTINCT * FROM "CheatSheet"."hotbarelements" WHERE userid=$1;';
 	var inputVariables = [req.user.id];
+
+	var breadcrumbs = {};
 
 	dbc.query(sqlString, inputVariables, function(err, result) {
 		res.locals.hotbarelements = {};
