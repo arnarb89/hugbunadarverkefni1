@@ -25,7 +25,7 @@ summaryManager.getSummaryById = function (summaryId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatSummary).map(summary => { summary.id = summaryId; return summary; }));
+			return callback(null, result.rows.map(formatSummary).map(summary => { summary.id = summaryId; return summary; })[0]);
 		}
 	});
 }
@@ -80,7 +80,7 @@ summaryManager.createSummary = function (user, content, teacherName, attendanceD
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatSummary).map(summary => { summary.author = user; return summary; }));
+			return callback(null, result.rows.map(formatSummary).map(summary => { summary.author = user; return summary; })[0]);
 		}
 	});
 }
