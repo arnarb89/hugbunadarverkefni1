@@ -42,6 +42,23 @@ majorManager.getMajorById = function (majorId, callback) {
 	});
 }
 
+majorManager.getMajorByIdArnar = function (majorId, callback) {
+	var sqlString = "SELECT " +
+	"majors.name AS majorName, majors.id AS majorId, " + // from majors table
+	"departments.id AS departmentId, departments.name AS departmentName, " + // from departments table
+	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
+	"FROM majors, departments, schools WHERE majors.id = $1 AND majors.departmentId = departments.id AND departments.schoolid = schools.id";
+	var inputVariables = [majorId];
+
+	dbc.query(sqlString, inputVariables, function(err, result) {
+		if(err) {
+			return callback(err,null);
+		} else {
+			return callback(null,result);
+		}
+	});
+}
+
 majorManager.createMajor = function (name, departmentId, callback) {
 	var sqlString = "INSERT INTO majors (name, departmentid) VALUES ($1, $2) RETURNING *";
 	var inputVariables = [name, departmentId];
