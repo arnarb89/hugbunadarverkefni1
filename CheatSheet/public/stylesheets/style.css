@@ -335,3 +335,7 @@ a {
 .centerContent{
 	text-align: center;
 }
+
+.summaryListWidth{
+	width:800px;
+}

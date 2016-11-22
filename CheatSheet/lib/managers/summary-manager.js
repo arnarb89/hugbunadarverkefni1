@@ -55,12 +55,13 @@ summaryManager.getSummaryByCourse = function (courseId, callback) {
 	});
 }
 
+
 summaryManager.getSummaryMetaData = function (courseId, callback) {
 	var sqlString = "SELECT " +
 	"summaries.id AS summaryId, summaries.teacherName, summaries.attendanceDate, summaries.voteCount, summaries.dateCreated, summaries.dateModified, " + // from summary table
 	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, " + // from user table
 	"userLocal.username AS authorUsername " + // from userLocal table
-	"FROM summaries, courses, users, userLocal WHERE summaries.authorid = users.id AND summaries.courseId = $1 AND users.id=userLocal.userId";
+	"FROM summaries, courses, users, userLocal WHERE summaries.authorid = users.id AND summaries.courseId = $1 AND users.id=userLocal.userId AND courses.id=$1;";
 	var inputVariables = [courseId];
 
 	dbc.query(sqlString, inputVariables, function(err, result) {
