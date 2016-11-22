@@ -8,8 +8,9 @@ block content
 			div.breadcrumbsContainer.mainHeader.verticalMiddleContent
 				div
 					div(style="display:none;")
-						p(id="contentid")=breadcrumbs.majorid
-						p(id="contentname")=breadcrumbs.majorname
+						p(id="contentid")=breadcrumbs.currentid
+						p(id="contentname")=breadcrumbs.currentname
+						p(id="contenttype")=breadcrumbs.currenttype
 					span
 						a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
 						b=" > "
@@ -19,7 +20,7 @@ block content
 			div.coolBorder
 				if user
 					div.fullWidth.centerContent
-						a(id="majorAddToHotbar").btn.btn-success.fullWidth Add major to hotbar
+						a(id="addToHotbar").btn.btn-success.fullWidth Add major to hotbar
 				if result.length==0
 					p There are no courses yet.
 				else

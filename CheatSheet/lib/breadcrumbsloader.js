@@ -15,6 +15,8 @@ module.exports = function breadcrumbsloader(type,id) {
 
     	}else if(type=="major"){
 
+    		
+
     	}else if(type=="course"){
 
     	}else if(type=="summary"){

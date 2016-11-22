@@ -22,6 +22,9 @@ module.exports = function(passport){
 				res.render('placeholder-major',{message:'There was an error.'});
 			}else{
 				var majorBreadcrumbs = result.rows[0];
+				majorBreadcrumbs.currentid = majorBreadcrumbs.majorid;
+				majorBreadcrumbs.currentname = majorBreadcrumbs.majorname;
+				majorBreadcrumbs.currenttype = 'major';
 				
 				// async request
 				//console.log('/major/:id :id is: '+req.params.id);

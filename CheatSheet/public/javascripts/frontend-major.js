@@ -2,15 +2,15 @@
 
 console.log("hello");
 
-if($('#majorAddToHotbar')){
+if($('#addToHotbar')){
 
-    $('#majorAddToHotbar').on('click',function(e){
-        console.log("Clicked add major to hotbar.");
+    $('#addToHotbar').on('click',function(e){
+        console.log("Clicked add to hotbar.");
         e.preventDefault();
         //do some verification
         // /:type/:id/:contentname
         var temporaryInfo = {
-            type: 'major',
+            type: $('#contenttype').html(),
             contentid: $('#contentid').html(),
             contentname: $('#contentname').html()
         };
