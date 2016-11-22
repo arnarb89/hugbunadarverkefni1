@@ -94,7 +94,7 @@ function formatSummary(unformattedSummary) {
 		teacherName : unformattedSummary.teachername,
 		attendanceDate : moment(unformattedSummary.attendancedate).format('hh:mm DD/MM/YY'),
 		dateCreated : moment(unformattedSummary.datecreated).format('hh:mm DD/MM/YY'),
-		dateModified : moment(unformattedSummary.datemodified).format('hh:mm DD/MM/YY'),
+		dateModified : moment(unformattedSummary.datemodified).format('DD/MM/YY'),
 		voteCount : unformattedSummary.votecount,
 		author : {
 			id : unformattedSummary.authorid,
