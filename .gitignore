@@ -1,3 +1,4 @@
 CheatSheet/node_modules
 CheatSheet/.env
 CheatSheet/social
+**/test-*.*
