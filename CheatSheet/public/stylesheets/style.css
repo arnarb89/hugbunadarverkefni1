@@ -1,7 +1,10 @@
 body {
   /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow-y: scroll;
+  
 }
+
 .log {
 display: inline-block;
 vertical-align:top;
@@ -110,25 +113,24 @@ a {
 	margin-right:20px;
 }
 
+.loginLinksLineHeight{
+	line-height:30px;
+}
 
 .loginLinks:link{
-	line-height: 30px;
 	color: #321CA3;
 	text-decoration: none;
 }
 .loginLinks:visited{
-	line-height: 30px;
 	text-decoration: none;
 	color: #321CA3;
 }
 
 .loginLinks:hover{
-	line-height: 30px;
 	text-decoration: none;
 	color: #5D49C4;
 }
 .loginLinks:active{
-	line-height: 30px;
 	text-decoration: none;
 	color: #321CA3;
 }
@@ -160,8 +162,7 @@ a {
 
 .loginContainer{
 	margin: 0 auto;
-	margin-top: 15px;
-	width:450px;
+	width: 600px;
 }
 .colorRed{
 	color: red;
@@ -232,12 +233,15 @@ a {
 	border-top-color: LightGray;
 	border-left-color: LightGray;
 	border-radius: 4px;
+	text-decoration:none;
 }
 .hotbarButtons:focus{ 
 	outline: none; 
+	text-decoration:none;
 }
 .hotbarButtons:hover{
 	/*color: #5D49C4;*/
+	text-decoration:none;
 	color: #6E6E6E;
 }
 
@@ -260,4 +264,74 @@ a {
 
 .btn-info{
 	color:#262626;
+}
+
+.contentContainer{
+	margin: 0 auto;
+	margin-top:20px;
+	width: 600px;
+	background-color: white;
+}
+
+.coolBorder{
+	border: 1px solid black;
+	border-color: rgba(100,100,100,1);
+	border-width: 1px 1px 1px 1px;
+	border-radius: 10px;
+	padding-left:30px;
+	padding-right:30px;
+	padding-top:30px;
+	padding-bottom:30px;
+	margin-bottom:20px;
+	margin-top:20px;
+
+	box-shadow: 0px 0px 20px #888888;
+}
+
+.squareBorder{
+	border: 1px solid black;
+	border-color: rgba(100,100,100,1);
+	border-width: 1px 1px 1px 1px;
+	padding-left:15px;
+	padding-right:15px;
+	padding-top:15px;
+	padding-bottom:15px;
+	margin-top:10px;
+
+}
+
+.breadcrumbsContainer{
+	margin-bottom:10px;
+}
+
+
+
+.identificationDiv{
+	width:150px;
+}
+
+.coursenameDiv{
+}
+
+.courseButton{
+	margin-bottom:5px;
+	margin-top:5px;
+}
+
+.inline{
+	display: inline-block;
+}
+
+.accountHotElement{
+	margin-top:4px;
+	margin-bottom:4px;
+}
+
+.submitcancelbuttons{
+	width:100px;
+	margin-right:10px;
+}
+
+.centerContent{
+	text-align: center;
 }

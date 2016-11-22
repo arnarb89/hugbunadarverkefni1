@@ -2,7 +2,7 @@ extends placeholder-layout
 
 block content
 	div.fullWidth
-		div.loginContainer
+		div.loginContainer.coolBorder
 			span Provide your signup information.
 			br
 			br
@@ -26,11 +26,9 @@ block content
 					label(for="fullname") Full name:
 					input(id="fullname" type="text" name="fullname" placeholder="Full name" required).form-control
 				input(type="submit").form-control.btn-success.active
-				br
-			div
-				if (message != "")
-					span(id="message")= message
-				else
-					span(id="message")
+			if (message != "")
+				span(id="message")= message
+			else
+				span(id="message")
 						
 	script(src="/javascripts/frontend-signup.js")

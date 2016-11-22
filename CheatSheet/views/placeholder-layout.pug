@@ -25,34 +25,34 @@ html(lang="is")
 				div.verticalMiddleContent.accountDiv.rightContent2
 					div
 						if	!session.passport||!session.passport.user
-							a(href='/login').loginLinks Login
+							a(href='/login').loginLinks.loginLinksLineHeight Login
 							b  | 
-							a(href='/signup').loginLinks Signup
+							a(href='/signup').loginLinks.loginLinksLineHeight Signup
 							b  | 
 							a(href='/facebook-login')
 								img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
 						else
-							a(href='/account').loginLinks=user.fullname
+							a(href='/account').loginLinks.loginLinksLineHeight=user.fullname
 							b  | 
-							a(href='/logout').loginLinks Logout
+							a(href='/logout').loginLinks.loginLinksLineHeight Logout
 			// Hotbar
 			if session.passport
 				if session.passport.user
 					div.fullWidth.hotBarDiv
 						div.hotbarLabels My Courses: 
-						button(onClick="location.href='/course?id=23';").hotbarButtons .Línuleg Algebra
-						button(onClick="location.href='/course?id=24';").hotbarButtons .Tölvunarfræði 1
+						//button(onClick="location.href='/course?id=23';").hotbarButtons .Línuleg Algebra
+						//button(onClick="location.href='/course?id=24';").hotbarButtons .Tölvunarfræði 1
 						each course in hotbarelements.courses
-							button(onClick="location.href='/course?id="+course.elementid+"';").hotbarButtons=course.contentname
+							a(href='/course/'+course.elementid).hotbarButtons.verticalMiddleContent=course.contentname
 						div.hotbarLabels My majors: 
-						button(onClick="location.href='/major?id=4';").hotbarButtons .Tölvunarfræði
+						//button(onClick="location.href='/major?id=4';").hotbarButtons .Tölvunarfræði
 						each major in hotbarelements.majors
-							button(onClick="location.href='/major?id="+major.elementid+"';").hotbarButtons=major.contentname
+							a(href='/major/'+major.elementid).hotbarButtons.verticalMiddleContent=major.contentname
 						div.hotbarLabels My summaries:
-						button(onClick="location.href='/summary?id=4';").hotbarButtons .Línuleg Algebra
-						button(onClick="location.href='/summary?id=5';").hotbarButtons .Tölvunarfræði 1
+						//button(onClick="location.href='/summary?id=4';").hotbarButtons .Línuleg Algebra
+						//button(onClick="location.href='/summary?id=5';").hotbarButtons .Tölvunarfræði 1
 						each summary in hotbarelements.summaries
-							button(onClick="location.href='/summary?id="+summary.elementid+"';").hotbarButtons=summary.contentname
+							a(href='/summary/'+summary.elementid).hotbarButtons.verticalMiddleContent=summary.contentname
 			// lower border for header
 			div.headerBorder
 		main

@@ -91,6 +91,12 @@ app.use('/logout', logout);
 var account = require('./routes/account-router')(passport);
 app.use('/account', account);
 
+var major = require('./routes/major-router')(passport);
+app.use('/major', major);
+
+var course = require('./routes/course-router')(passport);
+app.use('/course', course);
+
 
 
 // catch 404 and forward to error handler

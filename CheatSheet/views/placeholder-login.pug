@@ -2,7 +2,7 @@ extends placeholder-layout
 
 block content
 	div.fullWidth
-		div.loginContainer
+		div.loginContainer.coolBorder
 			span Provide your login information.
 			br
 			br
@@ -15,7 +15,6 @@ block content
 					input(id="password" type="password" name="password" placeholder="Password" required).form-control
 				div
 					input(type="submit").form-control.btn-success.active
-				br
 			if (message != "")
 				div
 					span= message
