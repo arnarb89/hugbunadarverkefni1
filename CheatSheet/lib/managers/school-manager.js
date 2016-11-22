@@ -15,7 +15,7 @@ schoolManager.getSchoolById = function (schoolId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatSchool));
+			return callback(null, result.rows.map(formatSchool)[0]);
 		}
 	});
 }
@@ -28,7 +28,7 @@ schoolManager.createSchool = function (name, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatSchool));
+			return callback(null, result.rows.map(formatSchool)[0]);
 		}
 	});
 }

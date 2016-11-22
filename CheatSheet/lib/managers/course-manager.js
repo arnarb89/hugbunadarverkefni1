@@ -38,7 +38,7 @@ courseManager.getCourseById = function (courseId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatCourse).map(course => { course.id = courseId; return course; }));
+			return callback(null, result.rows.map(formatCourse).map(course => { course.id = courseId; return course; })[0]);
 		}
 	});
 }
@@ -51,7 +51,7 @@ courseManager.createCourse = function (name, identificationCode, majorId, callba
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatCourse));
+			return callback(null, result.rows.map(formatCourse)[0]);
 		}
 	});
 }

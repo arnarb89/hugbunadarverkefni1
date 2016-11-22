@@ -37,7 +37,7 @@ majorManager.getMajorById = function (majorId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatMajor).map(major => { major.id = majorId; return major; }));
+			return callback(null, result.rows.map(formatMajor).map(major => { major.id = majorId; return major; })[0]);
 		}
 	});
 }
@@ -50,7 +50,7 @@ majorManager.createMajor = function (name, departmentId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatMajor));
+			return callback(null, result.rows.map(formatMajor)[0]);
 		}
 	});
 }

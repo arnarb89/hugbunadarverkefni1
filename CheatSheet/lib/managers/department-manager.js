@@ -33,7 +33,7 @@ departmentManager.getDepartmentById = function (departmentId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatDepartment).map(department => { department.id = departmentId; return department; }));
+			return callback(null, result.rows.map(formatDepartment).map(department => { department.id = departmentId; return department; })[0]);
 		}
 	});
 }
@@ -46,7 +46,7 @@ departmentManager.createDepartment = function (name, schoolId, callback) {
 		if(err) {
 			return callback(err);
 		} else {
-			return callback(null, result.rows.map(formatDepartment));
+			return callback(null, result.rows.map(formatDepartment)[0]);
 		}
 	});
 }
