@@ -63,6 +63,43 @@ module.exports = function(passport){
 		});
 	});
 
+	router.post('/addhotbarelement', isNotAuthenticated, function(req,res){
+		// ability to remove hotbar elements, should probably be async
+		// ability to change (username), (pw), email, fullname... might be a good idea to have it async
+		// function (fullname, email, username, id, callback)
+		//console.log("/addhotbarelement router was accessed");
+		//console.log("type: "+req.params.type);
+		//console.log("id: "+req.params.id);
+		//console.log("/addhotbarelement req.params: "+JSON.stringify(req.params));
+
+		//accountManager.removeHotbarElement = function (userid,type,elementid, callback) {
+		//return res.redirect('/account');
+		//console.log("/addhotbarelement, req.body: "+JSON.stringify(req.body));
+		//console.log("/addhotbarelement, req.body: "+req.body.type);
+		//console.log("/addhotbarelement, req.body: "+req.body.contentid);
+		//console.log("/addhotbarelement, req.body: "+req.body.contentname);
+		/*req.on('data', function(data) 
+	    {
+	    	console.log("/addhotbarelement route data: "+JSON.stringify(data))
+	    });
+		return res.json({swag:"swag"});*/
+		// accountManager.addhotbarelement = function (userid,type,contentid,contentname, callback)
+		accountManager.addHotbarElement(req.user.id, req.body.type, req.body.contentid, req.body.contentname, function(err,result){
+			//console.log("/addhotbarelement... before if else");
+			if(err){
+				req.session.changesuccessmessage = "There was an error adding to hotbar. Try again.";
+				console.log("/addhotbarelement, err: "+err);
+				return res.json({error: req.session.changesuccessmessage});
+			}
+			else{
+				console.log("/addhotbarelement, insert success");
+				req.session.changesuccessmessage = "The hotbar element was successfully added.";
+				return res.json({success: req.session.changesuccessmessage});
+			}
+			//console.log("/addhotbarelement... after if else");
+		});
+	});
+
 	router.post('/updateprofile', isNotAuthenticated, function(req,res){
 		// ability to remove hotbar elements, should probably be async
 		// ability to change (username), (pw), email, fullname... might be a good idea to have it async

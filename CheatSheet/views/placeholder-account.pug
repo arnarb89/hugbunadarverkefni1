@@ -2,15 +2,11 @@ extends placeholder-layout
 
 block content
 	div.fullWidth
-		div.accountContainer.loginContainer
+		div.loginContainer.coolBorder
 			// user info
 			div 
-				br
-				div
-					if changesuccessmessage
-						span(id="changesuccessmessage").colorRed=changesuccessmessage
-					else
-						br
+				if changesuccessmessage
+					span(id="changesuccessmessage").colorRed=changesuccessmessage
 				form(id="updateProfileForm" method="post" action='/account/updateprofile')
 					fieldset.form-group
 						label(for="fullname") Full name:
@@ -51,41 +47,23 @@ block content
 			div.verticalAlignment.fullWidth
 				label My courses:
 				div.verticalAlignment.fullWidth
-					div.fullWidth
-						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
-						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
-					div.fullWidth
-						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
-						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
 					each element in hotbarelements.courses
-						div.fullWidth
-							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
-							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
+						div.fullWidth.accountHotElement
+							a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
+							a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
 				br
 				label My majors:
 				//div.fullWidth My majors:
 				div.verticalAlignment.fullWidth
-					div.fullWidth
-						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
-						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
-					div.fullWidth
-						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
-						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
 					each element in hotbarelements.majors
-						div.fullWidth
-							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
-							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
+						div.fullWidth.accountHotElement
+							a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
+							a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
 				br
 				label My summaries:
 				div.verticalAlignment.fullWidth
-					div.fullWidth
-						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
-						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
-					div.fullWidth
-						div(onClick="location.href='/course?id=23';").btn.btn-info.hotElementWidth.leftContent .Línuleg Algebra
-						div(onClick="location.href='/account/removehotbarelement/course/23';").btn.btn-danger.hotRemoveWidth Remove
 					each element in hotbarelements.summaries
-						div.fullWidth
-							div(onClick="location.href='/"+element.type+"?id="+element.elementid+"';").btn.btn-info.hotElementWidth.leftContent=element.contentname
-							div(onClick="location.href='/account/removehotbarelement/"+element.type+"/"+element.elementid+"';").btn.btn-danger.hotRemoveWidth Remove
+						div.fullWidth.accountHotElement
+							a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
+							a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
 	script(src="/javascripts/frontend-account.js")
