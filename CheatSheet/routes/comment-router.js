@@ -2,43 +2,73 @@
 
 var commentManager = require('../lib/managers/comment-manager');
 var router = require('express').Router();
-var isAuthenticated = require('../lib/isAuthenticated');
 
-router.get('/async', function (req, res) {
+router.post('/async', function (req, res) {
+	console.log(JSON.stringify(req.body));
 	var parentId = req.body.parentId;
-	var type = req.body.type;
-	commentManager.getCommentsByTypeAndParentId(type, parentId, function callback(err, result) {
-		if(!err) {
-			res.send(result)
-		} else {
-			res.send(err)
-		}
-	});
+	var parentId = req.body.parentId;
+	var type = req.body.commentType;
+	var parentContentId = req.body.parenContentId
+	if(req.isAuthenticated()){
+		commentManager.getCommentsWithVoteByTypeAndParentId(req.user, 
+			type, parentId, parentContentId, function(err, result) {
+			if(!err) {
+				res.send(result);
+			} else {
+				res.send(err);
+			}
+		});
+	} else {
+		commentManager.getCommentsByTypeAndParentId(type, parentId, parentContentId, function(err, result) {
+			if(!err) {
+				res.send(result);
+			} else {
+				res.send(err);
+			}
+		});
+	}
 });
 
-router.get('/', function(req, res) {
-	var parentId = req.body.parentId;
-	var type = req.body.type;
-	commentManager.getCommentsByTypeAndParentId(type, parentId, function callback(err, result) {
-		if(!err) {
-			res.render('comment', { title: 'Comments', comments:result});
-		} else {
-			res.render('comment', { title: 'Comments', summary:err});
-		}
-	});
-});
-
-router.post('/', isAuthenticated, function (req, res) {
+router.post('/async/create', function (req, res) {
 	var content = req.body.content;
-	var parentId = req.body.parentId;
-	var type = req.body.type;
-	commentManager.createComment(req.user, content, type, parentId, function callback(err, results) {
-		if(!err) {
-			res.send(result)
+	var parentId = req.body.parent_id;
+	var type = req.body.comment_type;
+	var parentContentId = req.body.parent_content_id;
+	var isEdit = req.body.is_edit;
+	if(req.isAuthenticated()) {
+		if(isEdit) {
+			commentManager.editCommentByIdAndType(req.user, 
+				content, type, commentId, parentContentId, function(err, result) {
+				if(!err) {
+					res.send(result);
+				} else {
+					res.send(err);
+				}
+			});
 		} else {
-			res.send(err)
+			commentManager.createComment(req.user,
+			 content, type, parentId, parentContentId, function(err, result) {
+				if(!err) {
+					res.send(result);
+				} else {
+					res.send(err);
+				}
+			});
+		}
+	} else {
+		res.status(401).send();
+	}
+});
+
+router.post('/async/latest', function (req, res) {
+	commentManager.getLatestComments(req.body.amount, function(err, result) {
+		if(!err) {
+			res.send(result);
+		} else {
+			res.send(err);
 		}
 	});
+	}
 });
 
 module.exports = router;
