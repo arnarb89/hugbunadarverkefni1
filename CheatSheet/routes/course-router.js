@@ -17,6 +17,8 @@ module.exports = function(passport){
 				res.render('placeholder-course',{message:'There was an error.'});
 			}else{
 				var breadcrumbs = result.rows[0];
+				console.log("/course/:id get, result: "+JSON.stringify(result));
+				console.log("/course/:id get, breadcrumbs: "+JSON.stringify(breadcrumbs));
 				breadcrumbs.currentid = breadcrumbs.courseid;
 				breadcrumbs.currentname = breadcrumbs.coursename;
 				breadcrumbs.currenttype = 'course';
