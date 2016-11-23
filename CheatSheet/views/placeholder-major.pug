@@ -12,9 +12,11 @@ block content
 						p(id="contentname")=breadcrumbs.currentname
 						p(id="contenttype")=breadcrumbs.currenttype
 					span
-						a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
+						//a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
+						span=breadcrumbs.schoolname
 						b=" > "
-						a(href='/department/'+breadcrumbs.departmentid).loginLinks=breadcrumbs.departmentname
+						//a(href='/department/'+breadcrumbs.departmentid).loginLinks=breadcrumbs.departmentname
+						span=breadcrumbs.departmentname
 						b=" > "
 						a(href='/major/'+breadcrumbs.majorid).loginLinks=breadcrumbs.majorname
 			div.coolBorder
@@ -24,11 +26,16 @@ block content
 				if result.length==0
 					p There are no courses yet.
 				else
+					div(style="padding-left:13px; padding-right:13px; margin-top:5px;").horizontalAlignment
+						div.col-md-3 
+							b ID code:
+						div.col-md-9 
+							b Course name:
 					each course in result
 						// a course
 						a(href='/course/'+course.courseid).btn.btn-info.courseButton.fullWidth.leftContent
-							div.identificationDiv.inline=course.identificationcode+" : "
-							div.coursenameDiv.inline=course.coursename
+							div.col-md-3=course.identificationcode
+							div.col-md-9=course.coursename
 				if user
 					a(id="addNewCourseFormOpen").btn.btn-success.courseButton.fullWidth.centerContent Add new course to this major
 					div(id="addNewCourseForm" href='javascript:void(0)' style="display:none;").squareBorder
@@ -43,7 +50,7 @@ block content
 							a(id="addNewCourseFormSubmit" href='javascript:void(0)').form-control.btn-success.active.submitcancelbuttons Submit
 							a(id="addNewCourseFormCancel" href='javascript:void(0)').form-control.btn-danger.active.submitcancelbuttons Cancel
 				else
-					a(href="/login").btn.btn-success.fullWidth Login to add new courses!
+					a(href="/login").btn.btn-success.fullWidth.courseButton Login to add new courses!
 
 			// container for the comment module
 			div.coolBorder Here is the chat module

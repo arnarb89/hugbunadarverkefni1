@@ -12,9 +12,11 @@ block content
 						p(id="contentname")=breadcrumbs.currentname
 						p(id="contenttype")=breadcrumbs.currenttype
 					span
-						a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
+						//a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
+						span=breadcrumbs.schoolname
 						b=" > "
-						a(href='/department/'+breadcrumbs.departmentid).loginLinks=breadcrumbs.departmentname
+						//a(href='/department/'+breadcrumbs.departmentid).loginLinks=breadcrumbs.departmentname
+						span=breadcrumbs.departmentname
 						b=" > "
 						a(href='/major/'+breadcrumbs.majorid).loginLinks=breadcrumbs.majorname
 						b=" > "
@@ -29,11 +31,11 @@ block content
 					div(style="padding-left:13px; padding-right:13px; margin-top:5px;").horizontalAlignment
 						div.col-md-1 
 							b Rating:
-						div.col-md-5 
+						div.col-md-4 
 							b Author:
 						div.col-md-2 
 							b Attended:
-						div.col-md-2
+						div.col-md-3
 							b Teacher:
 						div.col-md-2 
 							b Modified:
@@ -44,14 +46,14 @@ block content
 							//div.inline=course.coursename
 							//
 							div.col-md-1.rightContent=summary.voteCount
-							div.col-md-5=summary.author.fullName
+							div.col-md-4=summary.author.fullName
 							div.col-md-2=summary.attendanceDate
-							div.col-md-2=summary.teacherName
+							div.col-md-3=summary.teacherName
 							div.col-md-2=summary.dateModified
 				if user
 					a(id="addNewSummaryFormOpen" href="/summary/create/"+breadcrumbs.currentid).btn.btn-success.courseButton.fullWidth.centerContent Add new summary for this course
 				else
-					a(href="/login").btn.btn-success.fullWidth Login to create a new summary!
+					a(href="/login").btn.btn-success.fullWidth.courseButton Login to create a new summary!
 
 			// container for the comment module
 			div.coolBorder Here is the chat module
