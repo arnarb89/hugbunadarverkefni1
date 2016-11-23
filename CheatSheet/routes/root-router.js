@@ -1,14 +1,21 @@
 'use strict';
+var express = require('express');
+var router = express.Router();
+var schoolManager = require('../lib/managers/school-manager');
 
-var schoolManager = require('../lib/managers/school-manager.js');
-var router = require('express').Router();
-
-router.get('/', function (req, res) {
-	schoolManager.get(req.body.name, schoolId, function (err, result) {
-		// send success and 
-		// error handling
-		res.render('index', {title:'root'});
+module.exports = function(passport) {
+	router.get('/', function done(req, res) {
+		schoolManager.getSchools(function done(err, result) {
+			if(!err) {
+				res.render('root', {
+					getLatestComments: true,
+					result:result
+				});
+			} else {
+				res.status(404).send();
+			}
+		});
 	});
-});
 
-module.exports = router;
+	return router;
+};

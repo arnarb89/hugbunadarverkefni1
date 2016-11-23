@@ -27,12 +27,12 @@ gulp.task('nodemon', function (cb) {
 
   return nodemon({
     script: 'bin/www',
-    ext: 'js pug json',
+    ext: 'js pug json css',
     env: { 'NODE_ENV': enviroment },
     // watch core server file(s) that require server restart on change
-    watch: ['bin/www', 'app.js','routes/**/*', 'views/**/*']
+    watch: ['bin/www', 'app.js','routes/**/*','public/**/*','passport/**/*','cs-managers/**/*','cs-DBcontroller/**/*','social/**/*', 'views/**/*', 'lib/*']
   }).on('start', function () {
-    // to avoid nodemon being started multiple times
+    // to avoid nodemon being started multiple times°l
     if (!started) {
       cb();
       started = true;
@@ -63,7 +63,7 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('jshint', function() {
-  return gulp.src(['./public/javascripts/*.js','./routes/*.js'])
+  return gulp.src(['./public/javascripts/*.js','./routes/*.js','./lib/*.js','./lib/managers/*.js','./passport/*.js','./social/*.js','./cs-managers/*.js','./cs-DBcontroller/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
@@ -76,3 +76,4 @@ gulp.task('serve', ['nodemon', 'browser-sync'/*, 'styles'*/]);
 // set production enviroment, then serve.
 gulp.task('serve-prod', ['setProdEnv','serve']);
 gulp.task('default', ['serve']);
+// gulp.task('default', ['jshint', 'serve']);

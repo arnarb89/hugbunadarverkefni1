@@ -1,0 +1,53 @@
+doctype html
+html(lang="is")
+	head
+		title= title
+		link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet")
+		link(rel='stylesheet' type='text/css' href='/stylesheets/style.css')
+		link(rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Shadows+Into+Light')
+		//<link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+		script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+		meta(charset="utf-8")
+		meta(name="viewport" content="width=device-width" initial-scale="1")
+		link(href="https://fonts.googleapis.com/css?family=Bowlby+One" rel="stylesheet")
+		link(href="https://fonts.googleapis.com/css?family=Bilbo" rel="stylesheet")
+	body
+		// The whole header
+		div.fullWidth.wholeHeader
+			// Upper header
+			div(style="min-height:68px;").fullWidth.mainHeader
+				// The logo
+				div.col-md-3.logoDiv.verticalMiddleContent.centeredContent
+					a(href='/').logoAnchor.logoText CheatSheet
+				// The flavor text
+				div.col-md-6.verticalMiddleContent.centeredContent.flavorText.middleSomething Find or create the best way to tackle each class in school
+				// Account management
+				div.col-md-3.verticalMiddleContent.accountDiv.rightContent2
+					div
+						if	!user
+							a(href='/login').loginLinks.loginLinksLineHeight Login
+							b  | 
+							a(href='/signup').loginLinks.loginLinksLineHeight Signup
+							b  | 
+							a(href='/facebook-login').brighten
+								img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
+						else
+							a(href='/account').loginLinks.loginLinksLineHeight=user.fullname
+							b  | 
+							a(href='/logout').loginLinks.loginLinksLineHeight Logout
+			// Hotbar
+			if user
+				div.fullWidth.hotBarDiv
+					div.hotbarLabels Courses: 
+					each course in hotbarelements.courses
+						a(href='/course/'+course.elementid).hotbarButtons.verticalMiddleContent=course.contentname
+					div.hotbarLabels Majors: 
+					each major in hotbarelements.majors
+						a(href='/major/'+major.elementid).hotbarButtons.verticalMiddleContent=major.contentname
+					div.hotbarLabels Summaries:
+					each summary in hotbarelements.summaries
+						a(href='/summary/'+summary.elementid).hotbarButtons.verticalMiddleContent=summary.contentname
+			// lower border for header
+			div.headerBorder
+		main
+			block content

@@ -1,38 +1,39 @@
 var login = require('./login');
 var signup = require('./signup');
-//var User = require('../models/user');
 var userManager = require('../cs-managers/userManager.js');
+var facebook = require('./facebook');
 
 module.exports = function(passport){
+    'use strict';
 
-	// Passport needs to be able to serialize and deserialize users to support persistent login sessions
+	// Serialization determines what should be stored in the cookie, gets "user" from done() of i.e. passport/login.js and passport/signup.js
     passport.serializeUser(function(user, done) {
-        console.log('serializing user: ');
-        console.log(user);
-        done(null, user.id);
+        
+        if(user.passwordhash) {
+            delete user.passwordhash;
+        }
+        done(null, user);
     });
 
-    /*passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            console.log('deserializing user:',user);
-            done(err, user);
-        });
-    });*/
-
-    passport.deserializeUser(function(id, done) {
-        userManager.getUserById(id, function(err, result) {
-            console.log('deserializing user:',result);
-            /*var theUser = {
-                username : result.username,
-                fullname: result.fullname,
-                email: result.email
-            };*/
-            done(err, result);
+    // Deserialization fetches "user" from the cookie and puts into session (i think?)
+    passport.deserializeUser(function(user, done) {
+        userManager.getUserById(user.id, function(err, result) {
+            var theresult = result.rows[0];
+            if(theresult.passwordhash) {
+                delete theresult.passwordhash;
+            }
+            if(!err) {
+                done(null,theresult);
+            }
+            else {
+                done(err,null);
+            }
         });
     });
 
     // Setting up Passport Strategies for Login and SignUp/Registration
     login(passport);
     signup(passport);
+    facebook(passport);
 
-}
+};

@@ -1,0 +1,67 @@
+block comment
+
+	div.comment-module
+		link(rel='stylesheet' href='/stylesheets/comment.css')
+		div(id='comment-main-container')
+			if contentInfo
+				script.
+					var contentInfo = !{JSON.stringify(contentInfo)}
+			if getLatestComments
+				script.
+					var getLatestComments = !{JSON.stringify(getLatestComments)}
+			if user
+				script.
+					var user = !{JSON.stringify(user)}
+				if contentInfo
+					div(id='reply-box-template' style="display: none;" data-action-type='reply').action-box
+						form(method="post" action='/comment/async')
+							fieldset.form-group  
+								textarea(type="text" placeholder="" name="content" autofocus required ).form-control
+								input(type='hidden' value='' name='parent_id' id='reply-parent-id' ).form-control
+								input(type='hidden' name='parent_content_id' value=''+contentInfo.id ).form-control
+								input(type='hidden' name='comment_type' value=''+contentInfo.type ).form-control
+							div
+								input(type="submit").form-control
+					div(id='edit-box-template' style='display: none;' data-action-type='edit').action-box
+						form(method="post" action='/comment/async')
+							fieldset.form-group  
+								textarea(type="text" placeholder="" name="content" autofocus required ).form-control
+								input(type='hidden' name='parent_content_id' value=contentInfo.id ).form-control
+								input(type='hidden' name='comment_type' value=contentInfo.type).form-control
+								input(type='hidden' name='comment_id' value='' id='edit-comment-id').form-control
+								input(type='hidden' name='is_edit' value=1 ).form-control
+							div
+								input(type="submit").form-control
+					div(id='load-more-template' style='display: none;')
+						a Load more comments
+			div(id='comment-container-template'	style='display: none;').comment-container
+				div.flexer.comment-box
+					div.vote-actions
+						div.up-vote ▲
+						div.down-vote ▼
+					div.comment
+						div.info-line.flexer
+							div.vote-count 13
+							div.author
+								a user 1
+							div
+								time.date-created 2016-11-14 18:50:48 +0000
+						div.comment-content
+							p This is content of comment 1
+						div.action-line
+							ul.list-inline
+								if user
+									li.reply
+										a reply
+									li.edit
+										a edit
+									li.report
+										a report
+								//- li.delete
+								//- 	a delete
+								//- li.permalink
+								//- 	a permalink
+								//- li.parent
+								//- 	a parent
+
+		script(type='text/javascript' src='/javascripts/comment-loader.js')

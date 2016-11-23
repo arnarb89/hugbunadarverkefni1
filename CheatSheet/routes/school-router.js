@@ -3,11 +3,22 @@
 var schoolManager = require('../lib/managers/school-manager.js');
 var router = require('express').Router();
 
-router.post('/', function (req, res) {
-	schoolManager.createSchool(req.body.name, schoolId, function (err, result) {
-			// send success and 
-			// error handling
-	});
-});
+module.exports = function(passport) {
 
-module.exports = router;
+	router.post('/', function (req, res) {
+		console.log(req.body)
+		if(req.isAuthenticated()){
+			schoolManager.createSchool(req.body.schoolName, function (err, result) {
+				if(!err) {
+					res.send({success:result});
+				} else {
+					console.log({error:err});
+				}
+			});
+		} else {
+			res.status(401).send();
+		}
+	});
+
+	return router;
+};

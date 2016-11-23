@@ -16,13 +16,21 @@ var flash = require('connect-flash');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(require('connect').bodyParser);
+//app.use(require('connect').bodyParser.urlencoded({ extended: false }));
+
+
+
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 
 
@@ -43,13 +51,43 @@ app.use(flash());
 var initPassport = require('./passport/init');
 initPassport(passport);
 
-/*var routes = require('./routes/index')(passport);
-app.use('/', routes);*/
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next();
+});
+
+app.use(function(req,res,next){
+    if(req.user){
+      res.locals.user = req.user;
+      next();
+    }
+    else{
+      next();
+    }
+});
+
+// Load hotbar elements
+var loadhotbarelements = require('./lib/hotbarloader');
+app.use(loadhotbarelements);
 
 
 
-var routes = require('./routes/index')(passport);
-app.use('/', routes);
+
+var rootRouter = require('./routes/root-router')(passport);
+var commentRouter = require('./routes/comment-router')(passport);
+var dptmntRouter = require('./routes/department-router')(passport);
+var schoolRouter = require('./routes/school-router')(passport);
+
+app.use('/', rootRouter);
+app.use('/school', schoolRouter);
+app.use('/department', dptmntRouter);
+app.use('/comment', commentRouter);
+
+// var routes = require('./routes/index')(passport);
+// app.use('/', routes);
+
+var facebookLogin = require('./routes/facebook-login')(passport);
+app.use('/facebook-login', facebookLogin);
 
 var login = require('./routes/login')(passport);
 app.use('/login', login);
@@ -60,8 +98,20 @@ app.use('/signup', signup);
 var logout = require('./routes/logout')(passport);
 app.use('/logout', logout);
 
+<<<<<<< HEAD
 var summarypage = require('./routes/summarypage')(passport);
 app.use('/summarypage', summarypage);
+=======
+var account = require('./routes/account-router')(passport);
+app.use('/account', account);
+
+var major = require('./routes/major-router')(passport);
+app.use('/major', major);
+
+var course = require('./routes/course-router')(passport);
+app.use('/course', course);
+
+>>>>>>> ddfdfe7a65a1ac72e619fd1cce9d05223e39dfef
 
 
 // catch 404 and forward to error handler

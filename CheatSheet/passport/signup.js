@@ -1,55 +1,50 @@
 var LocalStrategy   = require('passport-local').Strategy;
-//var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 var userManager = require('../cs-managers/userManager.js');
 
 module.exports = function(passport){
+    'use strict';
 
 	passport.use('signup', new LocalStrategy(
         {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
-        function(req, username, password, done) {
-
-            findOrCreateUser = function(){
-                // find a user in Mongo with provided username
-                //User.findOne({ 'username' :  username }, function(err, user) {
-                userManager.getUserByUsername(username, function(err, result) {
+        function(req,username,password,done) {
+            
+            var findOrCreateUser = function(){
+                userManager.getLocalUserByUsername(req.body.username, function(err, result) {
                     // In case of any error, return using the done method
                     if (err){
                         console.log('Error in SignUp: '+err);
                         return done(err);
                     }
                     // already exists
-                    if (result) {
-                        console.log('User already exists with username: '+username);
-                        return done(null, false, req.flash('message','User Already Exists'));
+                    if (result.rows.length!==0) {
+                        console.log('User already exists with username: '+req.body.username);
+                        return done(null, false, req.flash('message','The username "'+req.body.username+'" is already in use. Please choose another one.'));
                     } else {
-                        // if there is no user with that email
-                        // create the user
-                        var newUser = {};
-                        /*[
-                            username, 
-                            createHash(password),
-                            req.param('email'),
-                            req.param('fullname')
-                        ];*/
-
-                        // set the user's local credentials
-                        newUser.username = username;
-                        newUser.password = createHash(password);
-                        newUser.email = req.param('email');
-                        newUser.fullname = req.param('fullname');
-
                         // save the user
-                        userManager.createUser(username,createHash(password),req.param('email'),req.param('fullname'),
-                            function(err) {
+                        userManager.createLocalUser(
+                            req.body.username,
+                            createHash(req.body.password),
+                            req.body.email,req.body.fullname,
+                            function(err,result) {
                                 if (err){
-                                    console.log('Error in Saving user: '+err);  
-                                    throw err;  
+                                    console.log('Error in Saving user: '+err); 
+                                    if(err== 'error: duplicate key value violates unique constraint "users_email_key"') {
+                                        return done(null,false,req.flash('message','The email "'+req.body.email+'" is already in use. Please choose another one.'));
+                                    }
+                                    else{
+                                        return done(null,false,req.flash('message','There was an error. '));
+                                    }
+                                    
                                 }
-                                console.log('User Registration succesful');    
-                                return done(null, newUser);
+                                var theresults = result.rows[0];
+                                if(theresults.passwordhash) {
+                                    delete theresults.passwordhash;
+                                }
+                                console.log('Signed up, returning theresults: '+JSON.stringify(theresults));
+                                return done(null, theresults);
                             }
                         );
                     }
@@ -64,6 +59,6 @@ module.exports = function(passport){
     // Generates hash using bCrypt
     var createHash = function(password){
         return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-    }
+    };
 
-}
+};
