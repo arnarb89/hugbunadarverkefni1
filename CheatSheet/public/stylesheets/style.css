@@ -261,12 +261,26 @@ a {
 	outline: none; 
 	text-decoration:none;
 }
+.hotbarButtons:link{
+	/*color: #5D49C4;*/
+	text-decoration:none;
+	color: #333333;
+}
+.hotbarButtons:visited{
+	/*color: #5D49C4;*/
+	text-decoration:none;
+	color: #333333;
+}
 .hotbarButtons:hover{
 	/*color: #5D49C4;*/
 	text-decoration:none;
 	color: #6E6E6E;
 }
-
+.hotbarButtons:active{
+	/*color: #5D49C4;*/
+	text-decoration:none;
+	color: #333333;
+}
 .hotbarLabels{
 	margin-right:4px;
 	display:flex;
@@ -394,4 +408,17 @@ a{
 
 a:hover{
 	text-decoration: none;
+}
+
+.transition{
+	      -webkit-transition: all 0.3s ease;
+     -moz-transition: all 0.3s ease;
+       -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+          transition: all 0.3s ease;
+}
+
+
+.loginSignupWidth{
+	width:500px;
 }

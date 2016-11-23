@@ -2,7 +2,7 @@ extends placeholder-layout
 
 block content
 	div.fullWidth
-		div.loginContainer
+		div.loginContainer.loginSignupWidth
 			div.breadcrumbsContainer.mainHeader.verticalMiddleContent
 				span
 					a(href='/').loginLinks CheatSheet
@@ -28,7 +28,7 @@ block content
 					fieldset.form-group
 						label(for="fullname") Full name:
 						input(id="fullname" type="text" name="fullname" placeholder="Full name" required).form-control
-					input(type="submit").form-control.btn-success.active
+					input(type="submit").form-control.btn-success.active.transition
 				if (message != "")
 					span(id="message")= message
 				else

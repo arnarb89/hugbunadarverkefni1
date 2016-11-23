@@ -2,7 +2,7 @@ extends placeholder-layout
 
 block content
 	div.fullWidth
-		div.loginContainer
+		div.loginContainer.loginSignupWidth
 			div.breadcrumbsContainer.mainHeader.verticalMiddleContent
 				span
 					a(href='/').loginLinks CheatSheet
@@ -17,7 +17,7 @@ block content
 						label(for="password") Password:
 						input(id="password" type="password" name="password" placeholder="Password" required).form-control
 					div
-						input(type="submit").form-control.btn-success.active
+						input(type="submit").form-control.btn-success.active.transition
 				if (message != "")
 					div
 						span= message
