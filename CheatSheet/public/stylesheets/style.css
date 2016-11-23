@@ -274,13 +274,6 @@ a {
 	flex-direction: column;
 }
 
-.hotRemoveWidth{
-	width: 20%;
-}
-.hotElementWidth{
-	width: 80%;
-}
-
 .btn-info{
 	color:#262626;
 }

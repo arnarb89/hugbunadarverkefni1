@@ -58,8 +58,10 @@ block content
 						else
 							each element in hotbarelements.courses
 								div.fullWidth.accountHotElement
-									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
-									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
+									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.leftContent.col-md-9=element.contentname
+									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.col-md-3 Remove
+					br
+					br
 					br
 					label Majors:
 					//div.fullWidth My majors:
@@ -69,8 +71,10 @@ block content
 						else
 							each element in hotbarelements.majors
 								div.fullWidth.accountHotElement
-									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
-									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
+									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.leftContent.col-md-9=element.contentname
+									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.col-md-3 Remove
+					br
+					br
 					br
 					label Summaries:
 					div.verticalAlignment.fullWidth
@@ -79,6 +83,6 @@ block content
 						else
 							each element in hotbarelements.summaries
 								div.fullWidth.accountHotElement
-									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
-									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
+									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.leftContent.col-md-9=element.contentname
+									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.col-md-3 Remove
 	script(src="/javascripts/frontend-account.js")
