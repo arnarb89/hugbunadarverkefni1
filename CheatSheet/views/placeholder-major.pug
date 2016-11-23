@@ -33,9 +33,9 @@ block content
 							b Course name:
 					each course in result
 						// a course
-						a(href='/course/'+course.courseid).btn.btn-info.courseButton.fullWidth.leftContent
-							div.col-md-3=course.identificationcode
-							div.col-md-9=course.coursename
+						a(href='/course/'+course.id).btn.btn-info.courseButton.fullWidth.leftContent
+							div.col-md-3=course.identificationCode
+							div.col-md-9=course.name
 				if user
 					a(id="addNewCourseFormOpen").btn.btn-success.courseButton.fullWidth.centerContent Add new course to this major
 					div(id="addNewCourseForm" href='javascript:void(0)' style="display:none;").squareBorder

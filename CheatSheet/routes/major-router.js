@@ -21,21 +21,21 @@ module.exports = function(passport){
 				console.log("/major/:id get, err: "+err);
 				res.render('placeholder-major',{message:'There was an error.'});
 			}else{
-				var majorBreadcrumbs = result.rows[0];
-				majorBreadcrumbs.currentid = majorBreadcrumbs.majorid;
-				majorBreadcrumbs.currentname = majorBreadcrumbs.majorname;
-				majorBreadcrumbs.currenttype = 'major';
+				var breadcrumbs = result.rows[0];
+				breadcrumbs.currentid = breadcrumbs.majorid;
+				breadcrumbs.currentname = breadcrumbs.majorname;
+				breadcrumbs.currenttype = 'major';
 				
 				// async request
 				//console.log('/major/:id :id is: '+req.params.id);
-				courseManager.getCoursesByMajorIdArnar(req.params.id, function (err, result) {
+				courseManager.getCourseByMajorId(req.params.id, function (err, result) {
 					if(err){
 						console.log("/major/:id get, err: "+err);
 						res.render('placeholder-major', {message: 'There was an error.'});
 					}else{
-						console.log('/major/:id get, result.rows: '+JSON.stringify(result.rows));
-						console.log('get /major/:id, breadCrumbs: '+JSON.stringify(majorBreadcrumbs));
-						res.render('placeholder-major', {message:null, result:result.rows, breadcrumbs: majorBreadcrumbs});
+						console.log('/major/:id get, result.rows: '+JSON.stringify(result));
+						console.log('get /major/:id, breadCrumbs: '+JSON.stringify(breadcrumbs));
+						res.render('placeholder-major', {message:null, result:result, breadcrumbs: breadcrumbs});
 					}
 					// return courses asyncly
 					// handle error

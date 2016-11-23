@@ -27,7 +27,7 @@ courseManager.getCourseByMajorId = function (majorId, callback) {
 
 
 
-courseManager.getCoursesByMajorIdArnar = function (majorId, callback) {
+/*courseManager.getCoursesByMajorIdArnar = function (majorId, callback) {
 	var sqlString = "SELECT " +
 	"courses.id AS courseId, courses.name AS courseName, courses.identificationCode, " + // from courses table
 	"majors.name AS majorName, majors.id AS majorId," + // from majors tableaua
@@ -43,7 +43,7 @@ courseManager.getCoursesByMajorIdArnar = function (majorId, callback) {
 			return callback(null,result);
 		}
 	});
-}
+}*/
 
 courseManager.getCourseByIdArnar = function (courseId, callback) {
 	var sqlString = "SELECT " +
