@@ -9,22 +9,24 @@
 	var thisContent;
 
 	var init = function() {
-		// $('#comment-load-button').click(function(){
-		// 	getComments(0);
-		// });
 		mainContainer = $('#comment-main-container');
 		commentTemplate = $('#comment-container-template');
 		replyTemplate = $('#reply-box-template');
 		editTemplate = $('#edit-box-template');
 		commentType = commentTemplate.data('commenttype');
-		console.log(user);
-		console.log(contentData);
-		thisUser = user;
-		thisContent = contentData;
-		getComments(0);
+		if(typeof user !== 'undefined') {
+			thisUser = user;
+		}
+		if(typeof contentInfo !== 'undefined')
+			thisContent = contentInfo;
+		if(typeof getLatestComments !== 'undefined') {
+			getLatest(mainContainer, 10);
+		} else if(typeof contentInfo !== 'undefined') {
+			getComments(mainContainer, 0);
+		}
 	};
 
-	var getComments = function(parentId) {
+	var getComments = function(container, parentId) {
 		console.log('getComments()');
 		$.ajax({
 			type: 'GET',
@@ -36,10 +38,28 @@
 			},
 			success: function(result) {
 				console.log('ajax:getComments:success');
-				loadComments(mainContainer, result);
+				loadComments(container, result);
 			},
 			error: function(err) {
 				console.log('ajax:getComments:error');
+				console.log(err);
+			},
+			dataType: 'json'
+		})
+	} 
+
+	var getLatest = function(container, amount) {
+		console.log('getComments()');
+		$.ajax({
+			type: 'POST',
+			url: '/comment/async/latest',
+			data: {
+				amount: amount
+			},
+			success: function(result) {
+				loadComments(container, result);
+			},
+			error: function(err) {
 				console.log(err);
 			},
 			dataType: 'json'
@@ -63,7 +83,6 @@
 	};
 
 	var makeComment = function(mainContainer, comment) {
-		console.log(comment);
 		var alreadyExists = $('#comment-container-'+comment.id).length !== 0
 		var isRootComment = parseInt(comment.parentId) === 0;
 		var parentExists = $('#comment-container-'+comment.parentId).length !== 0;

@@ -73,8 +73,18 @@ app.use(loadhotbarelements);
 
 
 
-var routes = require('./routes/index')(passport);
-app.use('/', routes);
+var rootRouter = require('./routes/root-router')(passport);
+var commentRouter = require('./routes/comment-router')(passport);
+var dptmntRouter = require('./routes/department-router')(passport);
+var schoolRouter = require('./routes/school-router')(passport);
+
+app.use('/', rootRouter);
+app.use('/school', schoolRouter);
+app.use('/department', dptmntRouter);
+app.use('/comment', commentRouter);
+
+// var routes = require('./routes/index')(passport);
+// app.use('/', routes);
 
 var facebookLogin = require('./routes/facebook-login')(passport);
 app.use('/facebook-login', facebookLogin);

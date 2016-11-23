@@ -1,0 +1,17 @@
+.school-container {
+	margin-bottom: 0.5em;
+}
+
+.department-container, .major-container, .department-form, .major-form  {
+	padding: 0.5em 0em 0em 3em;
+}
+
+.school-children-container {
+	/*border-left: 1px black solid;*/
+	/*margin-left: 2em;*/
+}
+
+.school-button, .department-button, .major-button {
+	text-align:	left;
+	padding-left: 2em;
+}
