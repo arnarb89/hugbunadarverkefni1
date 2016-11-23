@@ -13,7 +13,9 @@ courseManager.getCourseByMajorId = function (majorId, callback) {
 	"majors.name AS majorName, " + // from majors tableaua
 	"departments.id AS departmentId, departments.name AS departmentName, " + // from departments table
 	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
-	"FROM courses, majors, departments, schools WHERE majors.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id";
+	"FROM courses, majors, departments, schools "+
+	"WHERE majors.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id "+
+	"ORDER BY courseName ASC;";
 	var inputVariables = [majorId];
 
 	dbc.query(sqlString, inputVariables, function(err, result) {
