@@ -60,6 +60,9 @@ app.use('/signup', signup);
 var logout = require('./routes/logout')(passport);
 app.use('/logout', logout);
 
+var summarypage = require('./routes/summarypage')(passport);
+app.use('/summarypage', summarypage);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
