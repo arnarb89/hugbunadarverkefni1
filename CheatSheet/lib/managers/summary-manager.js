@@ -55,12 +55,15 @@ summaryManager.getSummaryByCourse = function (courseId, callback) {
 	});
 }
 
+
 summaryManager.getSummaryMetaData = function (courseId, callback) {
 	var sqlString = "SELECT " +
 	"summaries.id AS summaryId, summaries.teacherName, summaries.attendanceDate, summaries.voteCount, summaries.dateCreated, summaries.dateModified, " + // from summary table
 	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, " + // from user table
 	"userLocal.username AS authorUsername " + // from userLocal table
-	"FROM summaries, courses, users, userLocal WHERE summaries.authorid = users.id AND summaries.courseId = $1 AND users.id=userLocal.userId";
+	"FROM summaries, courses, users, userLocal "+
+	"WHERE summaries.authorid = users.id AND summaries.courseId = $1 AND users.id=userLocal.userId AND courses.id=$1"+
+	"ORDER BY summaries.voteCount DESC;";
 	var inputVariables = [courseId];
 
 	dbc.query(sqlString, inputVariables, function(err, result) {
@@ -91,7 +94,7 @@ function formatSummary(unformattedSummary) {
 		teacherName : unformattedSummary.teachername,
 		attendanceDate : moment(unformattedSummary.attendancedate).format('hh:mm DD/MM/YY'),
 		dateCreated : moment(unformattedSummary.datecreated).format('hh:mm DD/MM/YY'),
-		dateModified : moment(unformattedSummary.datemodified).format('hh:mm DD/MM/YY'),
+		dateModified : moment(unformattedSummary.datemodified).format('DD/MM/YY'),
 		voteCount : unformattedSummary.votecount,
 		author : {
 			id : unformattedSummary.authorid,

@@ -43,6 +43,7 @@ float: right;
 }
 
 .course {
+
 	
 	text-align: center;
 	width: 100%;
@@ -86,7 +87,6 @@ a {
 }
 
 .flavorText{
-	padding-right:0px;
 	font-size: 2.5em;
 	font-family: 'Bilbo', cursive;
 
@@ -103,14 +103,18 @@ a {
 	align-items: center;
 }
 
+.middleSomething{
+	justify-content: center;
+}
+
 .wholeHeader{
+
 	background-color: LightGray;
 	background: linear-gradient(0deg,#A6A6A6, #EBEBEB);
 }
 
 .accountDiv{
-	min-width: 20%;
-	margin-right:20px;
+	padding-right:20px;
 }
 
 .loginLinksLineHeight{
@@ -163,6 +167,7 @@ a {
 .loginContainer{
 	margin: 0 auto;
 	width: 600px;
+	margin-top:20px;
 }
 .colorRed{
 	color: red;
@@ -184,12 +189,30 @@ a {
 	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
 }
 
+.logoText:link{
+	color: rgba(10,10,10,1);
+}
+
+.logoText:visited{
+	color: rgba(10,10,10,1);
+}
+
+
 .logoText:hover{
-	color: rgba(10,10,10,0.5);
+	color: rgba(10,10,10,0.45);
+	/*color: rgba(10,10,10,1);*/
 	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
 }
+
+.logoText:active{
+	color: rgba(10,10,10,1);
+}
+
+
+
 .logoAnchor:link{
 	text-decoration: none;
+
 	
 }
 .logoAnchor:visited{
@@ -215,8 +238,7 @@ a {
 }
 
 .logoDiv{
-	min-width:20%;
-	margin-left:20px;
+	padding-left:20px;
 }
 .hotbarButtons{
 	padding: 1;
@@ -239,12 +261,26 @@ a {
 	outline: none; 
 	text-decoration:none;
 }
+.hotbarButtons:link{
+	/*color: #5D49C4;*/
+	text-decoration:none;
+	color: #333333;
+}
+.hotbarButtons:visited{
+	/*color: #5D49C4;*/
+	text-decoration:none;
+	color: #333333;
+}
 .hotbarButtons:hover{
 	/*color: #5D49C4;*/
 	text-decoration:none;
 	color: #6E6E6E;
 }
-
+.hotbarButtons:active{
+	/*color: #5D49C4;*/
+	text-decoration:none;
+	color: #333333;
+}
 .hotbarLabels{
 	margin-right:4px;
 	display:flex;
@@ -255,14 +291,19 @@ a {
 	flex-direction: column;
 }
 
-.hotRemoveWidth{
-	width: 20%;
-}
-.hotElementWidth{
-	width: 80%;
-}
-
 .btn-info{
+	color:#262626;
+}
+.btn-info:link{
+	color:#262626;
+}
+.btn-info:visited{
+	color:#262626;
+}
+.btn-info:hover{
+	color:#262626;
+}
+.btn-info:active{
 	color:#262626;
 }
 
@@ -334,4 +375,50 @@ a {
 
 .centerContent{
 	text-align: center;
+}
+
+.summaryListWidth{
+	width:800px;
+}
+
+
+
+.brighten  img{
+  -webkit-filter: brightness(110%);
+  -webkit-transition: all 0.2s ease;
+     -moz-transition: all 0.2s ease;
+       -o-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+}
+ 
+.brighten img:hover {
+  -webkit-filter: brightness(125%);
+}
+
+
+
+a{
+	      -webkit-transition: all 0.3s ease;
+     -moz-transition: all 0.3s ease;
+       -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+          transition: all 0.3s ease;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+.transition{
+	      -webkit-transition: all 0.3s ease;
+     -moz-transition: all 0.3s ease;
+       -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+          transition: all 0.3s ease;
+}
+
+
+.loginSignupWidth{
+	width:500px;
 }

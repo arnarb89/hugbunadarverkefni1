@@ -13,7 +13,9 @@ courseManager.getCourseByMajorId = function (majorId, callback) {
 	"majors.name AS majorName, " + // from majors tableaua
 	"departments.id AS departmentId, departments.name AS departmentName, " + // from departments table
 	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
-	"FROM courses, majors, departments, schools WHERE majors.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id";
+	"FROM courses, majors, departments, schools "+
+	"WHERE majors.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id "+
+	"ORDER BY courseName ASC;";
 	var inputVariables = [majorId];
 
 	dbc.query(sqlString, inputVariables, function(err, result) {
@@ -25,7 +27,9 @@ courseManager.getCourseByMajorId = function (majorId, callback) {
 	});
 }
 
-courseManager.getCoursesByMajorIdArnar = function (majorId, callback) {
+
+
+/*courseManager.getCoursesByMajorIdArnar = function (majorId, callback) {
 	var sqlString = "SELECT " +
 	"courses.id AS courseId, courses.name AS courseName, courses.identificationCode, " + // from courses table
 	"majors.name AS majorName, majors.id AS majorId," + // from majors tableaua
@@ -41,7 +45,25 @@ courseManager.getCoursesByMajorIdArnar = function (majorId, callback) {
 			return callback(null,result);
 		}
 	});
-}
+}*/
+
+courseManager.getCourseByIdArnar = function (courseId, callback) {
+	var sqlString = "SELECT " +
+	"courses.name AS courseName, courses.identificationCode, courses.id AS courseId, " + // from courses table
+	"majors.id AS majorId, majors.name AS majorName, " + // from majors table
+	"departments.id AS departmentId, departments.name AS departmentName, " + // from departments table
+	"schools.id AS schoolId, schools.name AS schoolName " + // from schools table
+	"FROM courses, majors, departments, schools WHERE courses.id = $1 AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id";
+	var inputVariables = [courseId];
+
+	dbc.query(sqlString, inputVariables, function(err, result) {
+		if(err) {
+			return callback(err,null);
+		} else {
+			return callback(null, result);
+		}
+	});
+};
 
 courseManager.getCourseById = function (courseId, callback) {
 	var sqlString = "SELECT " +
