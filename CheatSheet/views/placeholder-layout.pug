@@ -17,14 +17,14 @@ html(lang="is")
 			// Upper header
 			div.fullWidth.mainHeader
 				// The logo
-				div.logoDiv.leftContent
+				div.col-md-3.logoDiv
 					a(href='/').logoAnchor.logoText CheatSheet
 				// The flavor text
-				div.verticalMiddleContent.centeredContent.flavorText Find or create the best way to tackle each class in school
+				div.col-md-6.verticalMiddleContent.centeredContent.flavorText.middleSomething Find or create the best way to tackle each class in school
 				// Account management
-				div.verticalMiddleContent.accountDiv.rightContent2
+				div.col-md-3.verticalMiddleContent.accountDiv.rightContent2
 					div
-						if	!session.passport||!session.passport.user
+						if	!user
 							a(href='/login').loginLinks.loginLinksLineHeight Login
 							b  | 
 							a(href='/signup').loginLinks.loginLinksLineHeight Signup
@@ -36,18 +36,17 @@ html(lang="is")
 							b  | 
 							a(href='/logout').loginLinks.loginLinksLineHeight Logout
 			// Hotbar
-			if session.passport
-				if session.passport.user
-					div.fullWidth.hotBarDiv
-						div.hotbarLabels My Courses: 
-						each course in hotbarelements.courses
-							a(href='/course/'+course.elementid).hotbarButtons.verticalMiddleContent=course.contentname
-						div.hotbarLabels My majors: 
-						each major in hotbarelements.majors
-							a(href='/major/'+major.elementid).hotbarButtons.verticalMiddleContent=major.contentname
-						div.hotbarLabels My summaries:
-						each summary in hotbarelements.summaries
-							a(href='/summary/'+summary.elementid).hotbarButtons.verticalMiddleContent=summary.contentname
+			if user
+				div.fullWidth.hotBarDiv
+					div.hotbarLabels Courses: 
+					each course in hotbarelements.courses
+						a(href='/course/'+course.elementid).hotbarButtons.verticalMiddleContent=course.contentname
+					div.hotbarLabels Majors: 
+					each major in hotbarelements.majors
+						a(href='/major/'+major.elementid).hotbarButtons.verticalMiddleContent=major.contentname
+					div.hotbarLabels Summaries:
+					each summary in hotbarelements.summaries
+						a(href='/summary/'+summary.elementid).hotbarButtons.verticalMiddleContent=summary.contentname
 			// lower border for header
 			div.headerBorder
 		main

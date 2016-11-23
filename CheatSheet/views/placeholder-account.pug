@@ -2,68 +2,83 @@ extends placeholder-layout
 
 block content
 	div.fullWidth
-		div.loginContainer.coolBorder
-			// user info
-			div 
-				if changesuccessmessage
-					span(id="changesuccessmessage").colorRed=changesuccessmessage
-				form(id="updateProfileForm" method="post" action='/account/updateprofile')
-					fieldset.form-group
-						label(for="fullname") Full name:
-						input(id="fullname" type="text" name="fullname" placeholder="Full name" required value=user.fullname).form-control
-					fieldset.form-group  
-						label(for="email") Email:
-						input(id="email" type="text" name="email" placeholder="Email" required value=user.email).form-control
-					input(type="submit" value="Update" id="profilesubmitbutton").form-control.btn-success.active
-				if user.facebookid===null
-					br
-					form(id="updateUsernameForm" method="post" action='/account/updateusername')
+		div.loginContainer
+			div.breadcrumbsContainer.mainHeader.verticalMiddleContent
+				span
+					a(href='/').loginLinks CheatSheet
+						b=" > "
+					a(href='/accoung').loginLinks Account
+			div.coolBorder
+				// user info
+				div 
+					if changesuccessmessage
+						span(id="changesuccessmessage").colorRed=changesuccessmessage
+					form(id="updateProfileForm" method="post" action='/account/updateprofile')
+						fieldset.form-group
+							label(for="fullname") Full name:
+							input(id="fullname" type="text" name="fullname" placeholder="Full name" required value=user.fullname).form-control
 						fieldset.form-group  
-							label(for="username") Username:
-							input(id="username" type="text" placeholder="Username" name="username" required value=user.username).form-control
-						input(type="submit" value="Update" id="usernamesubmitbutton").form-control.btn-success.active
+							label(for="email") Email:
+							input(id="email" type="text" name="email" placeholder="Email" required value=user.email).form-control
+						input(type="submit" value="Update" id="profilesubmitbutton").form-control.btn-success.active
+					if user.facebookid===null
+						br
+						form(id="updateUsernameForm" method="post" action='/account/updateusername')
+							fieldset.form-group  
+								label(for="username") Username:
+								input(id="username" type="text" placeholder="Username" name="username" required value=user.username).form-control
+							input(type="submit" value="Update" id="usernamesubmitbutton").form-control.btn-success.active
+						br
+						form(id="updatePasswordForm" method="post" action='/account/updatepassword')
+							fieldset.form-group
+								label(for="oldpassword") Old password:
+								input(id="oldpassword" type="password" name="oldpassword" placeholder="Password" required).form-control
+							fieldset.form-group
+								label(for="newpassword1") New password:
+								input(id="newpassword1" type="password" name="newpassword1" placeholder="The new password" required).form-control
+							fieldset.form-group
+								div.mainHeader
+									label(for="newpassword2") Retype the new password:
+									div
+										span(id="password-message").colorRed
+								input(id="newpassword2" type="password" name="newpassword2" placeholder="Retype your new password" required).form-control
+							input(type="submit" value="Update" id="passwordsubmitbutton").form-control.btn-success.active
+				br
+				div
+					if (message != "")
+						span(id="message")= message
+					else
+						span(id="message")
+				//hotbar elements
+				div.verticalAlignment.fullWidth
+					label Courses:
+					div.verticalAlignment.fullWidth
+						if hotbarelements.courses.length==0
+							span You have not added any courses to your hotbar yet
+						else
+							each element in hotbarelements.courses
+								div.fullWidth.accountHotElement
+									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
+									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
 					br
-					form(id="updatePasswordForm" method="post" action='/account/updatepassword')
-						fieldset.form-group
-							label(for="oldpassword") Old password:
-							input(id="oldpassword" type="password" name="oldpassword" placeholder="Password" required).form-control
-						fieldset.form-group
-							label(for="newpassword1") New password:
-							input(id="newpassword1" type="password" name="newpassword1" placeholder="The new password" required).form-control
-						fieldset.form-group
-							div.mainHeader
-								label(for="newpassword2") Retype the new password:
-								div
-									span(id="password-message").colorRed
-							input(id="newpassword2" type="password" name="newpassword2" placeholder="Retype your new password" required).form-control
-						input(type="submit" value="Update" id="passwordsubmitbutton").form-control.btn-success.active
-			br
-			div
-				if (message != "")
-					span(id="message")= message
-				else
-					span(id="message")
-			//hotbar elements
-			div.verticalAlignment.fullWidth
-				label My courses:
-				div.verticalAlignment.fullWidth
-					each element in hotbarelements.courses
-						div.fullWidth.accountHotElement
-							a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
-							a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
-				br
-				label My majors:
-				//div.fullWidth My majors:
-				div.verticalAlignment.fullWidth
-					each element in hotbarelements.majors
-						div.fullWidth.accountHotElement
-							a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
-							a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
-				br
-				label My summaries:
-				div.verticalAlignment.fullWidth
-					each element in hotbarelements.summaries
-						div.fullWidth.accountHotElement
-							a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
-							a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
+					label Majors:
+					//div.fullWidth My majors:
+					div.verticalAlignment.fullWidth
+						if hotbarelements.majors.length==0
+							span You have not added any majors to your hotbar yet
+						else
+							each element in hotbarelements.majors
+								div.fullWidth.accountHotElement
+									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
+									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
+					br
+					label Summaries:
+					div.verticalAlignment.fullWidth
+						if hotbarelements.summaries.length==0
+							span You have not added any summaries to your hotbar yet
+						else
+							each element in hotbarelements.summaries
+								div.fullWidth.accountHotElement
+									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.hotElementWidth.leftContent=element.contentname
+									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.hotRemoveWidth Remove
 	script(src="/javascripts/frontend-account.js")

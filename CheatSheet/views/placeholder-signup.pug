@@ -2,33 +2,36 @@ extends placeholder-layout
 
 block content
 	div.fullWidth
-		div.loginContainer.coolBorder
-			span Provide your signup information.
-			br
-			br
-			form(method="post" action='/signup' )
-				fieldset.form-group  
-					label(for="username") Username:
-					input(id="username" type="text" placeholder="Username" name="username" autofocus required).form-control
-				fieldset.form-group
-					label(for="password") Password:
-					input(id="password" type="password" name="password" placeholder="Password" required).form-control
-				fieldset.form-group
-					div.mainHeader
-						label(for="password2") Retype password:
-						div
-							span(id="password-message").colorRed
-					input(id="password2" type="password" name="password2" placeholder="Retype your password" required).form-control
-				fieldset.form-group  
-					label(for="email") Email:
-					input(id="email" type="text" name="email" placeholder="Email" required).form-control
-				fieldset.form-group
-					label(for="fullname") Full name:
-					input(id="fullname" type="text" name="fullname" placeholder="Full name" required).form-control
-				input(type="submit").form-control.btn-success.active
-			if (message != "")
-				span(id="message")= message
-			else
-				span(id="message")
+		div.loginContainer
+			div.breadcrumbsContainer.mainHeader.verticalMiddleContent
+				span
+					a(href='/').loginLinks CheatSheet
+						b=" > "
+					a(href='/signup').loginLinks Signup
+			div.coolBorder
+				form(method="post" action='/signup' )
+					fieldset.form-group  
+						label(for="username") Username:
+						input(id="username" type="text" placeholder="Username" name="username" autofocus required).form-control
+					fieldset.form-group
+						label(for="password") Password:
+						input(id="password" type="password" name="password" placeholder="Password" required).form-control
+					fieldset.form-group
+						div.mainHeader
+							label(for="password2") Retype password:
+							div
+								span(id="password-message").colorRed
+						input(id="password2" type="password" name="password2" placeholder="Retype your password" required).form-control
+					fieldset.form-group  
+						label(for="email") Email:
+						input(id="email" type="text" name="email" placeholder="Email" required).form-control
+					fieldset.form-group
+						label(for="fullname") Full name:
+						input(id="fullname" type="text" name="fullname" placeholder="Full name" required).form-control
+					input(type="submit").form-control.btn-success.active
+				if (message != "")
+					span(id="message")= message
+				else
+					span(id="message")
 						
 	script(src="/javascripts/frontend-signup.js")
