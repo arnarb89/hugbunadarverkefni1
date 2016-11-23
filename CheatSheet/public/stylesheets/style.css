@@ -187,12 +187,29 @@ a {
 	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
 }
 
+.logoText:link{
+	color: rgba(10,10,10,1);
+}
+
+.logoText:visited{
+	color: rgba(10,10,10,1);
+}
+
+
 .logoText:hover{
-	color: rgba(10,10,10,0.5);
+	color: rgba(10,10,10,0.45);
 	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
 }
+
+.logoText:active{
+	color: rgba(10,10,10,1);
+}
+
+
+
 .logoAnchor:link{
 	text-decoration: none;
+
 	
 }
 .logoAnchor:visited{
