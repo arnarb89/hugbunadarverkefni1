@@ -280,6 +280,18 @@ a {
 .btn-info{
 	color:#262626;
 }
+.btn-info:link{
+	color:#262626;
+}
+.btn-info:visited{
+	color:#262626;
+}
+.btn-info:hover{
+	color:#262626;
+}
+.btn-info:active{
+	color:#262626;
+}
 
 .contentContainer{
 	margin: 0 auto;
