@@ -17,7 +17,7 @@ html(lang="is")
 			// Upper header
 			div.fullWidth.mainHeader
 				// The logo
-				div.col-md-3.logoDiv
+				div.col-md-3.logoDiv.enlargen
 					a(href='/').logoAnchor.logoText CheatSheet
 				// The flavor text
 				div.col-md-6.verticalMiddleContent.centeredContent.flavorText.middleSomething Find or create the best way to tackle each class in school
@@ -29,7 +29,7 @@ html(lang="is")
 							b  | 
 							a(href='/signup').loginLinks.loginLinksLineHeight Signup
 							b  | 
-							a(href='/facebook-login')
+							a(href='/facebook-login').brighten
 								img(src='/images/login-with-facebook.png' style='width:135px;height:30px;')
 						else
 							a(href='/account').loginLinks.loginLinksLineHeight=user.fullname

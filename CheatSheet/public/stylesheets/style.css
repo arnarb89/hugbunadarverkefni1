@@ -197,7 +197,8 @@ a {
 
 
 .logoText:hover{
-	color: rgba(10,10,10,0.45);
+	/*color: rgba(10,10,10,0.45);*/
+	color: rgba(10,10,10,1);
 	text-shadow: -1px -1px 0px rgba(20,20,20,0.9), 1px 2px 4px rgba(0,0,0,0.6);
 }
 
@@ -350,4 +351,57 @@ a {
 
 .summaryListWidth{
 	width:800px;
+}
+
+
+
+.brighten  img{
+  -webkit-filter: brightness(110%);
+  -webkit-transition: all 0.2s ease;
+     -moz-transition: all 0.2s ease;
+       -o-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+}
+ 
+.brighten img:hover {
+  -webkit-filter: brightness(125%);
+}
+/*
+.enlargen{
+	-webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+
+      -webkit-transition: all 0.4s ease;
+     -moz-transition: all 0.4s ease;
+       -o-transition: all 0.4s ease;
+      -ms-transition: all 0.4s ease;
+          transition: all 0.4s ease;
+}
+
+.enlargen:hover
+{
+        -webkit-transform: scale(0.98);
+        -ms-transform: scale(0.98);
+        transform: scale(0.98);
+}*/
+
+.enlargen{
+	-webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+
+      -webkit-transition: all 8s ease;
+     -moz-transition: all 8s ease;
+       -o-transition: all 8s ease;
+      -ms-transition: all 8s ease;
+          transition: all 8s ease;
+}
+
+.enlargen:hover
+{
+        -webkit-transform: scale(0.6);
+        -ms-transform: scale(0.6);
+        transform: scale(0.6);
 }
