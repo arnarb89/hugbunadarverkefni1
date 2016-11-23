@@ -1,0 +1,77 @@
+extends placeholder-layout
+
+block content
+	//major container
+	link(rel='stylesheet' type='text/css' href='/stylesheets/root.css')
+	div.fullWidth
+		div.contentContainer
+			div.breadcrumbsContainer.mainHeader.verticalMiddleContent
+				div
+					span
+						a(href='').loginLinks CheatSheet
+			div.coolBorder
+				if result.length==0
+					p There are no schools yet.
+				else
+					each school in result
+						//- a(href='/course/'+course.courseid).btn.btn-info.courseButton.fullWidth.leftContent
+							div.identificationDiv.inline=course.identificationcode+" : "
+							div.coursenameDiv.inline=course.coursename
+						div(id='school-container-'+school.id).school-container
+							a(id='school-button-'+school.id, data-school-id=school.id).btn.btn-info.fullWidth.school-button=school.name
+							div.school-children-container
+							//- div(style='padding: 0.5em 0em 0em 3em;')
+								a.btn.btn-warning.fullWidth departmentName
+								div(style='padding: 0.5em 0em 0em 3em;')
+									a.btn.btn-success.fullWidth majorName
+
+				if user
+					a(id="addNewSchoolFormOpen").btn.btn-success.courseButton.fullWidth.centerContent Add new school
+					div(id="addNewSchoolForm" href='javascript:void(0)' style="display:none;").squareBorder
+						form
+							fieldset.form-group 
+								label(for="addNewSchoolFormSchoolName") School name:
+								input(id="addNewSchoolFormSchoolName" type="text" name="addNewSchoolFormSchoolName" placeholder="School name" required).form-control
+						div.horizontalAlignment
+							a(id="addNewSchoolFormSubmit" href='javascript:void(0)').form-control.btn-success.active.submitcancelbuttons Submit
+							a(id="addNewSchoolFormCancel" href='javascript:void(0)').form-control.btn-danger.active.submitcancelbuttons Cancel
+					div(id='template-form-container' style='display: none;')
+						a(id="button-form-open").btn.btn-success.courseButton.fullWidth.centerContent Add new school
+						div(id="form-box" href='javascript:void(0)' style="display:none;").squareBorder
+							form
+								fieldset.form-group 
+									label(for="name1") School name:
+									input(id="name1" type="text" name="name1" placeholder="School name" required).form-control
+							div.horizontalAlignment
+								a(id="submit" href='javascript:void(0)').form-control.btn-success.active.submitcancelbuttons Submit
+								a(id="cancel" href='javascript:void(0)').form-control.btn-danger.active.submitcancelbuttons Cancel
+					div(id='template-form-department' style='display: none;').department-form
+						a(id="button-form-open").btn.btn-success.courseButton.fullWidth.centerContent Add new department
+						div(id="form-box" href='javascript:void(0)' style="display:none;").squareBorder
+							form
+								fieldset.form-group 
+									label(for="departmentName") Department name:
+									input(id="department-name" type="text" name="departmentName" placeholder="Department name" required).form-control
+							div.horizontalAlignment
+								a(id="button-form-submit" href='javascript:void(0)').form-control.btn-success.active.submitcancelbuttons Submit
+								a(id="button-form-cancel" href='javascript:void(0)').form-control.btn-danger.active.submitcancelbuttons Cancel
+					div(id='template-form-major' style='display: none;').major-form
+						a(id="button-form-open").btn.btn-success.courseButton.fullWidth.centerContent Add new major
+						div(id="form-box" href='javascript:void(0)' style="display:none;").squareBorder
+							form
+								fieldset.form-group 
+									label(for="majorName") Major name:
+									input(id="major-name" type="text" name="majorName" placeholder="Major name" required).form-control
+							div.horizontalAlignment
+								a(id="button-form-submit" href='javascript:void(0)').form-control.btn-success.active.submitcancelbuttons Submit
+								a(id="button-form-cancel" href='javascript:void(0)').form-control.btn-danger.active.submitcancelbuttons Cancel
+				else
+					a(href="/login").btn.btn-success.fullWidth Login to add new schools and departments!
+
+			// container for the comment module
+			div.coolBorder
+				include comment
+
+
+	script(src="/javascripts/root-loader.js")
+	//- script(src="/javascripts/frontend-major.js")

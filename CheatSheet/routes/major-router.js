@@ -44,6 +44,19 @@ module.exports = function(passport){
 		})
 	});
 
+	router.post('/async', function(req, res) {
+		majorManager.getMajorByDepartmentId(
+			req.body.departmentId, function(err, result) {
+			console.log('hello majorasync');
+			if(!err) {
+				res.send(result);		
+			} else {
+				res.status(404);
+			}
+
+		});
+	});
+
 	router.post('/addnewmajor', function (req, res) {
 		if(!req.isAuthenticated()){
 			console.log('/addnewmajor, user is not authenticated.');
