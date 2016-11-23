@@ -52,8 +52,12 @@ if($('#addNewCourseForm')){
             courseidentificationcode: $('#addNewCourseFormIdCode').val(),
             coursename: $('#addNewCourseFormCourseName').val()
         };
+        if(temporaryInfo.coursename.length==0 || temporaryInfo.courseidentificationcode.length==0){
+            alert("You have to fill out the form first.")
+            return;
+        }
         $.ajax({
-            url: 'http://localhost:8080/course/addnewcourse',
+            url: '/course/addnewcourse',
             type: 'post',
             dataType: 'json',
             data: temporaryInfo,
