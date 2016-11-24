@@ -1,5 +1,100 @@
-extends layout
+extends placeholder-layout
 
 block content
+	head
+		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+	style(type="text/css").
+		.no-gutter > [class*='col-'] {
+		    padding-right:0;
+		    padding-left:0;
+		}
 
-	p This is summary.pug
+
+	div.container
+		div.row
+			br
+			div.breadcrumbsContainer.verticalMiddleContent
+				div.col-xs-0(style="display:none;")
+					p#contentId=summary.id
+					p#contentName=summary.course.name
+					p#contentType='summary'
+				div.col-xs-10
+					//a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
+					span=summary.course.major.department.school.name
+					b=" > "
+					//a(href='/department/'+breadcrumbs.departmentid).loginLinks=breadcrumbs.departmentname
+					span=summary.course.major.department.name
+					b=" > "
+					a(href='/major/'+summary.course.major.id).loginLinks=summary.course.major.name
+					b=" > "
+					a(href='/course/'+summary.course.id).loginLinks=summary.course.name
+					b=" > "
+					a(href='/summary/'+summary.id).loginLinks='This summary'
+				div.col-xs-2
+					a#addToHotbar-button.btn.btn-danger.fullWidth Add to hotbar 
+						i.fa.fa-plus-circle
+
+
+		div.panel.panel-default#summary-container
+			div.panel-body#header-container
+				div.row
+					div.col-xs-2#vote-container
+						div.row
+							div.col-xs-3
+								div.row
+									button.btn.btn-block.btn-primary#upVote-button
+										i.fa.fa-chevron-up
+								div.row.text-center#voteCount-container
+									span#voteCounter=summary.voteCount
+								div.row
+									button.btn.btn-block.btn-primary#downVote-button
+										i.fa.fa-chevron-down
+					div.col-xs-10.col-xs-pull-1.text-center#courseName-container
+						h1=summary.course.name
+			div.panel-heading.text-center#metaData-container
+				div.row
+					div.col-xs-4#studentName
+						p 
+							strong Student: 
+							span=summary.author.fullName
+					div.col-xs-4#lastEdited
+						p 
+							strong Edited: 
+							span=summary.dateModified
+					div.col-xs-4#identificationCode
+						p
+							strong Course code: 
+							span=summary.course.identificationCode
+				div.row
+					div.col-xs-4#teacherName
+						p 
+							strong Teacher: 
+							span=summary.teacherName
+					div.col-xs-4#dateAttended
+						p 
+							strong Attended: 
+							span=summary.attendanceDate
+			div.panel-body#summaryText-container
+				div.panel-body
+					p=summary.content 
+			div.panel-footer#footer-container
+				div.row.no-gutter
+					div.col-xs-1#share
+						button.btn.btn-block.btn-primary 
+							span Share 
+							i.fa.fa-share-alt
+					div.col-xs-1#viewSource
+						button.btn.btn-block.btn-info 
+							span Source 
+							i.fa.fa-info-circle
+					div.col-xs-1#report
+						button.btn.btn-block.btn-danger 
+							span Report 
+							i.fa.fa-exclamation-circle
+
+		div.panel.panel-primary
+			include comment
+
+	script(type='text/javascript' src='/javascripts/frontend-summary.js')
+
+	

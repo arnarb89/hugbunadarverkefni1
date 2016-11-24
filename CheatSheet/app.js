@@ -77,11 +77,14 @@ var rootRouter = require('./routes/root-router')(passport);
 var commentRouter = require('./routes/comment-router')(passport);
 var dptmntRouter = require('./routes/department-router')(passport);
 var schoolRouter = require('./routes/school-router')(passport);
+var voteRouter = require('./routes/vote-router')(passport);
+
 
 app.use('/', rootRouter);
 app.use('/school', schoolRouter);
 app.use('/department', dptmntRouter);
 app.use('/comment', commentRouter);
+app.use('/vote', voteRouter);
 
 // var routes = require('./routes/index')(passport);
 // app.use('/', routes);
@@ -106,6 +109,10 @@ app.use('/major', major);
 
 var course = require('./routes/course-router')(passport);
 app.use('/course', course);
+
+// var summary = require('./test-elvar')(passport);
+var summary = require('./routes/summary-router')(passport);
+app.use('/summary', summary);
 
 
 
