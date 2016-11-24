@@ -7,11 +7,10 @@ var router = express.Router();
 module.exports = function(passport) {
 
 	router.post('/async', function (req, res) {
+		var parentId = req.body.parentId;
+		var type = req.body.type;
+		var parentContentId = req.body.parentContentId
 		console.log(JSON.stringify(req.body));
-		var parentId = req.body.parentId;
-		var parentId = req.body.parentId;
-		var type = req.body.commentType;
-		var parentContentId = req.body.parenContentId
 		if(req.isAuthenticated()){
 			commentManager.getCommentsWithVoteByTypeAndParentId(req.user, 
 				type, parentId, parentContentId, function(err, result) {
@@ -22,7 +21,12 @@ module.exports = function(passport) {
 				}
 			});
 		} else {
+			console.log('/async not signed in')
 			commentManager.getCommentsByTypeAndParentId(type, parentId, parentContentId, function(err, result) {
+				console.log('err:')
+				console.log(JSON.stringify(err))
+				console.log('result:')
+				console.log(JSON.stringify(result))
 				if(!err) {
 					res.send(result);
 				} else {
@@ -38,6 +42,7 @@ module.exports = function(passport) {
 		var type = req.body.comment_type;
 		var parentContentId = req.body.parent_content_id;
 		var isEdit = req.body.is_edit;
+		console.log(req.body)
 		if(req.isAuthenticated()) {
 			if(isEdit) {
 				commentManager.editCommentByIdAndType(req.user, 

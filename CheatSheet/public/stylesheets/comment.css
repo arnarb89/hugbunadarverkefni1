@@ -34,3 +34,20 @@
 .comment-content {
 	max-width: 60em;
 }
+
+.root-form-reply, #no-comment-message {
+	margin: 0 auto;
+}
+
+#no-comment-message {
+	text-align: center;	
+}
+
+.action-line {
+	border-bottom: 1px black solid;
+}
+
+
+.vote-count {
+	text-align: right;
+}

@@ -51,12 +51,13 @@ block content
 							div.col-md-3=summary.teacherName
 							div.col-md-2=summary.dateModified
 				if user
-					a(id="addNewSummaryFormOpen" href="/summary/create/"+breadcrumbs.currentid).btn.btn-success.courseButton.fullWidth.centerContent Add new summary for this course
+					a(id="addNewSummaryFormOpen" href="/summary/create/"+breadcrumbs.currentid).btn.btn-success.courseButton.fullWidth.centerContent Create new summary for this course
 				else
 					a(href="/login").btn.btn-success.fullWidth.courseButton Login to create a new summary!
 
 			// container for the comment module
-			div.coolBorder Here is the chat module
+			div.coolBorder 
+				include comment
 
 
 	script(src="/javascripts/frontend-course.js")
