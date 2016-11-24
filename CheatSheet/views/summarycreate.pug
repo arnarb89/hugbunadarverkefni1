@@ -1,0 +1,21 @@
+extends placeholder-layout
+
+block content
+	//major container
+	div.fullWidth
+		div.contentContainer
+			div.coolBorder
+				form(method="post" action='/summary/create/'+courseId)
+					h1 Create Summary
+					br
+					br
+					fieldset.form-group
+						label(for="content") Write about the course:
+						textarea(id="content" type="textarea" rows="5" cols="50" name="content" autofocus required).form-control
+					fieldset.form-group
+						label(for="teacherName") Name of the Teacher:
+						input(id="teacherName" name="teacherName" autofocus required).form-control
+					fieldset.form-group
+						label(for="attendanceDate") Veldu hvenær próftímabilið byrjaði(t.d. 1.des, 1.maí) og ár sem setið var áfangann:
+						input(type="date" name="attendanceDate" id="attendanceDate")
+					input(type="submit").form-control.btn-success.active.transition
