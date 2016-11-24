@@ -34,8 +34,9 @@ block comment
 								input(type='hidden' name='is_edit' value=1 ).form-control
 							div
 								input(type="submit").form-control
-					div(id='load-more-template' style='display: none;')
-						a Load more comments
+			if contentInfo
+				div(id='load-more-template' style='display: none;')
+					a Load more comments
 			div(id='comment-container-template'	style='display: none;').comment-container
 				div.flexer.comment-box
 					if user
@@ -54,7 +55,7 @@ block comment
 							p This is content of comment 1
 						div.action-line
 							ul.list-inline
-								if user
+								if user && contentInfo
 									li.reply
 										a reply
 									li.edit
