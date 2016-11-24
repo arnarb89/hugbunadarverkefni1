@@ -1,6 +1,6 @@
 
 
-console.log("hello");
+console.log("hello, where am I?");
 
 if($('#addToHotbar')){
 

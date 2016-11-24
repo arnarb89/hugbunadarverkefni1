@@ -3,7 +3,10 @@ block comment
 	div.comment-module
 		link(rel='stylesheet' href='/stylesheets/comment.css')
 		div(id='comment-main-container')
-			div(id='no-comment-message')
+			div#mustLogIn.row.text-center
+				if !user
+					p You must log in to comment. Or be at least level 10.
+			div(id='no-comment-message').row
 				p Sorry, there are no comments yet. Be the first one to comment!
 			if contentInfo
 				script.

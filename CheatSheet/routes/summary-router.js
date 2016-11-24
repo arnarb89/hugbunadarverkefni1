@@ -6,22 +6,19 @@ var router = express.Router();
 var moment = require('moment');
 
 module.exports = function(passport) {
-	
+	console.log("in summary-router");
 	router.get('/:id', function (req, res) {
 		summaryManager.getSummaryById(req.params.id, function(err, result) {
 			if(!err) {
-				res.render('summarycreate', { title: 'Summary', summary:result});
+				res.render('summary', { title : 'Summary', summary : result, contentInfo : { type : 'summary', id : result.id } });
 			} else {
-				res.render('summarycreate', { title: 'Summary', summary:result});
+				res.render('error', { error : err, message : "I'm sorry, the internet has exploded." });
 			}
 		});
 	});
 
 	router.get('/create/:id', function(req, res) {
-		var courseId = req.params.id;
-		res.render('summarycreate',{
-			courseId:courseId
-		});
+		res.render('summarycreate', { title: 'Create summary', courseId : req.params.id });
 	});
 
 	router.post('/create/:id', function(req, res) {
@@ -31,7 +28,7 @@ module.exports = function(passport) {
 		var teacherName = req.body.teacherName;
 		var attendanceDate = moment(req.body.attendaneDate).format();
 		
-		console.log('someone wants to create summary');
+		console.log('Someone wants to create summary');
 		console.log(JSON.stringify(req.body))
 		if(req.isAuthenticated()) { // <== checkar hvort notandi se skradur inn
 									// getur verid thaegilegra ad debugga an thess ad checka permission fyrst samt

@@ -9,7 +9,32 @@ block content
 		    padding-left:0;
 		}
 
+
 	div.container
+		div.row
+			br
+			div.breadcrumbsContainer.verticalMiddleContent
+				div.col-xs-0(style="display:none;")
+					p#contentId=summary.id
+					p#contentName=summary.course.name
+					p#contentType='summary'
+				div.col-xs-10
+					//a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
+					span=summary.course.major.department.school.name
+					b=" > "
+					//a(href='/department/'+breadcrumbs.departmentid).loginLinks=breadcrumbs.departmentname
+					span=summary.course.major.department.name
+					b=" > "
+					a(href='/major/'+summary.course.major.id).loginLinks=summary.course.major.name
+					b=" > "
+					a(href='/course/'+summary.course.id).loginLinks=summary.course.name
+					b=" > "
+					a(href='/summary/'+summary.id).loginLinks='This summary'
+				div.col-xs-2
+					a#addToHotbar-button.btn.btn-danger.fullWidth Add to hotbar 
+						i.fa.fa-plus-circle
+
+
 		div.panel.panel-default#summary-container
 			div.panel-body#header-container
 				div.row
@@ -17,12 +42,12 @@ block content
 						div.row
 							div.col-xs-3
 								div.row
-									button.btn.btn-block.btn-success#upVote-button
+									button.btn.btn-block.btn-primary#upVote-button
 										i.fa.fa-chevron-up
 								div.row.text-center#voteCount-container
 									span#voteCounter=summary.voteCount
 								div.row
-									button.btn.btn-block.btn-danger#downVote-button
+									button.btn.btn-block.btn-primary#downVote-button
 										i.fa.fa-chevron-down
 					div.col-xs-10.col-xs-pull-1.text-center#courseName-container
 						h1=summary.course.name
@@ -67,7 +92,8 @@ block content
 							span Report 
 							i.fa.fa-exclamation-circle
 
-	include comment
+		div.panel.panel-primary
+			include comment
 
 	script(type='text/javascript' src='/javascripts/frontend-summary.js')
 
