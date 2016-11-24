@@ -208,8 +208,8 @@ function formatComment(unformattedComment) {
 		parentId : unformattedComment.parentid,
 		parentContentId : unformattedComment.parentcontentid,
 		voteCount : unformattedComment.votecount,
-		dateCreated : moment(unformattedComment.datecreated).format('hh:mm DD/MM/YY'),
-		dateModified : moment(unformattedComment.datemodified).format('hh:mm DD/MM/YY'),
+		dateCreated : moment(unformattedComment.datecreated).fromNow(),
+		dateModified : moment(unformattedComment.datemodified).fromNow(),
 		hasChild : Boolean(unformattedComment.haschild),
 		author : {
 			id : unformattedComment.authorid,
