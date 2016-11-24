@@ -1,0 +1,53 @@
+.flexer {
+	display:flex;
+}
+
+.comment-container {
+	padding: 2em 2em 2em 2em;
+}
+
+#comment-main-container, .comment-container {
+	width: 100%;
+}
+
+.up-vote.voted {
+	color: #00FF00;
+}
+
+.voted.down-vote {
+	color: #FF0000;
+}
+
+.info-line {
+	padding-bottom: 1em;
+}
+
+.vote-actions {
+	padding-right: 0.7em;
+}
+
+.action-box {
+	max-width: 40em;
+	min-width: 40em;
+}
+
+.comment-content {
+	max-width: 60em;
+}
+
+.root-form-reply, #no-comment-message {
+	margin: 0 auto;
+}
+
+#no-comment-message {
+	text-align: center;	
+}
+
+.action-line {
+	border-bottom: 1px black solid;
+}
+
+
+.vote-count {
+	text-align: right;
+}
