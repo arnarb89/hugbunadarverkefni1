@@ -3,6 +3,8 @@ block comment
 	div.comment-module
 		link(rel='stylesheet' href='/stylesheets/comment.css')
 		div(id='comment-main-container')
+			div(id='no-comment-message')
+				p Sorry, there are no comments yet. Be the first one to comment!
 			if contentInfo
 				script.
 					var contentInfo = !{JSON.stringify(contentInfo)}
@@ -14,7 +16,7 @@ block comment
 					var user = !{JSON.stringify(user)}
 				if contentInfo
 					div(id='reply-box-template' style="display: none;" data-action-type='reply').action-box
-						form(method="post" action='/comment/async')
+						form(method="post" action='/comment/async/create')
 							fieldset.form-group  
 								textarea(type="text" placeholder="" name="content" autofocus required ).form-control
 								input(type='hidden' value='' name='parent_id' id='reply-parent-id' ).form-control
@@ -23,7 +25,7 @@ block comment
 							div
 								input(type="submit").form-control
 					div(id='edit-box-template' style='display: none;' data-action-type='edit').action-box
-						form(method="post" action='/comment/async')
+						form(method="post" action='/comment/async/create')
 							fieldset.form-group  
 								textarea(type="text" placeholder="" name="content" autofocus required ).form-control
 								input(type='hidden' name='parent_content_id' value=contentInfo.id ).form-control
@@ -36,15 +38,17 @@ block comment
 						a Load more comments
 			div(id='comment-container-template'	style='display: none;').comment-container
 				div.flexer.comment-box
-					div.vote-actions
-						div.up-vote ▲
-						div.down-vote ▼
+					if user
+						div.vote-actions
+							div.up-vote ▲
+							div.down-vote ▼
 					div.comment
 						div.info-line.flexer
-							div.vote-count 13
-							div.author
+							div.author.col-md-2
 								a user 1
-							div
+							div.vote-count.col-md-2 0
+							div points
+							div.col-md-2
 								time.date-created 2016-11-14 18:50:48 +0000
 						div.comment-content
 							p This is content of comment 1
