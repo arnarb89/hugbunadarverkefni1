@@ -110,8 +110,6 @@ app.use('/major', major);
 var course = require('./routes/course-router')(passport);
 app.use('/course', course);
 
-var summary = require('./test-onlyLocal');
-app.use('/summary', summary);
 
 
 // catch 404 and forward to error handler

@@ -1,35 +1,41 @@
+(function() {
 
-var init = function() {
-		mainContainer = $('#comment-main-container');
-		commentTemplate = $('#comment-container-template');
-		replyTemplate = $('#reply-box-template');
-		editTemplate = $('#edit-box-template');
-		commentType = commentTemplate.data('commenttype');
-		if(typeof user !== 'undefined')
-			thisUser = user;
-		if(typeof contentInfo !== 'undefined')
-			thisContent = contentInfo;
-		if(typeof getLatestComments !== 'undefined') {
-			getLatest(mainContainer, 10);
-		} else if(typeof contentInfo !== 'undefined') {
-			console.log(JSON.stringify(contentInfo))
-			if(typeof user !== 'undefined')
-				makeReplyToRootForm(mainContainer);
-			getComments(mainContainer, 0);
+	var voteContainer;
+	var upVoteButton;
+	var downVoteButton;
+	var voteCountContainer;
+	var thisContent;
+
+
+	function init() {
+		if(!window.jQuery) {
+			return setTimeout(function() { init() }, 50);
 		}
-	};
+		
+		// console.log("I'm in init");
 
-var upVoteHandler = function(upButton, downButton, value, parentComment, voteCounter) {
+		voteContainer = $('#vote-container');
+		upButton = voteContainer.find('#upVote-button');
+		downButton = voteContainer.find('#downVote-button');
+		voteCounter = voteContainer.find('#voteCounter');
+		if(typeof contentInfo !== 'undefined') thisContent = contentInfo;
+
+		upVoteHandler(upButton, downButton, voteCounter);
+		downVoteHandler(downButton, upButton, voteCounter);
+	};
+	
+
+	var upVoteHandler = function(upButton, downButton, voteCounter) {
+		// console.log("I'm in upVoteHandler");
+		var value = 1;
 		$(upButton).on('click', function(e) {
 			e.preventDefault();
 			$.ajax({
 				type: 'POST',
 				cache:false,
-				url: '/vote',
+				url: '/vote/summary',
 				data: {
 					voteValue: value,
-					parentId:parentComment.id,
-					type: thisContent.type,
 					parentContentId: thisContent.id
 				},
 				success: function(result) {
@@ -48,23 +54,22 @@ var upVoteHandler = function(upButton, downButton, value, parentComment, voteCou
 					}
 				},
 				error: function(err) {
-					console.log('posted comment failure');
+					console.log('vote failure ERROR ERROR!');
 				},
 			});
 		});
 	}
 
-var downVoteHandler = function(downButton, upButton, value, parentComment, voteCounter) {
+	var downVoteHandler = function(downButton, upButton, voteCounter) {
+		var value = -1;
 		$(downButton).on('click', function(e) {
 			e.preventDefault();
 			$.ajax({
 				type: 'POST',
 				cache:false,
-				url: '/vote',
+				url: '/vote/summary',
 				data: {
 					voteValue: value,
-					parentId:parentComment.id,
-					type: thisContent.type,
 					parentContentId: thisContent.id
 				},
 				success: function(result) {
@@ -82,22 +87,38 @@ var downVoteHandler = function(downButton, upButton, value, parentComment, voteC
 					}
 				},
 				error: function(err) {
-					console.log('posted comment failure');
+					console.log('vote failure ERROR ERROR!');
 				},
 			});
 		});
 	}
 
+	return init();
 
-	var count = 0;
-	var defer = function(func) {
-		if(window.jQuery) {
-			func();
-		} else {
-			count = count+1;
-			if(count<50)
-				setTimeout(function(){defer(func)}, 50);
-		}
-	};
+})();
 
-	// return defer(init);
+
+	// var init = function() {
+	// 	mainContainer = $('#comment-main-container');
+	// 	commentTemplate = $('#comment-container-template');
+	// 	replyTemplate = $('#reply-box-template');
+	// 	editTemplate = $('#edit-box-template');
+	// 	commentType = commentTemplate.data('commenttype');
+	// 	if(typeof user !== 'undefined')
+	// 		thisUser = user;
+	// 	if(typeof contentInfo !== 'undefined')
+	// 		thisContent = contentInfo;
+	// 	if(typeof getLatestComments !== 'undefined') {
+	// 		getLatest(mainContainer, 10);
+	// 	} else if(typeof contentInfo !== 'undefined') {
+	// 		console.log(JSON.stringify(contentInfo))
+	// 		if(typeof user !== 'undefined')
+	// 			makeReplyToRootForm(mainContainer);
+	// 		getComments(mainContainer, 0);
+	// 	}
+	// };
+
+	
+
+
+	

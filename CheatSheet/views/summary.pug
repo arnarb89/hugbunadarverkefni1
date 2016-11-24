@@ -17,12 +17,12 @@ block content
 						div.row
 							div.col-xs-3
 								div.row
-									button.btn.btn-block.btn-primary
+									button.btn.btn-block.btn-success#upVote-button
 										i.fa.fa-chevron-up
-								div.row.text-center
-									p=summary.voteCount
+								div.row.text-center#voteCount-container
+									span#voteCounter=summary.voteCount
 								div.row
-									button.btn.btn-block.btn-danger
+									button.btn.btn-block.btn-danger#downVote-button
 										i.fa.fa-chevron-down
 					div.col-xs-10.col-xs-pull-1.text-center#courseName-container
 						h1=summary.course.name
