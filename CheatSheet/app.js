@@ -98,10 +98,6 @@ app.use('/signup', signup);
 var logout = require('./routes/logout')(passport);
 app.use('/logout', logout);
 
-<<<<<<< HEAD
-var summarypage = require('./routes/summarypage')(passport);
-app.use('/summarypage', summarypage);
-=======
 var account = require('./routes/account-router')(passport);
 app.use('/account', account);
 
@@ -111,7 +107,10 @@ app.use('/major', major);
 var course = require('./routes/course-router')(passport);
 app.use('/course', course);
 
->>>>>>> ddfdfe7a65a1ac72e619fd1cce9d05223e39dfef
+// var summary = require('./test-elvar')(passport);
+var summary = require('./routes/summary-router')(passport);
+app.use('/summary', summary);
+
 
 
 // catch 404 and forward to error handler
