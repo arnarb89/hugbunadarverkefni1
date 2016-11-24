@@ -92,9 +92,9 @@ function formatSummary(unformattedSummary) {
 	var summary = {
 		id : unformattedSummary.id !== undefined ? unformattedSummary.id : unformattedSummary.summaryid,
 		teacherName : unformattedSummary.teachername,
-		attendanceDate : moment(unformattedSummary.attendancedate).format('hh:mm DD/MM/YY'),
-		dateCreated : moment(unformattedSummary.datecreated).format('hh:mm DD/MM/YY'),
-		dateModified : moment(unformattedSummary.datemodified).format('DD/MM/YY'),
+		attendanceDate : moment(unformattedSummary.attendancedate).format('MMMM YYYY'),
+		dateCreated : moment(unformattedSummary.datecreated).format('DD/MM/YY'),
+		dateModified : moment(unformattedSummary.datemodified).fromNow(),
 		voteCount : unformattedSummary.votecount,
 		author : {
 			id : unformattedSummary.authorid,
