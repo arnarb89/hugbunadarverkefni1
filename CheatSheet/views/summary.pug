@@ -1,5 +1,74 @@
-extends layout
+extends placeholder-layout
 
 block content
+	head
+		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+	style(type="text/css").
+		.no-gutter > [class*='col-'] {
+		    padding-right:0;
+		    padding-left:0;
+		}
 
-	p This is summary.pug
+	div.container
+		div.panel.panel-default#summary-container
+			div.panel-body#header-container
+				div.row
+					div.col-xs-2#vote-container
+						div.row
+							div.col-xs-3
+								div.row
+									button.btn.btn-block.btn-success#upVote-button
+										i.fa.fa-chevron-up
+								div.row.text-center#voteCount-container
+									span#voteCounter=summary.voteCount
+								div.row
+									button.btn.btn-block.btn-danger#downVote-button
+										i.fa.fa-chevron-down
+					div.col-xs-10.col-xs-pull-1.text-center#courseName-container
+						h1=summary.course.name
+			div.panel-heading.text-center#metaData-container
+				div.row
+					div.col-xs-4#studentName
+						p 
+							strong Student: 
+							span=summary.author.fullName
+					div.col-xs-4#lastEdited
+						p 
+							strong Edited: 
+							span=summary.dateModified
+					div.col-xs-4#identificationCode
+						p
+							strong Course code: 
+							span=summary.course.identificationCode
+				div.row
+					div.col-xs-4#teacherName
+						p 
+							strong Teacher: 
+							span=summary.teacherName
+					div.col-xs-4#dateAttended
+						p 
+							strong Attended: 
+							span=summary.attendanceDate
+			div.panel-body#summaryText-container
+				div.panel-body
+					p=summary.content 
+			div.panel-footer#footer-container
+				div.row.no-gutter
+					div.col-xs-1#share
+						button.btn.btn-block.btn-primary 
+							span Share 
+							i.fa.fa-share-alt
+					div.col-xs-1#viewSource
+						button.btn.btn-block.btn-info 
+							span Source 
+							i.fa.fa-info-circle
+					div.col-xs-1#report
+						button.btn.btn-block.btn-danger 
+							span Report 
+							i.fa.fa-exclamation-circle
+
+	include comment
+
+	script(type='text/javascript' src='/javascripts/frontend-summary.js')
+
+	
