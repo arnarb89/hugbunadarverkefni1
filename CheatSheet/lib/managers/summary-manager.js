@@ -8,6 +8,7 @@ var moment = require('moment');
 var summaryManager = {};
 
 
+
 summaryManager.getSummaryById = function (summaryId, callback) {
 	var sqlString = "SELECT " +
 	"summaries.content, summaries.teacherName, summaries.attendanceDate, summaries.voteCount, summaries.dateCreated, summaries.dateModified, " + // from summaries table
@@ -16,9 +17,9 @@ summaryManager.getSummaryById = function (summaryId, callback) {
 	"departments.id AS departmentId, departments.name AS departmentName, " + // from department table
 	"schools.id AS schoolId, schools.name AS schoolName, " + // from school table
 	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, " + // from user table
-	"userLocal.username AS authorUsername " + // from userLocal table
-	"FROM summaries, courses, majors, departments, schools, users, userLocal " +
-	"WHERE summaries.id = $1 AND summaries.courseid = courses.id AND courses.majorid = majors.id AND majors.departmentid = departments.id AND departments.schoolid = schools.id AND summaries.authorid = users.id AND users.id=userLocal.userId";
+	"CASE WHEN users.id=us.userId THEN (SELECT username FROM userLocal WHERE userLocal.userId=users.id) END AS authorUsername, " + // from userLocal table
+	"FROM summaries, courses, majors, departments, schools, users, (SELECT userLocal.userId FROM userLocal UNION SELECT userFb.userId FROM userFb) as us " +
+	"WHERE summaries.id = $1 AND summaries.courseid = courses.id AND courses.majorid = majors.id AND majors.departmentid = departments.id AND departments.schoolid = schools.id AND summaries.authorid = users.id AND users.id = us.userId";
 	var inputVariables = [summaryId];
 
 	dbc.query(sqlString, inputVariables, function(err, result) {
@@ -31,8 +32,6 @@ summaryManager.getSummaryById = function (summaryId, callback) {
 }
 
 
-
-
 summaryManager.getSummaryByCourse = function (courseId, callback) {
 	var sqlString = "SELECT " +
 	"summaries.id AS summaryId, summaries.content, summaries.teacherName, summaries.attendanceDate, summaries.voteCount, summaries.dateCreated, summaries.dateModified, " + // from summary table
@@ -41,9 +40,9 @@ summaryManager.getSummaryByCourse = function (courseId, callback) {
 	"departments.id AS departmentId, departments.name AS departmentName, " + // from department table
 	"schools.id AS schoolId, schools.name AS schoolName, " + // from school table
 	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, " + // from user table
-	"userLocal.username AS authorUsername " + // from userLocal table
-	"FROM summaries, courses, majors, departments, schools, users, userLocal " +
-	"WHERE summaries.courseId = $1 AND summaries.courseId = courses.id AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id AND summaries.authorId = users.id AND users.id=userLocal.userId";
+	"CASE WHEN users.id=us.userId THEN (SELECT username FROM userLocal WHERE userLocal.userId=users.id) END AS authorUsername, " + // from userLocal table
+	"FROM summaries, courses, majors, departments, schools, users, (SELECT userLocal.userId FROM userLocal UNION SELECT userFb.userId FROM userFb) as us " +
+	"WHERE summaries.courseId = $1 AND summaries.courseId = courses.id AND courses.majorId = majors.id AND majors.departmentId = departments.id AND departments.schoolId = schools.id AND summaries.authorId = users.id AND users.id = us.userId";
 	var inputVariables = [courseId];
 
 	dbc.query(sqlString, inputVariables, function(err, result) {
@@ -60,9 +59,9 @@ summaryManager.getSummaryMetaData = function (courseId, callback) {
 	var sqlString = "SELECT " +
 	"summaries.id AS summaryId, summaries.teacherName, summaries.attendanceDate, summaries.voteCount, summaries.dateCreated, summaries.dateModified, " + // from summary table
 	"users.id AS authorId, users.fullName AS authorName, users.email AS authorEmail, " + // from user table
-	"userLocal.username AS authorUsername " + // from userLocal table
-	"FROM summaries, courses, users, userLocal "+
-	"WHERE summaries.authorid = users.id AND summaries.courseId = $1 AND users.id=userLocal.userId AND courses.id=$1"+
+	"CASE WHEN users.id=us.userId THEN (SELECT username FROM userLocal WHERE userLocal.userId=users.id) END AS authorUsername, " + // from userLocal table
+	"FROM summaries, courses, users, (SELECT userLocal.userId FROM userLocal UNION SELECT userFb.userId FROM userFb) as us "+
+	"WHERE summaries.authorid = users.id AND summaries.courseId = $1 AND users.id = us.userId AND courses.id=$1"+
 	"ORDER BY summaries.voteCount DESC;";
 	var inputVariables = [courseId];
 
@@ -74,6 +73,7 @@ summaryManager.getSummaryMetaData = function (courseId, callback) {
 		}
 	});
 }
+
 
 summaryManager.createSummary = function (user, content, teacherName, attendanceDate, courseId, callback) {
 	var sqlString = "INSERT INTO summaries (authorId, content, teacherName, attendanceDate, courseId, voteCount, dateCreated, dateModified) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
