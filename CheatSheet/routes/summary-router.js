@@ -1,38 +1,50 @@
 'use strict';
 
 var summaryManager = require('../lib/managers/summary-manager');
-router = require('express').Router();
-var isAuthenticated = require('../lib/isAuthenticated');
+var express = require('express');
+var router = express.Router();
+var moment = require('moment');
 
-router.get('/', function (req, res) {
-	summaryManager.getSummaryById(req.body.summaryId, function(err, result) {
-		if(!err) {
-			res.render('index', { title: 'Summary', summary:result});
+module.exports = function(passport) {
+	
+	router.get('/:id', function (req, res) {
+		summaryManager.getSummaryById(req.params.id, function(err, result) {
+			if(!err) {
+				res.render('summarycreate', { title: 'Summary', summary:result});
+			} else {
+				res.render('summarycreate', { title: 'Summary', summary:result});
+			}
+		});
+	});
+
+	router.get('/create/:id', function(req, res) {
+		var courseId = req.params.id;
+		res.render('summarycreate',{
+			courseId:courseId
+		});
+	});
+
+	router.post('/create/:id', function(req, res) {
+		
+		var courseId = req.params.id;
+		var content = req.body.content;
+		var teacherName = req.body.teacherName;
+		var attendanceDate = moment(req.body.attendaneDate).format();
+		
+		console.log('someone wants to create summary');
+		console.log(JSON.stringify(req.body))
+		if(req.isAuthenticated()) { // <== checkar hvort notandi se skradur inn
+									// getur verid thaegilegra ad debugga an thess ad checka permission fyrst samt
+			summaryManager.createSummary(req.user, content, teacherName, attendanceDate, courseId, function(err, result) {
+				console.log(result);
+				res.redirect('/summary/'+result.id);
+			});
+			
+			
 		} else {
-			res.render('index', { title: 'Summary', summary:result});
+			res.status(401).send(); // status code sem thydir unauthorized access (no permission)
 		}
 	});
-});
 
-router.get('/create', isAuthenticated, function (req, res) {
-	// expects req.body.courseId
-	// render summary form, tagged with courseId
-	res.render('index', { title: '/summary/get'});
-});
-
-router.post('/create', isAuthenticated, function (req, res) {
-	var content = req.body.content;
-	var teacherName = req.body.teacherName;
-	// Maybe reformat date somehow
-	var attendance = req.body.attendanceDate;
-	summaryManager.createSummary(req.body.user, content, teacherName, attendance, function (err, result) {
-		if(!err) {
-			res.send(result)
-		} else {
-			res.send(err)
-		}
-	});
-});
-
-
-module.exports = router
+	return router;
+}
