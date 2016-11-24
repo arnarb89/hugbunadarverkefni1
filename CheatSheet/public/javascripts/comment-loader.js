@@ -14,31 +14,37 @@
 		replyTemplate = $('#reply-box-template');
 		editTemplate = $('#edit-box-template');
 		commentType = commentTemplate.data('commenttype');
-		if(typeof user !== 'undefined') {
+		if(typeof user !== 'undefined')
 			thisUser = user;
-		}
 		if(typeof contentInfo !== 'undefined')
 			thisContent = contentInfo;
 		if(typeof getLatestComments !== 'undefined') {
 			getLatest(mainContainer, 10);
 		} else if(typeof contentInfo !== 'undefined') {
+			console.log(JSON.stringify(contentInfo))
+			if(typeof user !== 'undefined')
+				makeReplyToRootForm(mainContainer);
 			getComments(mainContainer, 0);
 		}
 	};
 
 	var getComments = function(container, parentId) {
 		console.log('getComments()');
+		var payload = {
+			parentId:parentId,
+			type: thisContent.type,
+			parentContentId: thisContent.id
+		};
 		$.ajax({
-			type: 'GET',
+			type: 'post',
 			url: '/comment/async',
-			data: {
-				parentId:parentId,
-				type: thisContent.type,
-				parentContentId: thisContent.id
-			},
+			data: payload,
 			success: function(result) {
 				console.log('ajax:getComments:success');
 				loadComments(container, result);
+				if($('.comment-box').length > 1) {
+					$('#no-comment-message').hide();
+				}
 			},
 			error: function(err) {
 				console.log('ajax:getComments:error');
@@ -58,6 +64,9 @@
 			},
 			success: function(result) {
 				loadComments(container, result);
+				if($('.comment-box').length > 1) {
+					$('#no-comment-message').hide();
+				}
 			},
 			error: function(err) {
 				console.log(err);
@@ -99,7 +108,8 @@
 		newContainer.attr('id','comment-container-'+comment.id);
 		var newComment = newContainer.find(".comment");
 		newComment.find('.comment-content p').text(comment.content);
-		newComment.find('.info-line .vote-count').text(comment.voteCount);
+		var voteCounter = newComment.find('.info-line .vote-count');
+		voteCounter.text(comment.voteCount);
 		newComment.find('.info-line time').text(comment.dateCreated);
 		newComment.find('.info-line .author a').text(comment.author.username);
 
@@ -125,8 +135,8 @@
 		if(thisUser) {
 			var up = newContainer.find('.up-vote');
 			var down = newContainer.find('.down-vote');
-			addVoteHandler(up, down, 1, comment);
-			addVoteHandler(down, up, -1, comment);
+			upVoteHandler(up, down, 1, comment, voteCounter);
+			downVoteHandler(down, up, -1, comment, voteCounter);
 		}
 
 		var replyButton = newComment.find('.action-line ul .reply');
@@ -150,21 +160,95 @@
 		newContainer.show()
 	};
 
-	var addVoteHandler = function(button, otherButton, value, parentComment) {
-		$(button).on('click', function(e) {
+	var makeReplyToRootForm = function(mainContainer){
+		var replyBox = replyTemplate.clone(true);
+		replyBox.attr('id', 'action-box-reply-root');
+		replyBox.data('action-type', 'reply');
+		replyBox.toggleClass('root-form-reply')
+		replyBox.find('#reply-parent-id').val(0);
+		replyBox.appendTo(mainContainer);
+		replyBox.show();
+		var form = replyBox.find('form');
+		form.find('textarea').attr('placeholder', 'Anything you want to discuss?');
+		$(form).on('submit', function(e) {
+			e.preventDefault();
+			$.ajax({
+				type: 'POST',
+				cache:false,
+				url: $(this).attr('action'),
+				data: $(this).serialize(),
+				success: function(result) {
+					console.log('posted comment success');
+					loadComments(mainContainer, result);
+					replyBox.remove();
+				},
+				error: function(err) {
+					console.log('posted comment failure');
+				},
+			});
+		});
+	}
+
+	var downVoteHandler = function(downButton, upButton, value, parentComment, voteCounter) {
+		$(downButton).on('click', function(e) {
 			e.preventDefault();
 			$.ajax({
 				type: 'POST',
 				cache:false,
 				url: '/vote',
 				data: {
-					vote_value: value,
-					parent_id:parentComment.id,
-					type: thisContent.type
+					voteValue: value,
+					parentId:parentComment.id,
+					type: thisContent.type,
+					parentContentId: thisContent.id
 				},
 				success: function(result) {
-					button.toggleClass('voted');
-					otherButton.removeClass('voted');
+					var curr = parseInt(voteCounter.text());
+					if($(downButton).hasClass('voted')){
+						downButton.toggleClass('voted');
+						voteCounter.text(curr+1);
+					} else if($(upButton).hasClass('voted')){
+						downButton.toggleClass('voted');
+						upButton.toggleClass('voted');
+						voteCounter.text(curr-2);
+					} else {
+						voteCounter.text(curr-1);
+						downButton.toggleClass('voted');
+					}
+				},
+				error: function(err) {
+					console.log('posted comment failure');
+				},
+			});
+		});
+	}
+	var upVoteHandler = function(upButton, downButton, value, parentComment, voteCounter) {
+		$(upButton).on('click', function(e) {
+			e.preventDefault();
+			$.ajax({
+				type: 'POST',
+				cache:false,
+				url: '/vote',
+				data: {
+					voteValue: value,
+					parentId:parentComment.id,
+					type: thisContent.type,
+					parentContentId: thisContent.id
+				},
+				success: function(result) {
+					var curr = parseInt(voteCounter.text());
+					if($(upButton).hasClass('voted')){
+						upButton.toggleClass('voted');
+						voteCounter.text(curr-1);
+					} else if ($(downButton).hasClass('voted')){
+						downButton.removeClass('voted');
+						upButton.toggleClass('voted');
+						voteCounter.text(curr+2)
+					} else {
+						upButton.toggleClass('voted');
+						voteCounter.text(curr+1)
+
+					}
 				},
 				error: function(err) {
 					console.log('posted comment failure');
@@ -176,7 +260,7 @@
 	var addLoadMoreHandler = function(button, parentComment) {
 		$(button).on('click', function(e) {
 			e.preventDefault();
-			getComments(parentComment.id);
+			getComments(mainContainer, parentComment.id);
 			$(button).remove();
 		})
 	}
@@ -244,7 +328,6 @@
 					data: $(this).serialize(),
 					success: function(result) {
 						console.log('posted comment success');
-						// Wrong?, put successfully posted comment into tree
 						loadComments(mainContainer, result);
 						editBox.remove();
 					},

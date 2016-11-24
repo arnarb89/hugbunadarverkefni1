@@ -72,7 +72,6 @@ commentManager.getCommentsWithVoteByTypeAndParentId = function (user, type, pare
 commentManager.getCommentsByTypeAndParentId = function (type, parentId, parentContentId, callback) {
 	var sqlString;
 	var inputVariables = [parentId, parentContentId];
-
 	if(type.toLowerCase() === "course") {
 		sqlString = "SELECT " +
 			"courseComments.id as commentId, courseComments.content, courseComments.parentId, courseComments.dateCreated, courseComments.voteCount, courseComments.dateModified, parentContentId, " + // from comments table
