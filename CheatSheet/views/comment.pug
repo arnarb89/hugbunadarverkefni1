@@ -39,7 +39,7 @@ block comment
 					a Load more comments
 			div(id='comment-container-template'	style='display: none;').comment-container
 				div.flexer.comment-box
-					if user
+					if user && contentInfo
 						div.vote-actions
 							div.up-vote ▲
 							div.down-vote ▼
