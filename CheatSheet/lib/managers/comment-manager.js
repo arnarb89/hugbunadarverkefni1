@@ -18,12 +18,12 @@ commentManager.getLatestComments = function (amount, callback) {
 	// "ORDER BY dateModified DESC;";
 
 	var sqlString = "SELECT " +
-	"comments.id, content, parentId, dateCreated, voteCount, dateModified, " + // from comments (summaryComments UNION courseComments)
+	"comments.id, content, parentId, dateCreated, voteCount, dateModified, parentContentId, " + // from comments (summaryComments UNION courseComments)
 	"users.id AS authorId, fullName AS authorName, email AS authorEmail, " + // from users
 	"CASE WHEN users.id=us.userId THEN (SELECT username FROM userLocal WHERE userLocal.userId=users.id) END AS authorUsername " + // from userLocal
 	"FROM (SELECT * FROM courseComments UNION SELECT * FROM summaryComments LIMIT $1) AS comments, users, (SELECT userLocal.userId FROM userLocal UNION SELECT userFb.userId FROM userFb) as us " +
 	"WHERE comments.authorid = users.id " +
-	"AND users.id = us.userId; " 
+	"AND users.id = us.userId " 
 	"ORDER BY dateModified DESC;";
 
 	var inputVariables = [amount];
