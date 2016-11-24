@@ -6,13 +6,12 @@ var router = express.Router();
 var moment = require('moment');
 
 module.exports = function(passport) {
-	console.log("in summary-router");
 	router.get('/:id', function (req, res) {
 		summaryManager.getSummaryById(req.params.id, function(err, result) {
-			if(!err) {
-				res.render('summary', { title : 'Summary', summary : result, contentInfo : { type : 'summary', id : result.id } });
+			if(err) {
+				res.render('error', { error : err, message : "I'm sorry, the internet has exploded." });				
 			} else {
-				res.render('error', { error : err, message : "I'm sorry, the internet has exploded." });
+				res.render('summary', { title : 'Summary', summary : result, contentInfo : { type : 'summary', id : result.id } });
 			}
 		});
 	});
