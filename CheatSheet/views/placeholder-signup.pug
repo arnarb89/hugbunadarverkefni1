@@ -4,11 +4,12 @@ block content
 	div.fullWidth
 		div.loginContainer.loginSignupWidth
 			div.breadcrumbsContainer.mainHeader.verticalMiddleContent
-				span
+				span.breadcrumbsText
 					a(href='/').loginLinks CheatSheet
 						b=" > "
 					a(href='/signup').loginLinks Signup
 			div.coolBorder
+				h2(style="margin:0px;padding-bottom:0.7em;").fullWidth.centerContent Signup
 				form(method="post" action='/signup' )
 					fieldset.form-group  
 						label(for="username") Username:

@@ -307,9 +307,24 @@ a {
 	color:#262626;
 }
 
+.btn-primary{
+	color:#262626;
+}
+.btn-primary:link{
+	color:#262626;
+}
+.btn-primary:visited{
+	color:#262626;
+}
+.btn-primary:hover{
+	color:#262626;
+}
+.btn-primary:active{
+	color:#262626;
+}
+
 .contentContainer{
 	margin: 0 auto;
-	margin-top:20px;
 	width: 600px;
 	background-color: white;
 }
@@ -342,6 +357,7 @@ a {
 }
 
 .breadcrumbsContainer{
+	margin-top:20px;
 	margin-bottom:10px;
 }
 
@@ -421,4 +437,17 @@ a:hover{
 
 .loginSignupWidth{
 	width:500px;
+}
+
+.lowButton{
+	margin-top:1em;
+}
+
+.breadcrumbsText{
+	line-height:30px;
+} 
+
+.accountHotbarLabels{
+	margin-top:1em;
+	margin-bottom:1em;
 }

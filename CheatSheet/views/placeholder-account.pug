@@ -4,11 +4,12 @@ block content
 	div.fullWidth
 		div.loginContainer
 			div.breadcrumbsContainer.mainHeader.verticalMiddleContent
-				span
+				span.breadcrumbsText
 					a(href='/').loginLinks CheatSheet
 						b=" > "
 					a(href='/account').loginLinks Account
 			div.coolBorder
+				h2(style="margin:0px;padding-bottom:0.7em;").fullWidth.centerContent Account settings
 				// user info
 				div 
 					if changesuccessmessage
@@ -43,7 +44,6 @@ block content
 										span(id="password-message").colorRed
 								input(id="newpassword2" type="password" name="newpassword2" placeholder="Retype your new password" required).form-control
 							input(type="submit" value="Update" id="passwordsubmitbutton").form-control.btn-success.active.transition
-				br
 				div
 					if (message != "")
 						span(id="message")= message
@@ -51,7 +51,7 @@ block content
 						span(id="message")
 				//hotbar elements
 				div.verticalAlignment.fullWidth
-					label Courses:
+					label.accountHotbarLabels Courses:
 					div.verticalAlignment.fullWidth
 						if hotbarelements.courses.length==0
 							span You have not added any courses to your hotbar yet
@@ -60,10 +60,7 @@ block content
 								div.fullWidth.accountHotElement
 									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.leftContent.col-md-9=element.contentname
 									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.col-md-3 Remove
-					br
-					br
-					br
-					label Majors:
+					label.accountHotbarLabels Majors:
 					//div.fullWidth My majors:
 					div.verticalAlignment.fullWidth
 						if hotbarelements.majors.length==0
@@ -73,10 +70,7 @@ block content
 								div.fullWidth.accountHotElement
 									a(href='/'+element.type+'/'+element.elementid).btn.btn-info.leftContent.col-md-9=element.contentname
 									a(href='/account/removehotbarelement/'+element.type+'/'+element.elementid).btn.btn-danger.col-md-3 Remove
-					br
-					br
-					br
-					label Summaries:
+					label.accountHotbarLabels Summaries:
 					div.verticalAlignment.fullWidth
 						if hotbarelements.summaries.length==0
 							span You have not added any summaries to your hotbar yet

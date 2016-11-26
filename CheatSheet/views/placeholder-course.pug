@@ -11,7 +11,7 @@ block content
 						p(id="contentid")=breadcrumbs.currentid
 						p(id="contentname")=breadcrumbs.currentname
 						p(id="contenttype")=breadcrumbs.currenttype
-					span
+					span.breadcrumbsText
 						//a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
 						span=breadcrumbs.schoolname
 						b=" > "
@@ -21,16 +21,23 @@ block content
 						a(href='/major/'+breadcrumbs.majorid).loginLinks=breadcrumbs.majorname
 						b=" > "
 						a(href='/course/'+breadcrumbs.courseid).loginLinks=breadcrumbs.coursename
-			div.coolBorder
 				if user
-					div.fullWidth.centerContent
-						a(id="addToHotbar").btn.btn-danger.fullWidth='Add '+breadcrumbs.currenttype+' to hotbar'
+					- var hasadded = false
+					each element in hotbarelements.courses
+						if element.elementid == breadcrumbs.currentid
+							- hasadded = true
+					if hasadded == false
+						a(id="addToHotbar").btn.btn-sm.btn-danger.centerContent='Add this '+breadcrumbs.currenttype+' to hotbar'
+					else 
+						a(href='/account/removehotbarelement/'+breadcrumbs.currenttype+'/'+breadcrumbs.currentid).btn.btn-sm.btn-danger.centerContent='Remove this '+breadcrumbs.currenttype+' from hotbar'
+			div.coolBorder
+				h2(style="margin:0px;padding-bottom:0.7em;").fullWidth.centerContent Summaries
 				if result.length==0
 					p There are no summaries yet.
 				else
-					div(style="padding-left:13px; padding-right:13px; margin-top:5px;").horizontalAlignment
-						div.col-md-1 
-							b Votes:
+					div(style="padding-left:13px; padding-right:13px; margin-top:0px;margin-bottom:2em;")
+						div.col-md-1.rightContent
+							b Score:
 						div.col-md-4 
 							b Author:
 						div.col-md-2 
@@ -51,9 +58,9 @@ block content
 							div.col-md-3=summary.teacherName
 							div.col-md-2=summary.dateModified
 				if user
-					a(id="addNewSummaryFormOpen" href="/summary/create/"+breadcrumbs.currentid).btn.btn-success.courseButton.fullWidth.centerContent Create new summary for this course
+					a(id="addNewSummaryFormOpen" href="/summary/create/"+breadcrumbs.currentid).btn.btn-success.courseButton.fullWidth.centerContent.lowButton Create new summary for this course
 				else
-					a(href="/login").btn.btn-success.fullWidth.courseButton Login to create a new summary!
+					a(href="/login").btn.btn-success.fullWidth.courseButton.lowButton Login to create a new summary!
 
 			// container for the comment module
 			div.coolBorder 

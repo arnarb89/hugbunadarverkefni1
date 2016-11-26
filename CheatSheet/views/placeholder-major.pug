@@ -11,7 +11,7 @@ block content
 						p(id="contentid")=breadcrumbs.currentid
 						p(id="contentname")=breadcrumbs.currentname
 						p(id="contenttype")=breadcrumbs.currenttype
-					span
+					span.breadcrumbsText
 						//a(href='/school/'+breadcrumbs.schoolid).loginLinks=breadcrumbs.schoolname
 						span=breadcrumbs.schoolname
 						b=" > "
@@ -19,14 +19,21 @@ block content
 						span=breadcrumbs.departmentname
 						b=" > "
 						a(href='/major/'+breadcrumbs.majorid).loginLinks=breadcrumbs.majorname
-			div.coolBorder
 				if user
-					div.fullWidth.centerContent
-						a(id="addToHotbar").btn.btn-danger.fullWidth Add major to hotbar
+					- var hasadded = false
+					each major in hotbarelements.majors
+						if major.elementid == breadcrumbs.currentid
+							- hasadded = true
+					if hasadded == false
+						a(id="addToHotbar").btn.btn-sm.btn-danger.centerContent='Add this '+breadcrumbs.currenttype+' to hotbar'
+					else 
+						a(href='/account/removehotbarelement/'+breadcrumbs.currenttype+'/'+breadcrumbs.currentid).btn.btn-sm.btn-danger.centerContent='Remove this '+breadcrumbs.currenttype+' from hotbar'
+			div.coolBorder
+				h2(style="margin:0px;padding-bottom:0.7em;").fullWidth.centerContent Courses
 				if result.length==0
-					p There are no courses yet.
+					p There are no courses created for this major yet
 				else
-					div(style="padding-left:13px; padding-right:13px; margin-top:5px;").horizontalAlignment
+					div(style="padding-left:13px; padding-right:13px; margin-top:0px;margin-bottom:2em;")
 						div.col-md-3 
 							b ID code:
 						div.col-md-9 
@@ -37,7 +44,7 @@ block content
 							div.col-md-3=course.identificationCode
 							div.col-md-9=course.name
 				if user
-					a(id="addNewCourseFormOpen").btn.btn-success.courseButton.fullWidth.centerContent Add new course to this major
+					a(id="addNewCourseFormOpen").btn.btn-success.courseButton.fullWidth.centerContent.lowButton Add new course to this major
 					div(id="addNewCourseForm" href='javascript:void(0)' style="display:none;").squareBorder
 						form
 							fieldset.form-group 
@@ -50,7 +57,7 @@ block content
 							a(id="addNewCourseFormSubmit" href='javascript:void(0)').form-control.btn-success.active.submitcancelbuttons Submit
 							a(id="addNewCourseFormCancel" href='javascript:void(0)').form-control.btn-danger.active.submitcancelbuttons Cancel
 				else
-					a(href="/login").btn.btn-success.fullWidth.courseButton Login to add new courses!
+					a(href="/login").btn.btn-success.fullWidth.courseButton.lowButton Login to add new courses!
 
 			// container for the comment module
 			//div.coolBorder Here is the chat module
