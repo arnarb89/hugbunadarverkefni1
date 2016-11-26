@@ -13,9 +13,10 @@ module.exports = function(passport){
 		courseManager.getCourseByIdArnar(thecourseid, function(err,result){
 			if(err){
 				// console.log("/course/:id get, err: "+err);
-				res.render('placeholder-course',{message:'There was an error.'});
+				res.render('error',{ error :  err, message:'There was an error.'});
 			}else{
 				var breadcrumbs = result.rows[0];
+
 				// console.log("/course/:id get, result: "+JSON.stringify(result));
 				// console.log("/course/:id get, breadcrumbs: "+JSON.stringify(breadcrumbs));
 				breadcrumbs.currentid = breadcrumbs.courseid;
@@ -26,7 +27,7 @@ module.exports = function(passport){
 				summaryManager.getSummaryMetaData(thecourseid, function (err, result) {
 					if(err){
 						// console.log("/course/:id get, err: "+err);
-						res.render('placeholder-course', {message: 'There was an error.'});
+						res.render('error', {error : err, message: 'There was an error.'});
 					}else{
 						// console.log('/course/:id get, results: '+JSON.stringify(result));
 						// console.log('/course/:id get, breadCrumbs: '+JSON.stringify(breadcrumbs));
