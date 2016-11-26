@@ -100,6 +100,13 @@ CREATE TABLE IF NOT EXISTS summaries (
 	courseid int NOT NULL references courses(id)
 );
 
+CREATE TABLE IF NOT EXISTS hotbarelements (
+	userid integer NOT NULL,
+	elementid integer NOT NULL,
+	type text NOT NULL,
+	contentname text NOT NULL
+);
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- FUNCTIONS
 
